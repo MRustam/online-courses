@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Instructors</title>
+</head>
+<body>
+
+<table border="solid, 1px">
+    <tr>
+        <th>ID</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Email</th>
+        <th>Skype</th>
+        <th>Work experience</th>
+    </tr>
+    <tr th:each="instructor : ${instructors}">
+        <td th:text="${instructor.getId()}"></td>
+        <td th:text="${instructor.getFirstName()}"></td>
+        <td th:text="${instructor.getLastName()}"></td>
+        <td th:text="${instructor.getDetail().getEmail()}"></td>
+        <td th:text="${instructor.getDetail().getSkype()}"></td>
+        <td th:text="${instructor.getDetail().getWorkExperience()}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
