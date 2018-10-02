@@ -1,90 +1,49 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
+import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Table(name = "Course")
+@Table(name = "course")
 public class Course {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "course_generator")
-    @SequenceGenerator(name = "course_generator", sequenceName = "course_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "title")
-    private String title;
-
     @Column(name = "category")
     private String category;
-
+    @Column(name = "title")
+    private String title;
     @Column(name = "description")
     private String description;
-
-    @Column(name = "duration_in_days")
-    private int durationInDays;
-
+    @Column(name = "review")
+    private String review;
+    @Column(name = "duration")
+    private int duration;
     @Column(name = "start_date")
     private LocalDate startDate;
-
-    @Column(name = "rating")
-    private double rating;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-    })
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_id")
-    private List<Review> reviews;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-    })
-    @JoinTable(
-            name = "course_student",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<Student> students;
 
     public Course() {
     }
 
-    public Course(String title, String category) {
-        this.title = title;
+    public Course(String category, String title, String description, String review, int duration, LocalDate startDate) {
         this.category = category;
-    }
-
-    public Course(String title, String category, String description, int durationInDays, LocalDate startDate, double rating) {
         this.title = title;
-        this.category = category;
         this.description = description;
-        this.durationInDays = durationInDays;
+        this.review = review;
+        this.duration = duration;
         this.startDate = startDate;
-        this.rating = rating;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCategory() {
@@ -95,6 +54,14 @@ public class Course {
         this.category = category;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -103,12 +70,20 @@ public class Course {
         this.description = description;
     }
 
-    public int getDurationInDays() {
-        return durationInDays;
+    public String getReview() {
+        return review;
     }
 
-    public void setDurationInDays(int durationInDays) {
-        this.durationInDays = durationInDays;
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public LocalDate getStartDate() {
@@ -119,43 +94,22 @@ public class Course {
         this.startDate = startDate;
     }
 
-    public double getRating() {
-        return rating;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return duration == course.duration &&
+                Objects.equals(id, course.id) &&
+                Objects.equals(category, course.category) &&
+                Objects.equals(title, course.title) &&
+                Objects.equals(description, course.description) &&
+                Objects.equals(review, course.review) &&
+                Objects.equals(startDate, course.startDate);
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public Instructor getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(Instructor instructor) {
-        this.instructor = instructor;
-    }
-
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
-
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
-
-    public void addStudent(Student student) {
-        if (students == null) {
-            students = new ArrayList<>();
-        }
-        students.add(student);
-        student.addCourse(this);
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, category, title, description, review, duration, startDate);
     }
 }
