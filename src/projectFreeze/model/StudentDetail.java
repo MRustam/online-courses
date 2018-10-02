@@ -8,7 +8,7 @@ public class StudentDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_detail_generator")
-    @SequenceGenerator(name = "student_detail_generator", sequenceName="student_detail_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "student_detail_generator", sequenceName = "student_detail_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "age")

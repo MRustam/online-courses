@@ -2,7 +2,7 @@ package ru.rmamedov.courses.springbootappcourses.service.interfaces;
 
 import java.util.List;
 
-public interface BaseInterface <T, ID> {
+public interface BaseInterface<T, ID> {
 
     List<T> findAll();
 
@@ -11,5 +11,7 @@ public interface BaseInterface <T, ID> {
     T saveOne(T object);
 
     void deleteOneById(ID id);
+
+    T updateOneById(ID id, T t);
 
 }
