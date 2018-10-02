@@ -10,7 +10,7 @@ import ru.rmamedov.courses.springbootappcourses.model.InstructorDetail;
 public class GlobalInstructorDetailExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<EntityErrorResponse<InstructorDetail>> handleInstructorNotFound(EntityNotFoundException exc){
+    public ResponseEntity<EntityErrorResponse<InstructorDetail>> handleInstructorNotFound(EntityNotFoundException exc) {
 
         EntityErrorResponse<InstructorDetail> entityErrorResponse = new EntityErrorResponse<>();
 
@@ -22,7 +22,7 @@ public class GlobalInstructorDetailExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<EntityErrorResponse<InstructorDetail>> handleOtherExceptions (Exception exc){
+    public ResponseEntity<EntityErrorResponse<InstructorDetail>> handleOtherExceptions(Exception exc) {
 
         EntityErrorResponse<InstructorDetail> entityErrorResponse = new EntityErrorResponse<>();
 

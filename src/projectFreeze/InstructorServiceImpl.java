@@ -33,7 +33,10 @@ public class InstructorServiceImpl implements IInstructorService {
 
     @Override
     public Instructor saveOne(Instructor instructor) {
-        return null;
+        if (instructor == null) {
+            throw new EntityNotFoundException("Saving instructor is null!");
+        }
+        return instructorRep.save(instructor);
     }
 
     @Override
