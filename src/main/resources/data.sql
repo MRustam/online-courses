@@ -18,3 +18,15 @@ INSERT INTO course (title, category, description, review, duration, start_date)
 VALUES ('English for advanced', 'languages', 'upper-intermediate', 'Not bad!, Thanks it grate, Very well', 55, '2018-08-19');
 INSERT INTO course (title, category, description, review, duration, start_date)
 VALUES ('Spain', 'languages', 'For intermediate.', 'Not bad!, Thanks it grate, Very well', 70, '2018-02-02');
+
+INSERT INTO student (first_name, last_name, age, email, skype)
+VALUES ('Alex', 'Fox', 23, 'alex@fox.com', 'alex@fox-skype.com');
+INSERT INTO student (first_name, last_name, age, email, skype)
+VALUES ('Rodger', 'Donnavan', 34, 'rodger@mail.com', 'rodger@donavan-skype.com');
+INSERT INTO student (first_name, last_name, age, email, skype)
+VALUES ('Tim', 'Cock', 30, 'tim@cock.com', 'tim@cock-skype.com');
+INSERT INTO student (first_name, last_name, age, email, skype)
+VALUES ('Bob', 'Swagger', 28, 'bob@swagger.com', 'bob@bob-skype.com');
+
+INSERT INTO instructor (first_name, last_name, work_experience, email, skype)
+VALUES ('John', 'Travolta', 40, 'travolta@fox.com', 'travolta@fox-skype.com');
