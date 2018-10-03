@@ -30,3 +30,8 @@ VALUES ('Bob', 'Swagger', 28, 'bob@swagger.com', 'bob@bob-skype.com');
 
 INSERT INTO instructor (first_name, last_name, work_experience, email, skype)
 VALUES ('John', 'Travolta', 40, 'travolta@fox.com', 'travolta@fox-skype.com');
+
+INSERT INTO course_review (text, creation_time)
+VALUES ('Bla bla-bla Bla bla-bla Bla bla-bla Bla bla-bla', '2014-03-29');
+INSERT INTO course_review (text, creation_time)
+VALUES ('Bla bla-bla Bla bla-bla Bla bla-bla Bla bla-bla', '2011-01-11');
