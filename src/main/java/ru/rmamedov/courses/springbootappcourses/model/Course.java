@@ -1,7 +1,5 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
