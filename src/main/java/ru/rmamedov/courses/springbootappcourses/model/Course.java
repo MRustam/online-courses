@@ -2,6 +2,8 @@ package ru.rmamedov.courses.springbootappcourses.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -17,23 +19,25 @@ public class Course {
     private String title;
     @Column(name = "description")
     private String description;
-    @Column(name = "review")
-    private String review;
     @Column(name = "duration")
     private int duration;
     @Column(name = "start_date")
     private LocalDate startDate;
 
+    @OneToMany
+    @JoinColumn(name = "course_id")
+    private List<Review> reviews;
+
     public Course() {
     }
 
-    public Course(String category, String title, String description, String review, int duration, LocalDate startDate) {
+    public Course(String category, String title, String description, int duration, LocalDate startDate, List<Review> reviews) {
         this.category = category;
         this.title = title;
         this.description = description;
-        this.review = review;
         this.duration = duration;
         this.startDate = startDate;
+        this.reviews = reviews;
     }
 
     public Long getId() {
@@ -68,14 +72,6 @@ public class Course {
         this.description = description;
     }
 
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
-    }
-
     public int getDuration() {
         return duration;
     }
@@ -92,6 +88,21 @@ public class Course {
         this.startDate = startDate;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public void addReview(Review review) {
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+        reviews.add(review);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -102,12 +113,25 @@ public class Course {
                 Objects.equals(category, course.category) &&
                 Objects.equals(title, course.title) &&
                 Objects.equals(description, course.description) &&
-                Objects.equals(review, course.review) &&
-                Objects.equals(startDate, course.startDate);
+                Objects.equals(startDate, course.startDate) &&
+                Objects.equals(reviews, course.reviews);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, category, title, description, review, duration, startDate);
+        return Objects.hash(id, category, title, description, duration, startDate, reviews);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", duration=" + duration +
+                ", startDate=" + startDate +
+                ", reviews=" + reviews +
+                '}';
     }
 }

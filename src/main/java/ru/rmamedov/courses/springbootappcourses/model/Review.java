@@ -51,13 +51,4 @@ public class Review {
     public void setCreation_time(LocalDate creation_time) {
         this.creation_time = creation_time;
     }
-
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", text='" + text + '\'' +
-                ", creation_time=" + creation_time +
-                '}';
-    }
 }

@@ -2,7 +2,6 @@ package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRep;
