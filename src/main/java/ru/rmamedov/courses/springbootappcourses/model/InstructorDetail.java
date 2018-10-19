@@ -7,8 +7,7 @@ import javax.persistence.*;
 public class InstructorDetail {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "instructor_detail_generator")
-    @SequenceGenerator(name = "instructor_detail_generator", sequenceName = "instructor_detail_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "work_experience")

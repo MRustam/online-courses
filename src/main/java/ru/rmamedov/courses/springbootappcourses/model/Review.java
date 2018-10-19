@@ -1,7 +1,5 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -16,7 +14,6 @@ public class Review {
     @Column(name = "text")
     private String text;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "creation_time")
     private LocalDate creation_time;
 
@@ -50,5 +47,14 @@ public class Review {
 
     public void setCreation_time(LocalDate creation_time) {
         this.creation_time = creation_time;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", text='" + text + '\'' +
+                ", creation_time=" + creation_time +
+                '}';
     }
 }

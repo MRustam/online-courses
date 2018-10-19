@@ -1,7 +1,8 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Student")
@@ -17,24 +18,29 @@ public class Student {
     @Column(name = "last_name")
     private String lastNAme;
 
-    @Column(name = "age")
-    private int age;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "student_detail_id")
+    private StudentDetail detail;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "skype")
-    private String skype;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    @JoinTable(
+            name = "course_student",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id")
+    )
+    private List<Course> courses;
 
     public Student() {
     }
 
-    public Student(String firstName, String lastNAme, int age, String email, String skype) {
+    public Student(String firstName, String lastNAme) {
         this.firstName = firstName;
         this.lastNAme = lastNAme;
-        this.age = age;
-        this.email = email;
-        this.skype = skype;
     }
 
     public Long getId() {
@@ -61,46 +67,27 @@ public class Student {
         this.lastNAme = lastNAme;
     }
 
-    public int getAge() {
-        return age;
+    public StudentDetail getDetail() {
+        return detail;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDetail(StudentDetail detail) {
+        this.detail = detail;
     }
 
-    public String getEmail() {
-        return email;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
-    public String getSkype() {
-        return skype;
-    }
-
-    public void setSkype(String skype) {
-        this.skype = skype;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return age == student.age &&
-                Objects.equals(id, student.id) &&
-                Objects.equals(firstName, student.firstName) &&
-                Objects.equals(lastNAme, student.lastNAme) &&
-                Objects.equals(email, student.email) &&
-                Objects.equals(skype, student.skype);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastNAme, age, email, skype);
+    public void addCourse(Course course) {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(course);
     }
 
     @Override
@@ -109,9 +96,8 @@ public class Student {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastNAme='" + lastNAme + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                ", skype='" + skype + '\'' +
+                ", detail=" + detail +
+                ", courses=" + courses +
                 '}';
     }
 }
