@@ -46,18 +46,8 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public Course updateOneById(Long id, Course course) {
-
         deleteOneById(id);
-//        Course c = new Course();
-//        c.setId(id);
-//        c.setTitle(course.getTitle());
-//        c.setCategory(course.getCategory());
-//        c.setDescription(course.getDescription());
-//        c.setDuration(course.getDuration());
-//        c.setStartDate(course.getStartDate());
-//        c.setReview(course.getReview());
         course.setId(id);
-
         return saveOne(course);
     }
 }
