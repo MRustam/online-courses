@@ -20,4 +20,7 @@ public interface IReviewService extends BaseInterface<Review, Long> {
 
     @Override
     Review updateOneById(Long id, Review review);
+
+    //Get course's reviews by id.
+    List<Review> getReviewsOfCourse(Long id);
 }

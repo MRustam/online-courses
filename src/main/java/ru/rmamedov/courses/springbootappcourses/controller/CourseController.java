@@ -18,7 +18,6 @@ public class CourseController {
     }
 
     // CRUD operations
-    ////
     @GetMapping("/courses")
     public List<Course> getAll() {
         return iCourseService.findAll();
@@ -39,7 +38,16 @@ public class CourseController {
     public Course updateById(@PathVariable Long id, @RequestBody Course course) {
         return iCourseService.updateOneById(id, course);
     }
-    //////
 
-    //Get course by id with reviews.
+    //Get high rated courses.
+    @GetMapping("/courses/high")
+    public List<Course> getHighRated() {
+        return iCourseService.getHighRatedCourses();
+    }
+
+    //Find one by title.
+    @GetMapping("/courses/findbytitle/{title}")
+    public Course findOneByTitle(@PathVariable String title) {
+        return iCourseService.findOneByTitle(title);
+    }
 }

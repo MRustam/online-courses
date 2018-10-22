@@ -1,5 +1,7 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +21,12 @@ public class Instructor {
     @Column(name = "last_name")
     private String lastName;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "detail_id")
     private InstructorDetail detail;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "instructor", cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

@@ -41,4 +41,10 @@ public class ReviewController {
     public Review updateById(@PathVariable Long id, @RequestBody Review review) {
         return iReviewService.updateOneById(id, review);
     }
+
+    //Get all from current course.
+    @GetMapping("/reviews/ofcourse/{courseId}")
+    public List<Review> getReviewsOfCourse(@PathVariable Long courseId) {
+        return iReviewService.getReviewsOfCourse(courseId);
+    }
 }
