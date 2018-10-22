@@ -50,4 +50,10 @@ public class CourseController {
     public Course findOneByTitle(@PathVariable String title) {
         return iCourseService.findOneByTitle(title);
     }
+
+    //Filter by category.
+    @GetMapping("/courses/category/{category}")
+    public List<Course> findAllByCategory(@PathVariable String category) {
+        return iCourseService.findAllByCategory(category);
+    }
 }
