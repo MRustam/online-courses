@@ -1,7 +1,6 @@
 package ru.rmamedov.courses.springbootappcourses.service.interfaces;
 
 import ru.rmamedov.courses.springbootappcourses.model.Course;
-import ru.rmamedov.courses.springbootappcourses.model.Review;
 
 import java.util.List;
 
@@ -28,5 +27,8 @@ public interface ICourseService extends BaseInterface<Course, Long> {
 
     //Find by title
     Course findOneByTitle(String title);
+
+    //Find all by category.
+    List<Course> findAllByCategory(String category);
 
 }

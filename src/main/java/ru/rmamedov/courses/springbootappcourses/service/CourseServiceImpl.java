@@ -60,4 +60,9 @@ public class CourseServiceImpl implements ICourseService {
     public Course findOneByTitle(String title) {
         return courseRep.findOneByTitle(title);
     }
+
+    @Override
+    public List<Course> findAllByCategory(String category) {
+        return courseRep.findAllByCategory(category);
+    }
 }
