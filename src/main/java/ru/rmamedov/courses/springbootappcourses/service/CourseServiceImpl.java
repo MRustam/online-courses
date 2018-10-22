@@ -50,4 +50,14 @@ public class CourseServiceImpl implements ICourseService {
         course.setId(id);
         return saveOne(course);
     }
+
+    @Override
+    public List<Course> getHighRatedCourses() {
+        return courseRep.highRated();
+    }
+
+    @Override
+    public Course findOneByTitle(String title) {
+        return courseRep.findOneByTitle(title);
+    }
 }

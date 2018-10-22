@@ -51,4 +51,9 @@ public class ReviewServiceImpl implements IReviewService {
         review.setId(id);
         return saveOne(review);
     }
+
+    @Override
+    public List<Review> getReviewsOfCourse(Long id) {
+        return reviewRepo.getReviewsOfCourse(id);
+    }
 }

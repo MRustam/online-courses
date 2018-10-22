@@ -18,7 +18,7 @@ public class Student {
     private String firstName;
 
     @Column(name = "last_name")
-    private String lastNAme;
+    private String lastName;
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -42,9 +42,9 @@ public class Student {
     public Student() {
     }
 
-    public Student(String firstName, String lastNAme) {
+    public Student(String firstName, String lastName) {
         this.firstName = firstName;
-        this.lastNAme = lastNAme;
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -63,12 +63,12 @@ public class Student {
         this.firstName = firstName;
     }
 
-    public String getLastNAme() {
-        return lastNAme;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastNAme(String lastNAme) {
-        this.lastNAme = lastNAme;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public StudentDetail getDetail() {
@@ -99,7 +99,7 @@ public class Student {
         return "Student{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
-                ", lastNAme='" + lastNAme + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", detail=" + detail +
                 ", courses=" + courses +
                 '}';
