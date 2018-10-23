@@ -91,6 +91,7 @@ public class Student {
         if (courses == null) {
             courses = new ArrayList<>();
         }
+        course.addStudent(this);
         courses.add(course);
     }
 

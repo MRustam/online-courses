@@ -3,6 +3,7 @@ package ru.rmamedov.courses.springbootappcourses.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 
 import java.util.List;
@@ -55,5 +56,11 @@ public class CourseController {
     @GetMapping("/courses/category/{category}")
     public List<Course> findAllByCategory(@PathVariable String category) {
         return iCourseService.findAllByCategory(category);
+    }
+
+    //Get all students of this course
+    @GetMapping("/courses/{id}/students")
+    public List<Student> getStudentsOfThisCourse(@PathVariable Long id) {
+        return iCourseService.getStudentsOfCurrentCourse(id);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 
@@ -64,5 +65,10 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public List<Course> findAllByCategory(String category) {
         return courseRep.findAllByCategory(category);
+    }
+
+    @Override
+    public List<Student> getStudentsOfCurrentCourse(Long id) {
+        return findOneById(id).getStudents();
     }
 }

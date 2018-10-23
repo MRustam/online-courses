@@ -48,3 +48,16 @@ INSERT INTO student (first_name, last_name, student_detail_id)
 VALUES ('Tim', 'Cock', 3);
 INSERT INTO student (first_name, last_name, student_detail_id)
 VALUES ('Bob', 'Swagger', 4);
+
+INSERT INTO course_student (student_id, course_id)
+VALUES (1, 1);
+INSERT INTO course_student (student_id, course_id)
+VALUES (2, 1);
+INSERT INTO course_student (student_id, course_id)
+VALUES (2, 4);
+INSERT INTO course_student (student_id, course_id)
+VALUES (3, 1);
+INSERT INTO course_student (student_id, course_id)
+VALUES (4, 2);
+INSERT INTO course_student (student_id, course_id)
+VALUES (3, 2);

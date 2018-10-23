@@ -2,7 +2,10 @@ package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
+import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.StudentRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
@@ -13,6 +16,9 @@ import java.util.List;
 public class StudentServiceImpl implements IStudentService {
 
     private StudentRep studentRep;
+
+    @Autowired
+    private CourseServiceImpl courseService;
 
     @Autowired
     public StudentServiceImpl(StudentRep studentRep) {
@@ -50,5 +56,16 @@ public class StudentServiceImpl implements IStudentService {
         deleteOneById(id);
         student.setId(id);
         return saveOne(student);
+    }
+
+    @Override
+    public List<Course> getAllCoursesOfStudent(Long id) {
+        return findOneById(id).getCourses();
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Override
+    public void enrollOnCourse(Long studentId, Long courseId) {
+        findOneById(studentId).addCourse(courseService.findOneById(courseId));
     }
 }
