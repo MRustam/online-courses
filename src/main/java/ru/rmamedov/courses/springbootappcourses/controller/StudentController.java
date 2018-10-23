@@ -2,6 +2,7 @@ package ru.rmamedov.courses.springbootappcourses.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
 
@@ -42,4 +43,13 @@ public class StudentController {
         return iStudentService.updateOneById(id, student);
     }
 
+    @GetMapping("/students/{id}/courses")
+    public List<Course> getAllCoursesOfStudent(@PathVariable Long id) {
+        return iStudentService.getAllCoursesOfStudent(id);
+    }
+
+    @PutMapping("/students/{studentId}/course/{courseId}")
+     public void enroll(@PathVariable Long studentId, @PathVariable Long courseId) {
+        iStudentService.enrollOnCourse(studentId, courseId);
+    }
 }

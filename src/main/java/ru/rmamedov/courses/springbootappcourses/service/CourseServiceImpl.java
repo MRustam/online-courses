@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 
@@ -46,18 +47,28 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public Course updateOneById(Long id, Course course) {
-
         deleteOneById(id);
-//        Course c = new Course();
-//        c.setId(id);
-//        c.setTitle(course.getTitle());
-//        c.setCategory(course.getCategory());
-//        c.setDescription(course.getDescription());
-//        c.setDuration(course.getDuration());
-//        c.setStartDate(course.getStartDate());
-//        c.setReview(course.getReview());
         course.setId(id);
-
         return saveOne(course);
+    }
+
+    @Override
+    public List<Course> getHighRatedCourses() {
+        return courseRep.highRated();
+    }
+
+    @Override
+    public Course findOneByTitle(String title) {
+        return courseRep.findOneByTitle(title);
+    }
+
+    @Override
+    public List<Course> findAllByCategory(String category) {
+        return courseRep.findAllByCategory(category);
+    }
+
+    @Override
+    public List<Student> getStudentsOfCurrentCourse(Long id) {
+        return findOneById(id).getStudents();
     }
 }

@@ -4,15 +4,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.rmamedov.courses.springbootappcourses.model.Instructor;
+import ru.rmamedov.courses.springbootappcourses.model.Student;
 
 @ControllerAdvice
-public class GlobalInstructorExceptionHandler {
+public class StudentGlobalExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<EntityErrorResponse<Instructor>> handleInstructorNotFound(EntityNotFoundException exc) {
+    public ResponseEntity<EntityErrorResponse<Student>> handleStudentNotFound(EntityNotFoundException exc) {
 
-        EntityErrorResponse<Instructor> entityErrorResponse = new EntityErrorResponse<>();
+        EntityErrorResponse<Student> entityErrorResponse = new EntityErrorResponse<>();
 
         entityErrorResponse.setStatus(HttpStatus.NOT_FOUND.value());
         entityErrorResponse.setMessage(exc.getMessage());
@@ -22,9 +22,9 @@ public class GlobalInstructorExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<EntityErrorResponse<Instructor>> handleOtherExceptions(Exception exc) {
+    public ResponseEntity<EntityErrorResponse<Student>> handleOtherExceptions(Exception exc) {
 
-        EntityErrorResponse<Instructor> entityErrorResponse = new EntityErrorResponse<>();
+        EntityErrorResponse<Student> entityErrorResponse = new EntityErrorResponse<>();
 
         entityErrorResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         entityErrorResponse.setMessage(exc.getMessage());

@@ -1,6 +1,10 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "instructor")
@@ -17,25 +21,26 @@ public class Instructor {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "work_experience")
-    private double workExperience;
+    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "detail_id")
+    private InstructorDetail detail;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "skype")
-    private String skype;
-
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "instructor", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    private List<Course> courses;
 
     public Instructor() {
     }
 
-    public Instructor(String firstName, String lastName, double workExperience, String email, String skype) {
+    public Instructor(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.workExperience = workExperience;
-        this.email = email;
-        this.skype = skype;
     }
 
     public Long getId() {
@@ -62,28 +67,28 @@ public class Instructor {
         this.lastName = lastName;
     }
 
-    public double getWorkExperience() {
-        return workExperience;
+    public InstructorDetail getDetail() {
+        return detail;
     }
 
-    public void setWorkExperience(double workExperience) {
-        this.workExperience = workExperience;
+    public void setDetail(InstructorDetail detail) {
+        this.detail = detail;
     }
 
-    public String getEmail() {
-        return email;
+    public List<Course> getCourses() {
+        return courses;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 
-    public String getSkype() {
-        return skype;
-    }
-
-    public void setSkype(String skype) {
-        this.skype = skype;
+    public void addCourse(Course course) {
+        if (courses == null) {
+            courses = new ArrayList<>();
+        }
+        courses.add(course);
+        course.setInstructor(this);
     }
 
     @Override
@@ -92,9 +97,7 @@ public class Instructor {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", workExperience=" + workExperience +
-                ", email='" + email + '\'' +
-                ", skype='" + skype + '\'' +
+                ", detail=" + detail +
                 '}';
     }
 }

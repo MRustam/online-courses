@@ -1,41 +1,82 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "course")
+@Table(name = "Course")
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "category")
-    private String category;
+
     @Column(name = "title")
     private String title;
+
+    @Column(name = "category")
+    private String category;
+
     @Column(name = "description")
     private String description;
-    @Column(name = "review")
-    private String review;
+
     @Column(name = "duration")
     private int duration;
+
     @Column(name = "start_date")
     private LocalDate startDate;
+
+    @Column(name = "rating")
+    private double rating;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    @JoinColumn(name = "instructor_id")
+    private Instructor instructor;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "course_id")
+    private List<Review> reviews;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    @JoinTable(
+            name = "course_student",
+            joinColumns = @JoinColumn(name = "course_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
+    )
+    private List<Student> students;
 
     public Course() {
     }
 
-    public Course(String category, String title, String description, String review, int duration, LocalDate startDate) {
-        this.category = category;
+    public Course(String title, String category) {
         this.title = title;
+        this.category = category;
+    }
+
+    public Course(String title, String category, String description, int duration, LocalDate startDate, double rating) {
+        this.title = title;
+        this.category = category;
         this.description = description;
-        this.review = review;
         this.duration = duration;
         this.startDate = startDate;
+        this.rating = rating;
     }
 
     public Long getId() {
@@ -46,14 +87,6 @@ public class Course {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -62,20 +95,20 @@ public class Course {
         this.title = title;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 
     public int getDuration() {
@@ -94,22 +127,42 @@ public class Course {
         this.startDate = startDate;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return duration == course.duration &&
-                Objects.equals(id, course.id) &&
-                Objects.equals(category, course.category) &&
-                Objects.equals(title, course.title) &&
-                Objects.equals(description, course.description) &&
-                Objects.equals(review, course.review) &&
-                Objects.equals(startDate, course.startDate);
+    public double getRating() {
+        return rating;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, category, title, description, review, duration, startDate);
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public Instructor getInstructor() {
+        return instructor;
+    }
+
+    public void setInstructor(Instructor instructor) {
+        this.instructor = instructor;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public void addStudent(Student student) {
+        if (students == null) {
+            students = new ArrayList<>();
+        }
+        students.add(student);
     }
 }
