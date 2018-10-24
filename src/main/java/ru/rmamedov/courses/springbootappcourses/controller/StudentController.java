@@ -18,38 +18,32 @@ public class StudentController {
         this.iStudentService = iStudentService;
     }
 
+    //CRUD
     @GetMapping("/students")
     public List<Student> getAll() {
         return iStudentService.findAll();
     }
-
     @GetMapping("/students/{id}")
     public Student getOneById(@PathVariable Long id) {
         return iStudentService.findOneById(id);
     }
-
     @PostMapping("/students")
     public Student saveOne(@RequestBody Student student) {
         return iStudentService.saveOne(student);
     }
-
     @DeleteMapping("/students/{id}")
     public void deleteOneById(@PathVariable Long id) {
         iStudentService.deleteOneById(id);
     }
-
     @PutMapping("/students/{id}")
     public Student updateById(@PathVariable Long id, @RequestBody Student student) {
         return iStudentService.updateOneById(id, student);
     }
 
+    //All courses from this student.
     @GetMapping("/students/{id}/courses")
     public List<Course> getAllCoursesOfStudent(@PathVariable Long id) {
         return iStudentService.getAllCoursesOfStudent(id);
     }
 
-    @PutMapping("/students/{studentId}/course/{courseId}")
-     public void enroll(@PathVariable Long studentId, @PathVariable Long courseId) {
-        iStudentService.enrollOnCourse(studentId, courseId);
-    }
 }

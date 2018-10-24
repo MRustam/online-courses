@@ -63,7 +63,7 @@ public class StudentServiceImpl implements IStudentService {
         return findOneById(id).getCourses();
     }
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+    @Transactional
     @Override
     public void enrollOnCourse(Long studentId, Long courseId) {
         findOneById(studentId).addCourse(courseService.findOneById(courseId));
