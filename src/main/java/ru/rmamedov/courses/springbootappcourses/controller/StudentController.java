@@ -40,7 +40,7 @@ public class StudentController {
         return iStudentService.updateOneById(id, student);
     }
 
-    //All courses from this student.
+    //All courses of this student.
     @GetMapping("/students/{id}/courses")
     public List<Course> getAllCoursesOfStudent(@PathVariable Long id) {
         return iStudentService.getAllCoursesOfStudent(id);
