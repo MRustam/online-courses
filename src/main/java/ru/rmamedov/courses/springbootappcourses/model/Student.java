@@ -3,8 +3,8 @@ package ru.rmamedov.courses.springbootappcourses.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Entity
 @Table(name = "Student")
@@ -89,7 +89,7 @@ public class Student {
 
     public void addCourse(Course course) {
         if (courses == null) {
-            courses = new ArrayList<>();
+            courses = new CopyOnWriteArrayList<>();
         }
         course.addStudent(this);
         courses.add(course);
