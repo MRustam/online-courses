@@ -1,6 +1,5 @@
 package ru.rmamedov.courses.springbootappcourses.service.interfaces;
 
-import org.springframework.transaction.annotation.Transactional;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 
