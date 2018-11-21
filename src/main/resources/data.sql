@@ -1,9 +1,13 @@
 
 INSERT INTO instructor_detail (work_experience, email, skype)
 VALUES (12, 'travolta-instructor@mail.com', 'skype-travolta-instructor@mail.com');
+INSERT INTO instructor_detail (work_experience, email, skype)
+VALUES (2, 'tim-instructor@mail.com', 'skype-tim-instructor@mail.com');
 
 INSERT INTO instructor (first_name, last_name, detail_id)
 VALUES ('John', 'Travolta', 1);
+INSERT INTO instructor (first_name, last_name, detail_id)
+VALUES ('Tim', 'Rob', 2);
 
 INSERT INTO course (title, category, description, duration, start_date, instructor_id, rating)
 VALUES ('Java 7EE', 'programming', 'For not beginners.', 35, '2018-03-01', 1, 9.5);

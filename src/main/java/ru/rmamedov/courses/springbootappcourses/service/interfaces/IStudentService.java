@@ -24,5 +24,5 @@ public interface IStudentService extends BaseInterface<Student, Long> {
 
     List<Course> getAllCoursesOfStudent(Long id);
 
-    void enrollOnCourse(Long studentId, Long courseId);
+//    void enrollOnCourse(Long studentId, Long courseId);
 }

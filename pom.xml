@@ -6,7 +6,7 @@
     <groupId>ru.rmamedov</groupId>
     <artifactId>spring-boot-rest-app-courses-json</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>spring-boot-rest-app-courses-thymeleaf</name>
     <description>Demo project for Spring Boot</description>
@@ -41,27 +41,34 @@
             <scope>runtime</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.postgresql</groupId>-->
+            <!--<artifactId>postgresql</artifactId>-->
+            <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>2.0.5.RELEASE</version>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <version>2.1.0.RELEASE</version>
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.2.2</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
         </plugins>
     </build>
 
