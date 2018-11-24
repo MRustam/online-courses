@@ -63,9 +63,9 @@ public class StudentServiceImpl implements IStudentService {
         return findOneById(id).getCourses();
     }
 
-    @Transactional
-    @Override
-    public void enrollOnCourse(Long studentId, Long courseId) {
-        findOneById(studentId).addCourse(courseService.findOneById(courseId));
-    }
+//    @Transactional
+//    @Override
+//    public void enrollOnCourse(Long studentId, Long courseId) {
+//        findOneById(studentId).addCourse(courseService.findOneById(courseId));
+//    }
 }

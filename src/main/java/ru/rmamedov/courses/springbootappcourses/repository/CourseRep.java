@@ -14,8 +14,8 @@ public interface CourseRep extends JpaRepository<Course, Long> {
     @Query("SELECT c FROM Course c WHERE c.rating >= 8.0")
     List<Course> highRated();
 
-    @Query("SELECT c FROM Course c WHERE c.title = :title")
-    Course findOneByTitle(@Param("title") String title);
+    @Query("SELECT c FROM Course c WHERE LOWER(c.title) LIKE LOWER(CONCAT('%',:title, '%'))")
+    List<Course> findOneByTitle(@Param("title") String title);
 
     @Query("SELECT c FROM Course c WHERE c.category = :category")
     List<Course> findAllByCategory(@Param("category") String category);
