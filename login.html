@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="/css/login.css"/>
+    <link rel="stylesheet" href="/lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" id="bootstrap-css">
+
+    <title>Login page</title>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="wrapper">
+
+        <form th:action="@{/login}" method="post" name="Login_Form" class="form-signin">
+            <h1 class="form-signin-heading">Log in</h1>
+
+            <div th:if="${param.error}">
+                <h5 style="color: #e4606d" class="form-signin-heading">Invalid username or password.</h5>
+            </div>
+            <div th:if="${param.logout}">
+                <h5 class="form-signin-heading">You have been logged out.</h5>
+            </div>
+
+            <br>
+
+            <input type="text" class="form-control" name="Username" placeholder="Username" required="" autofocus=""/>
+            <input type="password" class="form-control" name="Password" placeholder="Password" required=""/>
+
+            <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit">Login</button>
+        </form>
+
+    </div>
+</div>
+
+
+<script src="/lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+<script src="/lib/jquery-3.3.1/jquery.min.js"></script>
+</body>
+</html>

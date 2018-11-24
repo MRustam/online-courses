@@ -1,5 +1,6 @@
 package ru.rmamedov.courses.springbootappcourses.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,38 +10,76 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private LoggingAccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
+    public SecurityConfiguration(LoggingAccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/app/home").permitAll()
+                    .antMatchers(
+                            "/js/**",
+                            "/css/**",
+                            "/lib/**").permitAll()
+                    .antMatchers("/student/**").hasRole("STUDENT")
                     .anyRequest().authenticated()
-                    .and()
-                .formLogin()
-                    .loginPage("/app/login")
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                .and()
+                    .formLogin()
+                    .loginPage("/login")
                     .permitAll()
-                    .and()
-                .logout()
-                    .permitAll();
+                .and()
+                    .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll()
+                .and()
+                    .exceptionHandling()
+                    .accessDeniedHandler(accessDeniedHandler);
+
 
     }
 
     @Bean
     @Override
-    protected UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService() {
 
-        UserDetails user = User.withDefaultPasswordEncoder()
-                .username("student_01")
-                .password("123qwe")
-                .roles("STUDENT")
-                .build();
+        List<UserDetails> users = new ArrayList<>();
 
-        return new InMemoryUserDetailsManager(user);
+        UserDetails user =
+                User.withDefaultPasswordEncoder()
+                        .username("student_001")
+                        .password("123qwe")
+                        .roles("STUDENT")
+                        .build();
+
+        UserDetails manager =
+                User.withDefaultPasswordEncoder()
+                        .username("admin")
+                        .password("123qwe")
+                        .roles("ADMIN")
+                        .build();
+
+        users.add(user);
+        users.add(manager);
+
+        return new InMemoryUserDetailsManager(users);
     }
+
 }
