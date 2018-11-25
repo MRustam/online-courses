@@ -43,7 +43,7 @@ public class CourseController {
     }
 
     //Get high rated courses.
-    @GetMapping("/hight")
+    @GetMapping("/top")
     public List<Course> getHighRated() {
         return iCourseService.getHighRatedCourses();
     }

@@ -9,16 +9,31 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MvcController {
 
+    // Redirect to general page.
     @GetMapping("/")
     public String root() {
         return "index";
     }
 
-    @GetMapping("/student")
+    // General welcome page with list courses.
+    @GetMapping("/home")
     public String toHomePage() {
+        return "/index";
+    }
+
+    // My courses page.
+    @GetMapping("/student")
+    public String toStudentOwnPage() {
         return "/student/index";
     }
 
+    // Admin page 'add course, add instructor, add student'.
+    @GetMapping("/admin")
+    public String allAccessPage() {
+        return "/admin/index";
+    }
+
+    // Login page. If logged in then prevent to show login page.
     @GetMapping("/login")
     public String toLoginPage() {
 
@@ -31,6 +46,7 @@ public class MvcController {
         return "login";
     }
 
+    // Custom forbidden page if access denied.
     @GetMapping("/access-denied")
     public String accessDenied() {
         return "/error/access-denied";

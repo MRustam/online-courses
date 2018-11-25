@@ -1,14 +1,10 @@
+body {
+    background-color: #4e555b;
+}
+
 h1 {
     color: #78ab46;
     margin-top: 100px;
-}
-
-header {
-    position: fixed;
-    height: 50px;
-    top: 0;
-    width: 100%;
-    background-color: #ccc;
 }
 
 footer {
@@ -16,7 +12,7 @@ footer {
     height: 50px;
     bottom: 0;
     width: 100%;
-    background-color: #ccc
+    background-color: #f8f9fa!important;
 }
 
 footer p {
