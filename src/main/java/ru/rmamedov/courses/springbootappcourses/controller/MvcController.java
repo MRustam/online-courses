@@ -27,6 +27,12 @@ public class MvcController {
         return "/student/index";
     }
 
+    // All Instructors page.
+    @GetMapping("/instructor")
+    public String toInstructorsListPage() {
+        return "/instructor/index";
+    }
+
     // Admin page 'add course, add instructor, add student'.
     @GetMapping("/admin")
     public String allAccessPage() {

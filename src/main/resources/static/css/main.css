@@ -1,20 +1,25 @@
 body {
-    background-color: #4e555b;
+    background-image: url("/img/background.jpg");
+    padding-top: 54px;
 }
 
-h1 {
-    color: #78ab46;
-    margin-top: 100px;
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
 }
 
-footer {
+.card {
+    height: 100%;
+}
+
+.py-3 {
     position: fixed;
-    height: 50px;
+    left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #f8f9fa!important;
 }
 
-footer p {
-    padding: 15px;
+.text-center {
+    margin-bottom: 60px;
 }

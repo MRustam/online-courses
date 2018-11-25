@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <title>All instructors</title>
+</head>
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <h1>Here all ours instructors</h1>
+
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+        </tr>
+        </thead>
+        <tbody id="instructors-list">
+
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

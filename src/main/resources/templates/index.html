@@ -6,28 +6,19 @@
     <title>Index</title>
 </head>
 <body>
+
 <div layout:fragment="content" th:remove="tag">
-    <h1>All courses</h1>
 
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Category</th>
-            <th scope="col">Description</th>
-            <th scope="col">Started</th>
-            <th scope="col">Rating</th>
-        </tr>
-        </thead>
-        <tbody id="course">
+    <header class="jumbotron my-4">
+        <h1 class="display-3">Welcome page!</h1>
+        <p class="lead">This is online courses by UAcademy. Let's go to try some of them!!</p>
+        <a href="#" class="btn btn-primary btn-lg">Call to action!</a>
+    </header>
 
-        </tbody>
-    </table>
+    <div class="row text-center" id="courses-list">
 
-    <ul>
-        <li>Go to the <a href="/student" th:href="@{/student}">secured pages</a></li>
-    </ul>
+    </div>
+
 </div>
 
 </body>
