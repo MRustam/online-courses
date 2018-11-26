@@ -13,29 +13,13 @@ body {
     height: 100%;
 }
 
-<<<<<<< HEAD
-.py-3 {
-=======
-<<<<<<< Updated upstream
-footer {
-=======
 .py-2 {
->>>>>>> Stashed changes
->>>>>>> development
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
 }
 
-<<<<<<< HEAD
-.text-center {
-    margin-bottom: 60px;
-=======
-<<<<<<< Updated upstream
-footer p {
-    padding: 15px;
-=======
 #courses-list {
     margin-bottom: 40px;
 }
@@ -65,6 +49,4 @@ footer p {
 
 .form-control {
     margin-bottom: 25px;
->>>>>>> Stashed changes
->>>>>>> development
 }

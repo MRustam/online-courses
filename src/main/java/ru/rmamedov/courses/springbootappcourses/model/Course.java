@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "Course")
@@ -34,10 +32,6 @@ public class Course {
 
     @Column(name = "rating")
     private double rating;
-
-    @Lob
-    @Column(name="course_img", nullable=false, columnDefinition="mediumblob")
-    private byte[] image;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
@@ -141,14 +135,6 @@ public class Course {
         this.rating = rating;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
     public Instructor getInstructor() {
         return instructor;
     }
@@ -178,47 +164,5 @@ public class Course {
             students = new ArrayList<>();
         }
         students.add(student);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return duration == course.duration &&
-                Double.compare(course.rating, rating) == 0 &&
-                Objects.equals(id, course.id) &&
-                Objects.equals(title, course.title) &&
-                Objects.equals(category, course.category) &&
-                Objects.equals(description, course.description) &&
-                Objects.equals(startDate, course.startDate) &&
-                Arrays.equals(image, course.image) &&
-                Objects.equals(instructor, course.instructor) &&
-                Objects.equals(reviews, course.reviews) &&
-                Objects.equals(students, course.students);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(id, title, category, description, duration, startDate, rating, instructor, reviews, students);
-        result = 31 * result + Arrays.hashCode(image);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                ", duration=" + duration +
-                ", startDate=" + startDate +
-                ", rating=" + rating +
-                ", image=" + Arrays.toString(image) +
-                ", instructor=" + instructor +
-                ", reviews=" + reviews +
-                ", students=" + students +
-                '}';
     }
 }
