@@ -54,6 +54,11 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
+    public List<Course> getAllByRating() {
+        return courseRep.getAllByRating();
+    }
+
+    @Override
     public List<Course> getHighRatedCourses() {
         return courseRep.highRated();
     }

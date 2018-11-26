@@ -11,6 +11,10 @@ import java.util.List;
 @Repository
 public interface CourseRep extends JpaRepository<Course, Long> {
 
+    // Get all courses descending by rating
+    @Query("SELECT c FROM Course c ORDER BY rating DESC")
+    List<Course> getAllByRating();
+
     @Query("SELECT c FROM Course c WHERE c.rating >= 8.0")
     List<Course> highRated();
 

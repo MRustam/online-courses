@@ -11,7 +11,11 @@ header {
     background-color: #ccc;
 }
 
+<<<<<<< Updated upstream
 footer {
+=======
+.py-2 {
+>>>>>>> Stashed changes
     position: fixed;
     height: 50px;
     bottom: 0;
@@ -19,6 +23,38 @@ footer {
     background-color: #ccc
 }
 
+<<<<<<< Updated upstream
 footer p {
     padding: 15px;
+=======
+#courses-list {
+    margin-bottom: 40px;
+}
+
+#p-rating {
+    color: #1c7430;
+}
+
+.user-info {
+    color: #9E9E9E;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.list-group-item {
+    color: #4e555b;
+}
+
+.login {
+    background-color: aliceblue;
+    border-radius: 7px;
+    height: 370px;
+    margin: 0 auto;
+    width:20%;
+    margin-top: 140px;
+}
+
+.form-control {
+    margin-bottom: 25px;
+>>>>>>> Stashed changes
 }
