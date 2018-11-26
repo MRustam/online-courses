@@ -9,10 +9,6 @@ body {
     }
 }
 
-.card {
-    height: 100%;
-}
-
 .py-2 {
     position: fixed;
     left: 0;
@@ -20,8 +16,8 @@ body {
     width: 100%;
 }
 
-#courses-list {
-    margin-bottom: 40px;
+.content {
+    margin-bottom: 60px;
 }
 
 #p-rating {
@@ -48,5 +44,5 @@ body {
 }
 
 .form-control {
-    margin-bottom: 25px;
+     margin-bottom: 25px;
 }

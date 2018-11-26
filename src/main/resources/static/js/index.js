@@ -8,13 +8,12 @@ $(document).ready(function () {
                             '<div class="card h-100">' +
                                 '<img class="card-img-top" src="/img/abstract.jpg" />' +
                                 '<div class="card-body">' +
-                                    '<h4 class="card-title">' + el.title +'</h4>' +
+                                    '<h5 class="card-title">' + el.title +'</h5>' +
                                     '<p class="card-text">' + el.description + '</p>' +
                                     '<p id="p-rating">' + el.rating + '</p>' +
                                 '</div>' +
                                 '<div class="card-footer">' +
-                                    '<a href="#?' + el.id + '" class="btn btn-primary">Find Out More!</a>' +
-                                    '<small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>' +
+                                    '<a href="?id=' + el.id + '" class="btn btn-primary">Find Out More!</a>' +
                                 '</div>' +
                             '</div>' +
                         '</div>');
