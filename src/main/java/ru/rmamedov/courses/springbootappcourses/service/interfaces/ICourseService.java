@@ -24,6 +24,9 @@ public interface ICourseService extends BaseInterface<Course, Long> {
     @Override
     Course updateOneById(Long id, Course course);
 
+    // Sorted by rating
+    List<Course> getAllByRating();
+
     //Get high rated courses.
     List<Course> getHighRatedCourses();
 

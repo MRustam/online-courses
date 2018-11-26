@@ -36,8 +36,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                             "/css/**",
                             "/img/**",
                             "/lib/**").permitAll()
+<<<<<<< HEAD
                     .antMatchers("/api/**").authenticated()
+=======
+
+>>>>>>> development
                     .antMatchers("/student/**").hasRole("STUDENT")
+                    .antMatchers("/api/**").authenticated()
+                    .antMatchers("/student/**").hasAnyRole("ADMIN", "STUDENT")
                     .anyRequest().authenticated()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()

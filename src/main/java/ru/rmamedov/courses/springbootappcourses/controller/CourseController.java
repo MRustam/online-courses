@@ -21,9 +21,11 @@ public class CourseController {
     }
 
     // CRUD operations
+
+    // Custom get all courses, sorted by rating.
     @GetMapping("/all")
     public List<Course> getAll() {
-        return iCourseService.findAll();
+        return iCourseService.getAllByRating();
     }
     @GetMapping("/all/{id}")
     public Course getOneById(@PathVariable Long id) {

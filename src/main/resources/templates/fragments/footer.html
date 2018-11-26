@@ -1,17 +1,35 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
 <th:block th:fragment="footer">
+<<<<<<< HEAD
     <footer class="py-3 bg-dark">
         <div class="container">
             <p sec:authorize="isAuthenticated()" class="m-0 text-center text-white">Copyright © Online academy 2018</p>
                     <!--user: <span sec:authentication="name"></span>-->
                     <!--roles: <span sec:authentication="principal.authorities"></span>-->
+=======
+<<<<<<< Updated upstream
+    <footer>
+        <div class="container">
+            <p>
+                <span sec:authorize="isAuthenticated()" style="display: inline-block;">
+                    | Logged user: <span sec:authentication="name"></span> |
+                    Roles: <span sec:authentication="principal.authorities"></span> |
+                    <a th:href="@{/logout}">Log out</a>
+                </span>
+            </p>
+=======
+    <footer class="py-2 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright © Academy online 2018</p>
+>>>>>>> Stashed changes
+>>>>>>> development
         </div>
     </footer>
 
     <script type="text/javascript" src="/lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="/lib/jquery-3.3.1/jquery.min.js"></script>
     <script src="/js/index.js"></script>
 
