@@ -1,32 +1,25 @@
-h1 {
-    color: #78ab46;
-    margin-top: 100px;
+body {
+    background-image: url("/img/background.jpg");
+    padding-top: 54px;
 }
 
-header {
-    position: fixed;
-    height: 50px;
-    top: 0;
-    width: 100%;
-    background-color: #ccc;
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
 }
 
-<<<<<<< Updated upstream
-footer {
-=======
+.card {
+    height: 100%;
+}
+
 .py-2 {
->>>>>>> Stashed changes
     position: fixed;
-    height: 50px;
+    left: 0;
     bottom: 0;
     width: 100%;
-    background-color: #ccc
 }
 
-<<<<<<< Updated upstream
-footer p {
-    padding: 15px;
-=======
 #courses-list {
     margin-bottom: 40px;
 }
@@ -56,5 +49,4 @@ footer p {
 
 .form-control {
     margin-bottom: 25px;
->>>>>>> Stashed changes
 }
