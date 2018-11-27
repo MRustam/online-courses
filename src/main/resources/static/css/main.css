@@ -1,5 +1,6 @@
 body {
-    background-image: url("/img/background.jpg");
+    /*background-image: url("/img/background.jpg");*/
+    background-color: aliceblue;
     padding-top: 54px;
 }
 
@@ -20,8 +21,16 @@ body {
     margin-bottom: 60px;
 }
 
+.div-rating {
+    background: #f7f7f7;
+}
+
 #p-rating {
-    color: #1c7430;
+    color: #4e555b;
+    margin-bottom: 0px;
+    font-weight: 700;
+    text-align: right;
+    margin-right: 10px;
 }
 
 .user-info {
