@@ -33,6 +33,10 @@ public class Course {
     @Column(name = "rating")
     private double rating;
 
+    @Lob
+    @Column(name = "image")
+    private Byte[] image;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH,

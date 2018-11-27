@@ -1,5 +1,6 @@
 body {
-    background-image: url("/img/background.jpg");
+    /*background-image: url("/img/background.jpg");*/
+    background-color: aliceblue;
     padding-top: 54px;
 }
 
@@ -9,10 +10,6 @@ body {
     }
 }
 
-.card {
-    height: 100%;
-}
-
 .py-2 {
     position: fixed;
     left: 0;
@@ -20,12 +17,20 @@ body {
     width: 100%;
 }
 
-#courses-list {
-    margin-bottom: 40px;
+.content {
+    margin-bottom: 60px;
+}
+
+.div-rating {
+    background: #f7f7f7;
 }
 
 #p-rating {
-    color: #1c7430;
+    color: #4e555b;
+    margin-bottom: 0px;
+    font-weight: 700;
+    text-align: right;
+    margin-right: 10px;
 }
 
 .user-info {
@@ -48,5 +53,5 @@ body {
 }
 
 .form-control {
-    margin-bottom: 25px;
+     margin-bottom: 25px;
 }

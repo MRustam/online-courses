@@ -21,22 +21,25 @@ public class MvcController {
         return "/index";
     }
 
-    // My courses page.
+
+    // Student own page.
     @GetMapping("/student")
     public String toStudentOwnPage() {
-        return "/student/index";
+        return "/student/student";
     }
+
+
+    // My courses page.
+    @GetMapping("/current-course")
+    public String toCoursePage() {
+        return "/course/course";
+    }
+
 
     // All Instructors page.
     @GetMapping("/instructor")
     public String toInstructorsListPage() {
-        return "/instructor/index";
-    }
-
-    // Admin page 'add course, add instructor, add student'.
-    @GetMapping("/admin")
-    public String allAccessPage() {
-        return "/admin/index";
+        return "/instructor/instructor";
     }
 
     // Login page. If logged in then prevent to show login page.
