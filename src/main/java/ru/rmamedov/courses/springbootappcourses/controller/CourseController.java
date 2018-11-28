@@ -3,12 +3,14 @@ package ru.rmamedov.courses.springbootappcourses.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Review;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/courses")
 public class CourseController {
 
     private ICourseService iCourseService;
@@ -19,48 +21,56 @@ public class CourseController {
     }
 
     // CRUD operations
-    @GetMapping("/courses")
+
+    // Custom get all courses, sorted by rating.
+    @GetMapping("/all")
     public List<Course> getAll() {
-        return iCourseService.findAll();
+        return iCourseService.getAllByRating();
     }
-    @GetMapping("/courses/{id}")
+    @GetMapping("/all/{id}")
     public Course getOneById(@PathVariable Long id) {
         return iCourseService.findOneById(id);
     }
-    @PostMapping("/courses")
+    @PostMapping("/save")
     public Course saveOne(@RequestBody Course course) {
         return iCourseService.saveOne(course);
     }
-    @DeleteMapping("courses/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteOneById(@PathVariable Long id) {
         iCourseService.deleteOneById(id);
     }
-    @PutMapping("/courses/{id}")
+    @PutMapping("/update/{id}")
     public Course updateById(@PathVariable Long id, @RequestBody Course course) {
         return iCourseService.updateOneById(id, course);
     }
 
     //Get high rated courses.
-    @GetMapping("/courses/high")
+    @GetMapping("/top")
     public List<Course> getHighRated() {
         return iCourseService.getHighRatedCourses();
     }
 
     //Find one by title.
-    @GetMapping("/courses/findbytitle/{title}")
-    public Course findOneByTitle(@PathVariable String title) {
+    @GetMapping("/bytitle/{title}")
+    public List<Course> findOneByTitle(@PathVariable String title) {
         return iCourseService.findOneByTitle(title);
     }
 
     //Filter by category.
-    @GetMapping("/courses/category/{category}")
+    @GetMapping("/bycategory/{category}")
     public List<Course> findAllByCategory(@PathVariable String category) {
         return iCourseService.findAllByCategory(category);
     }
 
     //Get all students of this course
-    @GetMapping("/courses/{id}/students")
+    @GetMapping("/all/{id}/students")
     public List<Student> getStudentsOfThisCourse(@PathVariable Long id) {
         return iCourseService.getStudentsOfCurrentCourse(id);
+    }
+
+    //Get all reviews from current course.
+    @GetMapping("/all/{id}/reviews")
+    public List<Review> getReviewsOfCourse(@PathVariable Long id) {
+        return iCourseService.getReviewsOfThisCourse(id);
     }
 }

@@ -9,6 +9,7 @@ import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentServi
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/students")
 public class StudentController {
 
     private IStudentService iStudentService;
@@ -19,29 +20,29 @@ public class StudentController {
     }
 
     //CRUD
-    @GetMapping("/students")
+    @GetMapping("/all")
     public List<Student> getAll() {
         return iStudentService.findAll();
     }
-    @GetMapping("/students/{id}")
+    @GetMapping("/all/{id}")
     public Student getOneById(@PathVariable Long id) {
         return iStudentService.findOneById(id);
     }
-    @PostMapping("/students")
+    @PostMapping("/save")
     public Student saveOne(@RequestBody Student student) {
         return iStudentService.saveOne(student);
     }
-    @DeleteMapping("/students/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteOneById(@PathVariable Long id) {
         iStudentService.deleteOneById(id);
     }
-    @PutMapping("/students/{id}")
+    @PutMapping("/update/{id}")
     public Student updateById(@PathVariable Long id, @RequestBody Student student) {
         return iStudentService.updateOneById(id, student);
     }
 
     //All courses of this student.
-    @GetMapping("/students/{id}/courses")
+    @GetMapping("/all/{id}/courses")
     public List<Course> getAllCoursesOfStudent(@PathVariable Long id) {
         return iStudentService.getAllCoursesOfStudent(id);
     }

@@ -7,6 +7,4 @@ import ru.rmamedov.courses.springbootappcourses.model.Student;
 @Repository
 public interface StudentRep extends JpaRepository<Student, Long> {
 
-
-
 }

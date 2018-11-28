@@ -3,6 +3,7 @@ package ru.rmamedov.courses.springbootappcourses.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
+import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Instructor;
 import ru.rmamedov.courses.springbootappcourses.repository.InstructorRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
@@ -50,5 +51,11 @@ public class InstructorServiceImpl implements IInstructorService {
         deleteOneById(id);
         instructor.setId(id);
         return saveOne(instructor);
+    }
+
+
+    @Override
+    public List<Course> getCoursesOfThisInstructor(Long id) {
+        return findOneById(id).getCourses();
     }
 }

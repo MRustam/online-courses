@@ -1,9 +1,12 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "instructor_detail")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class InstructorDetail {
 
     @Id

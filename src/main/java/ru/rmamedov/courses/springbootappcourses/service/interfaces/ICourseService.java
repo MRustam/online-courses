@@ -1,6 +1,7 @@
 package ru.rmamedov.courses.springbootappcourses.service.interfaces;
 
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Review;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 
 import java.util.List;
@@ -23,11 +24,14 @@ public interface ICourseService extends BaseInterface<Course, Long> {
     @Override
     Course updateOneById(Long id, Course course);
 
+    // Sorted by rating
+    List<Course> getAllByRating();
+
     //Get high rated courses.
     List<Course> getHighRatedCourses();
 
     //Find by title
-    Course findOneByTitle(String title);
+    List<Course> findOneByTitle(String title);
 
     //Find all by category.
     List<Course> findAllByCategory(String category);
@@ -35,4 +39,5 @@ public interface ICourseService extends BaseInterface<Course, Long> {
     //Get all students of this course.
     List<Student> getStudentsOfCurrentCourse(Long id);
 
+    List<Review> getReviewsOfThisCourse(Long id);
 }
