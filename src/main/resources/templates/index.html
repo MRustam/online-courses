@@ -46,11 +46,18 @@
                         More
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" th:href="@{/student}" href="/student">students</a>
-                        <a class="dropdown-item" th:href="@{/instructor}" href="/student">instructors</a>
+                        <a class="dropdown-item" th:href="@{/students}" href="/students" id="students-button">students</a>
+                        <a class="dropdown-item" th:href="@{/instructors}" href="/instructors">instructors</a>
                         <a class="dropdown-item" href="#">contact</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" th:href="@{/logout}" href="/logout">logout</a>
+
+                        <div sec:authorize="isAuthenticated()">
+                            <a class="dropdown-item" th:href="@{/logout}" href="/logout">logout</a>
+                        </div>
+                        <div sec:authorize="isAnonymous()">
+                            <a class="dropdown-item" th:href="@{/login}" href="/login">login</a>
+                        </div>
+
                     </div>
                 </div>
             </div>

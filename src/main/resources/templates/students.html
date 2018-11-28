@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Shop Homepage - Start Bootstrap Template</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
@@ -32,31 +32,42 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+            <div class="navbar-nav ml-auto">
+
+                <div class="nav-item active">
                     <a class="nav-link" th:href="@{/home}" href="#">Home
                         <span class="sr-only">(current)</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/student}" href="/student">students</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/instructor}" href="/student">instructors</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/logout}" href="/logout">logout</a>
-                </li>
-            </ul>
+                </div>
+
+                <!-- Example single danger button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        More
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" th:href="@{/students}" href="/students">students</a>
+                        <a class="dropdown-item" th:href="@{/instructors}" href="/instructors">instructors</a>
+                        <a class="dropdown-item" href="#">contact</a>
+                        <div class="dropdown-divider"></div>
+
+                        <div sec:authorize="isAuthenticated()">
+                            <a class="dropdown-item" th:href="@{/logout}" href="/logout">logout</a>
+                        </div>
+                        <div sec:authorize="isAnonymous()">
+                            <a class="dropdown-item" th:href="@{/login}" href="/login">login</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container" id="students-content">
 
 </div>
 <!-- /.container -->
@@ -72,8 +83,9 @@
 <!-- Bootstrap core JavaScript -->
 <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="/js/index.js"></script>
+<script src="/js/multi-items.js"></script>
 
 </body>
 
 </html>
+

@@ -55,3 +55,11 @@ body {
 .form-control {
      margin-bottom: 25px;
 }
+
+.nav-link {
+    margin-right: 25px;
+}
+
+.card-title {
+    color: darkred;
+}
