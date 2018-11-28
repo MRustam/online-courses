@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -8,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login page</title>
+    <title>Login</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
@@ -22,30 +23,45 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
+            <span sec:authorize="isAuthenticated()" class="user-info nav-item">
+                user: <span sec:authentication="name"></span> | roles: <span
+                    sec:authentication="principal.authorities"></span>
+            </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
+            <div class="navbar-nav ml-auto">
+
+                <div class="nav-item active">
                     <a class="nav-link" th:href="@{/home}" href="#">Home
                         <span class="sr-only">(current)</span>
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/student}" href="/student">students</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/instructor}" href="/student">instructors</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/logout}" href="/logout">logout</a>
-                </li>
-            </ul>
+                </div>
+
+                <!-- Example single danger button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        More
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" th:href="@{/students}" href="/students" id="students-button">students</a>
+                        <a class="dropdown-item" th:href="@{/instructors}" href="/instructors">instructors</a>
+                        <a class="dropdown-item" href="#">contact</a>
+                        <div class="dropdown-divider"></div>
+
+                        <div sec:authorize="isAuthenticated()">
+                            <a class="dropdown-item" th:href="@{/logout}" href="/logout">logout</a>
+                        </div>
+                        <div sec:authorize="isAnonymous()">
+                            <a class="dropdown-item" th:href="@{/login}" href="/login">login</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
@@ -105,7 +121,7 @@
 <!-- Footer -->
 <footer class="py-2 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+        <p class="m-0 text-center text-white">Online Academy &copy; 2017</p>
     </div>
     <!-- /.container -->
 </footer>
@@ -113,7 +129,10 @@
 <!-- Bootstrap core JavaScript -->
 <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="/js/index.js"></script>
+<script src="/js/one-column-page.js"></script>
 
 </body>
 
 </html>
+

@@ -9,7 +9,6 @@ spring:
 
   jpa:
     hibernate:
-
       ddl-auto: create-drop
     properties:
       hibernate:
@@ -23,13 +22,13 @@ spring:
             non_contextual_creation: true
 
 
-  datasource:
-    platform: postgres
-    url: jdbc:postgresql://localhost:5432/courses_db
-    username: admin_course
-    password: 123qwe
-    driverClassName: org.postgresql.Driver
-    initialization-mode: always
+#  datasource:
+#    platform: postgres
+#    url: jdbc:postgresql://localhost:5432/courses_db
+#    username: admin_course
+#    password: 123qwe
+#    driverClassName: org.postgresql.Driver
+#    initialization-mode: always
 
 
   jackson:
@@ -49,10 +48,10 @@ spring:
     suffix: .html
 
 
-#  ###
-#  #   H2 Settings
-#  ###
-#  h2:
-#    console:
-#      enabled: true
-#      path: /h2
+  ###
+  #   H2 Settings
+  ###
+  h2:
+    console:
+      enabled: true
+      path: /h2

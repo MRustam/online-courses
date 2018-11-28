@@ -23,23 +23,16 @@ public class MvcController {
 
 
     // Student own page.
-    @GetMapping("/student")
+    @GetMapping("/students")
     public String toStudentOwnPage() {
-        return "/student/student";
-    }
-
-
-    // My courses page.
-    @GetMapping("/current-course")
-    public String toCoursePage() {
-        return "/course/course";
+        return "/students";
     }
 
 
     // All Instructors page.
-    @GetMapping("/instructor")
+    @GetMapping("/instructors")
     public String toInstructorsListPage() {
-        return "/instructor/instructor";
+        return "/instructors";
     }
 
     // Login page. If logged in then prevent to show login page.
@@ -49,15 +42,14 @@ public class MvcController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return "index";
+            return "/index";
         }
-
-        return "login";
+        return "/util-page/login";
     }
 
     // Custom forbidden page if access denied.
     @GetMapping("/access-denied")
     public String accessDenied() {
-        return "/error/access-denied";
+        return "/one-column-page";
     }
 }
