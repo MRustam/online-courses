@@ -8,8 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-
-    <name>springboot-rest-thymeleaf-app</name>
     <name>spring-boot-rest-app-courses</name>
     <description>Demo project for Spring Boot</description>
 
@@ -35,8 +33,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-
 
 
         <!--Thymeleaf-->
