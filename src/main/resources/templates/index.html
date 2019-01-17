@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Shop Homepage - Start Bootstrap Template</title>
+    <title>Courses Academy-online</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
@@ -23,8 +23,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-            <span sec:authorize="isAuthenticated()" class="user-info nav-item">
-                user: <span sec:authentication="name"></span> | roles: <span
+            <span sec:authorize="isAuthenticated()" class="userName-info nav-item small text-white font-italic">
+                User: <span sec:authentication="name"></span> | Roles: <span
                     sec:authentication="principal.authorities"></span>
             </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -71,23 +71,29 @@
     <div class="row">
 
         <div class="col-lg-3">
-            <h2 class="my-4">Category</h2>
+            <h2 class="my-4 text-center display-5" style="color: white">Category</h2>
             <div class="list-group">
-                <a href="#" class="list-group-item">Language</a>
-                <a href="#" class="list-group-item">Programming</a>
-                <a href="#" class="list-group-item">Painting</a>
-                <a href="#" class="list-group-item">Hobby</a>
+                <a th:href="@{/home}" href="/home" class="list-group-item">All</a>
+                <a href="?category=languages" class="list-group-item">Language</a>
+                <a href="?category=programming" class="list-group-item">Programming</a>
+                <a href="?category=painting" class="list-group-item">Painting</a>
+                <a href="?category=hobby" class="list-group-item">Hobby</a>
+
+                <div sec:authorize="hasAnyRole('ADMIN', 'INSTRUCTOR')">
+                    <a th:href="@{/new-course}" href="/new-course" class="list-group-item">Add new course</a>
+                </div>
+
             </div>
         </div>
         <!-- /.col-lg-3 -->
 
         <div class="col-lg-9">
 
-            <div class="row content" id="courses-list">
+            <div class="row content" id="course-list-items">
 
             </div>
 
-            <div class="content" id="current-course">
+            <div class="content" id="current-course-item">
 
             </div>
 

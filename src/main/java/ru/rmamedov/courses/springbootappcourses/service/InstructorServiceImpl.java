@@ -1,6 +1,8 @@
 package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
@@ -27,18 +29,12 @@ public class InstructorServiceImpl implements IInstructorService {
 
     @Override
     public Instructor findOneById(Long id) {
-        Instructor instructor = instructorRep.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Instructor with id: '" + id + "' - Not found!"));
-        return instructor;
+        return instructorRep.findById(id).orElseThrow(() -> new EntityNotFoundException("Instructor with id: " + id + "not found"));
     }
 
     @Override
     public Instructor saveOne(Instructor instructor) {
-        if (instructor.getFirstName() == null || instructor.getFirstName().equals("")) {
-            throw new EntityNotFoundException("Saving instructor is null!");
-        } else {
-            return instructorRep.save(instructor);
-        }
+        return instructorRep.save(instructor);
     }
 
     @Override
@@ -47,15 +43,33 @@ public class InstructorServiceImpl implements IInstructorService {
     }
 
     @Override
-    public Instructor updateOneById(Long id, Instructor instructor) {
-        deleteOneById(id);
-        instructor.setId(id);
-        return saveOne(instructor);
-    }
+    public Instructor updateOne(Instructor instructor) {
 
+        if (instructor == null) {
+            throw new EntityNotFoundException("Updating instructor not found");
+        }
+        return instructorRep.save(instructor);
+    }
 
     @Override
-    public List<Course> getCoursesOfThisInstructor(Long id) {
-        return findOneById(id).getCourses();
+    public List<Course> getExistingCourses(Long id) {
+
+        List<Course> courses = findOneById(id).getCourses();
+
+        if (courses.size() < 1) {
+            throw new EntityNotFoundException("This instructor has no any courses");
+        }
+        return courses;
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Instructor instructor = instructorRep.findByUsername(username);
+        if (instructor == null) {
+            throw new UsernameNotFoundException("User " + username + "not found");
+        }
+        return instructor;
+    }
+
 }

@@ -1,6 +1,6 @@
 body {
-    /*background-image: url("/img/background.jpg");*/
-    background-color: aliceblue;
+    background-image: url("/img/background.jpg");
+    /*background-color: aliceblue;*/
     padding-top: 54px;
 }
 
@@ -46,7 +46,6 @@ body {
 .login {
     background-color: aliceblue;
     border-radius: 7px;
-    height: 370px;
     margin: 0 auto;
     width:20%;
     margin-top: 140px;

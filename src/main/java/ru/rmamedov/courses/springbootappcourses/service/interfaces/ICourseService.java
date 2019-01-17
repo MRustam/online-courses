@@ -21,23 +21,19 @@ public interface ICourseService extends BaseInterface<Course, Long> {
     @Override
     void deleteOneById(Long id);
 
-    @Override
-    Course updateOneById(Long id, Course course);
+    Course updateOne(Course course);
 
     // Sorted by rating
     List<Course> getAllByRating();
-
-    //Get high rated courses.
-    List<Course> getHighRatedCourses();
 
     //Find by title
     List<Course> findOneByTitle(String title);
 
     //Find all by category.
-    List<Course> findAllByCategory(String category);
+    List<Course> findByCategory(String category);
 
     //Get all students of this course.
     List<Student> getStudentsOfCurrentCourse(Long id);
 
-    List<Review> getReviewsOfThisCourse(Long id);
+    List<Review> getReviewsOfCurrentCourse(Long id);
 }

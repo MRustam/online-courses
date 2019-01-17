@@ -1,8 +1,6 @@
 package ru.rmamedov.courses.springbootappcourses.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
 
@@ -11,16 +9,9 @@ import java.util.List;
 @Repository
 public interface CourseRep extends JpaRepository<Course, Long> {
 
-    // Get all courses descending by rating
-    @Query("SELECT c FROM Course c ORDER BY rating DESC")
-    List<Course> getAllByRating();
+    List<Course> findTop10ByOrderByRatingDesc();
 
-    @Query("SELECT c FROM Course c WHERE c.rating >= 8.0")
-    List<Course> highRated();
+    List<Course> findByTitleContainingIgnoreCase(String title);
 
-    @Query("SELECT c FROM Course c WHERE LOWER(c.title) LIKE LOWER(CONCAT('%',:title, '%'))")
-    List<Course> findOneByTitle(@Param("title") String title);
-
-    @Query("SELECT c FROM Course c WHERE c.category = :category")
-    List<Course> findAllByCategory(@Param("category") String category);
+    List<Course> findByCategoryOrderByRatingDesc(String category);
 }

@@ -1,13 +1,17 @@
 package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Instructor;
 import ru.rmamedov.courses.springbootappcourses.model.Review;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
+import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
 
 import java.util.List;
 
@@ -16,9 +20,12 @@ public class CourseServiceImpl implements ICourseService {
 
     private CourseRep courseRep;
 
+    private IInstructorService instructorService;
+
     @Autowired
-    public CourseServiceImpl(CourseRep courseRep) {
+    public CourseServiceImpl(CourseRep courseRep, IInstructorService instructorService) {
         this.courseRep = courseRep;
+        this.instructorService = instructorService;
     }
 
     @Override
@@ -38,6 +45,15 @@ public class CourseServiceImpl implements ICourseService {
         if (course.getTitle() == null) {
             throw new EntityNotFoundException("Saving course is null!");
         }
+
+//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        String firstName = userDetails.getPassword();
+//
+//        Instructor instructor = instructorService.findByFirstName(firstName);
+//
+//        course.setInstructor(instructor);
+
         return courseRep.save(course);
     }
 
@@ -47,30 +63,23 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public Course updateOneById(Long id, Course course) {
-        deleteOneById(id);
-        course.setId(id);
+    public Course updateOne(Course course) {
         return saveOne(course);
     }
 
     @Override
     public List<Course> getAllByRating() {
-        return courseRep.getAllByRating();
-    }
-
-    @Override
-    public List<Course> getHighRatedCourses() {
-        return courseRep.highRated();
+        return courseRep.findTop10ByOrderByRatingDesc();
     }
 
     @Override
     public List<Course> findOneByTitle(String title) {
-        return courseRep.findOneByTitle(title);
+        return courseRep.findByTitleContainingIgnoreCase(title);
     }
 
     @Override
-    public List<Course> findAllByCategory(String category) {
-        return courseRep.findAllByCategory(category);
+    public List<Course> findByCategory(String category) {
+        return courseRep.findByCategoryOrderByRatingDesc(category);
     }
 
     @Override
@@ -79,7 +88,7 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
-    public List<Review> getReviewsOfThisCourse(Long id) {
+    public List<Review> getReviewsOfCurrentCourse(Long id) {
         return findOneById(id).getReviews();
     }
 }

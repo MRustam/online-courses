@@ -23,8 +23,8 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-            <span sec:authorize="isAuthenticated()" class="user-info nav-item">
-                user: <span sec:authentication="name"></span> | roles: <span
+            <span sec:authorize="isAuthenticated()" class="userName-info nav-item">
+                userName: <span sec:authentication="name"></span> | roles: <span
                     sec:authentication="principal.authorities"></span>
             </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -40,34 +40,47 @@
                     </a>
                 </div>
 
-                <!-- Example single danger button -->
-                <div class="btn-group">
-                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        More
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" th:href="@{/students}" href="/students">students</a>
-                        <a class="dropdown-item" th:href="@{/instructors}" href="/instructors">instructors</a>
-                        <a class="dropdown-item" href="#">contact</a>
-                        <div class="dropdown-divider"></div>
-
-                        <div sec:authorize="isAuthenticated()">
-                            <a class="dropdown-item" th:href="@{/logout}" href="/logout">logout</a>
-                        </div>
-                        <div sec:authorize="isAnonymous()">
-                            <a class="dropdown-item" th:href="@{/login}" href="/login">login</a>
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </nav>
 
 <!-- Page Content -->
-<div class="container" id="students-content">
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 login">
+
+            <div class="row">
+                <div class="col-md-6 mt-3 mb-5 text-center" sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}" class="btn btn-outline-success btn-lg w-100" href="/logout" role="button">Logout</a>
+                </div>
+                <div class="col-md-6 mt-3 mb-5 text-center" sec:authorize="isAnonymous()">
+                    <a th:href="@{/login}" class="btn btn-outline-success btn-lg w-100" href="/login" role="button">Login</a>
+                </div>
+
+                <div class="col-md-6 mt-3 mb-5 text-center">
+                    <a th:href="@{/registration}" class="btn btn-outline-primary btn-lg w-100" href="/registration" role="button">Register</a>
+                </div>
+            </div>
+
+            <div id="auth-form">
+
+                <div th:if="${param.error}">
+                    <p class="alert alert-danger">
+                        Invalid username or password.
+                    </p>
+                </div>
+                <div th:if="${param.logout}">
+                    <p class="alert alert-info">
+                        You have been logged out.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 </div>
 <!-- /.container -->
@@ -83,7 +96,9 @@
 <!-- Bootstrap core JavaScript -->
 <script src="/webjars/jquery/3.3.1/jquery.min.js"></script>
 <script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 <script src="/js/multi-items.js"></script>
+<script src="/js/auth-page.js"></script>
 
 </body>
 

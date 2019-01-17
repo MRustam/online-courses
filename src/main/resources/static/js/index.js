@@ -108,4 +108,5 @@ $(document).ready(function () {
         alert(err);
     })
     // End of populating courses or current course with details.
+
 });

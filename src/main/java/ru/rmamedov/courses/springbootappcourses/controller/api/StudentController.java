@@ -1,4 +1,4 @@
-package ru.rmamedov.courses.springbootappcourses.controller;
+package ru.rmamedov.courses.springbootappcourses.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,13 +38,13 @@ public class StudentController {
     }
     @PutMapping("/update/{id}")
     public Student updateById(@PathVariable Long id, @RequestBody Student student) {
-        return iStudentService.updateOneById(id, student);
+        return iStudentService.updateOne(student);
     }
 
     //All courses of this student.
     @GetMapping("/all/{id}/courses")
     public List<Course> getAllCoursesOfStudent(@PathVariable Long id) {
-        return iStudentService.getAllCoursesOfStudent(id);
+        return iStudentService.getAllCoursesOfCurrentStudent(id);
     }
 
 }

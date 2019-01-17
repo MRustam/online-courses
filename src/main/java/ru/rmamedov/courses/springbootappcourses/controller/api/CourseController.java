@@ -1,4 +1,4 @@
-package ru.rmamedov.courses.springbootappcourses.controller;
+package ru.rmamedov.courses.springbootappcourses.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,13 +41,7 @@ public class CourseController {
     }
     @PutMapping("/update/{id}")
     public Course updateById(@PathVariable Long id, @RequestBody Course course) {
-        return iCourseService.updateOneById(id, course);
-    }
-
-    //Get high rated courses.
-    @GetMapping("/top")
-    public List<Course> getHighRated() {
-        return iCourseService.getHighRatedCourses();
+        return iCourseService.updateOne(course);
     }
 
     //Find one by title.
@@ -59,7 +53,7 @@ public class CourseController {
     //Filter by category.
     @GetMapping("/bycategory/{category}")
     public List<Course> findAllByCategory(@PathVariable String category) {
-        return iCourseService.findAllByCategory(category);
+        return iCourseService.findByCategory(category);
     }
 
     //Get all students of this course
@@ -71,6 +65,6 @@ public class CourseController {
     //Get all reviews from current course.
     @GetMapping("/all/{id}/reviews")
     public List<Review> getReviewsOfCourse(@PathVariable Long id) {
-        return iCourseService.getReviewsOfThisCourse(id);
+        return iCourseService.getReviewsOfCurrentCourse(id);
     }
 }

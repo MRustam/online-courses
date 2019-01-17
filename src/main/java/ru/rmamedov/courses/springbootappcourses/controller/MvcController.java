@@ -9,14 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MvcController {
 
-    // Redirect to general page.
-    @GetMapping("/")
-    public String root() {
-        return "index";
-    }
-
     // General welcome page with list courses.
-    @GetMapping("/home")
+    @GetMapping(value = {"/", "/home"})
     public String toHomePage() {
         return "/index";
     }
@@ -25,18 +19,19 @@ public class MvcController {
     // Student own page.
     @GetMapping("/students")
     public String toStudentOwnPage() {
-        return "/students";
+        return "/one-col-template";
     }
 
 
     // All Instructors page.
     @GetMapping("/instructors")
     public String toInstructorsListPage() {
-        return "/instructors";
+        return "/one-col-template";
     }
 
+
     // Login page. If logged in then prevent to show login page.
-    @GetMapping("/login")
+    @GetMapping(value = {"/login", "/registration"})
     public String toLoginPage() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,12 +39,19 @@ public class MvcController {
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "/index";
         }
-        return "/util-page/login";
+        return "/auth-page";
     }
 
     // Custom forbidden page if access denied.
     @GetMapping("/access-denied")
     public String accessDenied() {
-        return "/one-column-page";
+        return "/one-col-template";
+    }
+
+
+    // Custom forbidden page if access denied.
+    @GetMapping("/success")
+    public String successPage() {
+        return "/one-col-template";
     }
 }
