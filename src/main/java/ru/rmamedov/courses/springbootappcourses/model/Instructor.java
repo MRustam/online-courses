@@ -1,103 +1,105 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
+@Data
 @Entity
 @Table(name = "instructor")
-public class Instructor {
+public class Instructor implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "username", nullable = false)
+    private String username;
 
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    //@JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "detail_id")
-    private InstructorDetail detail;
+    @Column(name = "full_name", nullable = false)
+    private String fullName;
+
+    @Column(name = "age", nullable = false)
+    private int age;
+
+    @Column(name = "phone", nullable = false)
+    private String phone;
+
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "skype")
+    private String skype;
+
+    @Column(name = "work_experience")
+    private int workExperience;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "instructor", cascade = {
+    @OneToMany(fetch = FetchType.LAZY, cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.PERSIST,
             CascadeType.REFRESH
     })
+    @JoinColumn(name = "instructor_id")
     private List<Course> courses;
 
-    public Instructor() {
-    }
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "instructor_role", joinColumns = @JoinColumn(name = "instructor_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
-    public Instructor(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public InstructorDetail getDetail() {
-        return detail;
-    }
-
-    public void setDetail(InstructorDetail detail) {
-        this.detail = detail;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
-    }
-
-    public void addCourse(Course course) {
-        if (courses == null) {
-            courses = new ArrayList<>();
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> currentRoles = new ArrayList<>();
+        for (Role r : roles) {
+            currentRoles.add(new SimpleGrantedAuthority(r.getRole()));
         }
-        courses.add(course);
-        course.setInstructor(this);
+        return currentRoles;
     }
 
     @Override
-    public String toString() {
-        return "Instructor{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", detail=" + detail +
-                '}';
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

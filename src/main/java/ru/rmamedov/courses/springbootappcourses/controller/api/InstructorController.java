@@ -1,4 +1,4 @@
-package ru.rmamedov.courses.springbootappcourses.controller;
+package ru.rmamedov.courses.springbootappcourses.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,7 @@ import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorSe
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/instructors")
+@RequestMapping("/api/instructor")
 public class InstructorController {
 
     private IInstructorService iInstructorService;
@@ -24,7 +24,7 @@ public class InstructorController {
         return iInstructorService.findAll();
     }
 
-    @GetMapping("/all/{id}")
+    @GetMapping("/{id}")
     public Instructor getOneById(@PathVariable Long id) {
         return iInstructorService.findOneById(id);
     }
@@ -39,15 +39,15 @@ public class InstructorController {
         iInstructorService.deleteOneById(id);
     }
 
-    @PutMapping("/update/{id}")
-    public Instructor updateById(@PathVariable Long id, @RequestBody Instructor instructor) {
-        return iInstructorService.updateOneById(id, instructor);
+    @PutMapping("/update")
+    public Instructor updateById(@RequestBody Instructor instructor) {
+        return iInstructorService.updateOne(instructor);
     }
 
     //Get all students of this course
-    @GetMapping("/all/{id}/courses")
+    @GetMapping("{id}/courses")
     public List<Course> getAllCoursesOfThisInstructor(@PathVariable Long id) {
-        return iInstructorService.getCoursesOfThisInstructor(id);
+        return iInstructorService.getExistingCourses(id);
     }
 
 }

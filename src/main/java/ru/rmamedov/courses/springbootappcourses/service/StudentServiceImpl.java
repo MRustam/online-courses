@@ -1,71 +1,80 @@
 package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
-import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Role;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
+import ru.rmamedov.courses.springbootappcourses.repository.RoleRep;
 import ru.rmamedov.courses.springbootappcourses.repository.StudentRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
 public class StudentServiceImpl implements IStudentService {
 
     private StudentRep studentRep;
+    private RoleRep roleRep;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    private CourseServiceImpl courseService;
-
-    @Autowired
-    public StudentServiceImpl(StudentRep studentRep) {
+    public StudentServiceImpl(StudentRep studentRep, RoleRep roleRep, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.studentRep = studentRep;
+        this.roleRep = roleRep;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public List<Student> findAll() {
-        return studentRep.findAll();
+        return null;
     }
 
     @Override
-    public Student findOneById(Long id) {
-        Student student = studentRep.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Student with id: '" + id + "' - Not found!"));
-        return student;
+    public Student findOneById(Long aLong) {
+        return null;
     }
 
     @Override
     public Student saveOne(Student student) {
-        if (student.getFirstName() == null || student.getFirstName().equals("")) {
-            throw new EntityNotFoundException("Saving student is null!");
-        } else {
-            return studentRep.save(student);
+        student.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
+        List<Role> roles = new ArrayList<>();
+        for (Role r : student.getRoles()) {
+            if (r.getRole() != null) {
+                roles.add(roleRep.findByRole(r.getRole()));
+            }
         }
+        student.setRoles(new HashSet<>(roles));
+        return studentRep.save(student);
     }
 
     @Override
-    public void deleteOneById(Long id) {
-        studentRep.delete(findOneById(id));
+    public void deleteOneById(Long aLong) {
+
     }
 
     @Override
-    public Student updateOneById(Long id, Student student) {
-        deleteOneById(id);
-        student.setId(id);
-        return saveOne(student);
+    public Student updateOne(Student student) {
+        return null;
     }
 
     @Override
-    public List<Course> getAllCoursesOfStudent(Long id) {
-        return findOneById(id).getCourses();
+    public List<Course> getAllCoursesOfCurrentStudent(Long id) {
+        return null;
     }
 
-//    @Transactional
-//    @Override
-//    public void enrollOnCourse(Long studentId, Long courseId) {
-//        findOneById(studentId).addCourse(courseService.findOneById(courseId));
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Student student = studentRep.findByUsername(username);
+        if (student != null) {
+            return student;
+        }
+        throw new UsernameNotFoundException("User " + username + " not found.");
+    }
+
 }

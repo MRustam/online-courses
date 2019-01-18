@@ -1,6 +1,6 @@
 body {
     /*background-image: url("/img/background.jpg");*/
-    background-color: aliceblue;
+    background-color: #9E9E9E;
     padding-top: 54px;
 }
 
@@ -15,10 +15,6 @@ body {
     left: 0;
     bottom: 0;
     width: 100%;
-}
-
-.content {
-    margin-bottom: 60px;
 }
 
 .div-rating {
@@ -46,7 +42,6 @@ body {
 .login {
     background-color: aliceblue;
     border-radius: 7px;
-    height: 370px;
     margin: 0 auto;
     width:20%;
     margin-top: 140px;

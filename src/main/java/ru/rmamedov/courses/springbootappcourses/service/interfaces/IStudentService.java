@@ -1,11 +1,14 @@
 package ru.rmamedov.courses.springbootappcourses.service.interfaces;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 
 import java.util.List;
 
-public interface IStudentService extends BaseInterface<Student, Long> {
+public interface IStudentService extends UserDetailsService, BaseInterface<Student, Long> {
 
     @Override
     List<Student> findAll();
@@ -19,10 +22,10 @@ public interface IStudentService extends BaseInterface<Student, Long> {
     @Override
     void deleteOneById(Long aLong);
 
+    Student updateOne(Student student);
+
+    List<Course> getAllCoursesOfCurrentStudent(Long id);
+
     @Override
-    Student updateOneById(Long aLong, Student student);
-
-    List<Course> getAllCoursesOfStudent(Long id);
-
-//    void enrollOnCourse(Long studentId, Long courseId);
+    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 }

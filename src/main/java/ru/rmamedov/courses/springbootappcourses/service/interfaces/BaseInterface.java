@@ -12,6 +12,6 @@ public interface BaseInterface<T, ID> {
 
     void deleteOneById(ID id);
 
-    T updateOneById(ID id, T t);
+    T updateOne(T t);
 
 }
