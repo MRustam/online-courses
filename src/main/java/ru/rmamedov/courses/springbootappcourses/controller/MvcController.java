@@ -15,13 +15,11 @@ public class MvcController {
         return "/index";
     }
 
-
     // Student own page.
     @GetMapping("/students")
     public String toStudentOwnPage() {
         return "/one-col-template";
     }
-
 
     // All Instructors page.
     @GetMapping("/instructors")
@@ -29,17 +27,19 @@ public class MvcController {
         return "/one-col-template";
     }
 
-
     // Login page. If logged in then prevent to show login page.
-    @GetMapping(value = {"/login", "/registration"})
+    @GetMapping("/login")
     public String toLoginPage() {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             return "/index";
         }
-        return "/auth-page";
+        return "/login";
+    }
+
+    @GetMapping("/registration")
+    public String register() {
+        return "/registration";
     }
 
     // Custom forbidden page if access denied.
@@ -47,7 +47,6 @@ public class MvcController {
     public String accessDenied() {
         return "/one-col-template";
     }
-
 
     // Custom forbidden page if access denied.
     @GetMapping("/success")

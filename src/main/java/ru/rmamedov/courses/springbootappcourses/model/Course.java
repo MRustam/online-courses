@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "Course")
+@Table(name = "course")
 public class Course {
 
     @Id
@@ -40,26 +40,8 @@ public class Course {
     @Column(name = "image")
     private Byte[] image;
 
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-    })
-    @JoinColumn(name = "instructor_id")
-    private Instructor instructor;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "course_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "courses", fetch = FetchType.LAZY, cascade = {
-            CascadeType.DETACH,
-            CascadeType.MERGE,
-            CascadeType.PERSIST,
-            CascadeType.REFRESH
-    })
-    private List<Student> students;
 }

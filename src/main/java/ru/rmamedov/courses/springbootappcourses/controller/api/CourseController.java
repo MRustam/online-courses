@@ -10,7 +10,7 @@ import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseServic
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/courses")
+@RequestMapping("/api/course")
 public class CourseController {
 
     private ICourseService iCourseService;
@@ -27,7 +27,7 @@ public class CourseController {
     public List<Course> getAll() {
         return iCourseService.getAllByRating();
     }
-    @GetMapping("/all/{id}")
+    @GetMapping("/{id}")
     public Course getOneById(@PathVariable Long id) {
         return iCourseService.findOneById(id);
     }
@@ -39,7 +39,7 @@ public class CourseController {
     public void deleteOneById(@PathVariable Long id) {
         iCourseService.deleteOneById(id);
     }
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
     public Course updateById(@PathVariable Long id, @RequestBody Course course) {
         return iCourseService.updateOne(course);
     }
@@ -56,14 +56,8 @@ public class CourseController {
         return iCourseService.findByCategory(category);
     }
 
-    //Get all students of this course
-    @GetMapping("/all/{id}/students")
-    public List<Student> getStudentsOfThisCourse(@PathVariable Long id) {
-        return iCourseService.getStudentsOfCurrentCourse(id);
-    }
-
     //Get all reviews from current course.
-    @GetMapping("/all/{id}/reviews")
+    @GetMapping("/{id}/reviews")
     public List<Review> getReviewsOfCourse(@PathVariable Long id) {
         return iCourseService.getReviewsOfCurrentCourse(id);
     }

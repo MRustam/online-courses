@@ -3,24 +3,31 @@ package ru.rmamedov.courses.springbootappcourses.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Role;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
+import ru.rmamedov.courses.springbootappcourses.repository.RoleRep;
 import ru.rmamedov.courses.springbootappcourses.repository.StudentRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
 public class StudentServiceImpl implements IStudentService {
 
     private StudentRep studentRep;
-    private CourseServiceImpl courseService;
+    private RoleRep roleRep;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public StudentServiceImpl(StudentRep studentRep, CourseServiceImpl courseService) {
+    public StudentServiceImpl(StudentRep studentRep, RoleRep roleRep, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.studentRep = studentRep;
-        this.courseService = courseService;
+        this.roleRep = roleRep;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -34,8 +41,16 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
-    public Student saveOne(Student object) {
-        return null;
+    public Student saveOne(Student student) {
+        student.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
+        List<Role> roles = new ArrayList<>();
+        for (Role r : student.getRoles()) {
+            if (r.getRole() != null) {
+                roles.add(roleRep.findByRole(r.getRole()));
+            }
+        }
+        student.setRoles(new HashSet<>(roles));
+        return studentRep.save(student);
     }
 
     @Override

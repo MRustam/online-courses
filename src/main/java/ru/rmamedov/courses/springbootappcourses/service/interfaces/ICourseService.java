@@ -32,8 +32,5 @@ public interface ICourseService extends BaseInterface<Course, Long> {
     //Find all by category.
     List<Course> findByCategory(String category);
 
-    //Get all students of this course.
-    List<Student> getStudentsOfCurrentCourse(Long id);
-
     List<Review> getReviewsOfCurrentCourse(Long id);
 }

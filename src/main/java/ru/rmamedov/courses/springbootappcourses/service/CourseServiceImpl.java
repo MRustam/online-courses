@@ -1,14 +1,10 @@
 package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
-import ru.rmamedov.courses.springbootappcourses.model.Instructor;
 import ru.rmamedov.courses.springbootappcourses.model.Review;
-import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
@@ -20,12 +16,9 @@ public class CourseServiceImpl implements ICourseService {
 
     private CourseRep courseRep;
 
-    private IInstructorService instructorService;
-
     @Autowired
-    public CourseServiceImpl(CourseRep courseRep, IInstructorService instructorService) {
+    public CourseServiceImpl(CourseRep courseRep) {
         this.courseRep = courseRep;
-        this.instructorService = instructorService;
     }
 
     @Override
@@ -80,11 +73,6 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public List<Course> findByCategory(String category) {
         return courseRep.findByCategoryOrderByRatingDesc(category);
-    }
-
-    @Override
-    public List<Student> getStudentsOfCurrentCourse(Long id) {
-        return findOneById(id).getStudents();
     }
 
     @Override

@@ -6,9 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Entity
@@ -58,9 +56,18 @@ public class Student implements UserDetails {
     )
     private List<Course> courses;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "student_role", joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_STUDENT"));
+        List<SimpleGrantedAuthority> currentRoles = new ArrayList<>();
+        for (Role r : roles) {
+            currentRoles.add(new SimpleGrantedAuthority(r.getRole()));
+        }
+        return currentRoles;
     }
 
     @Override

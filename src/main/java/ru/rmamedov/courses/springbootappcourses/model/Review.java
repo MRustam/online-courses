@@ -14,9 +14,13 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "text")
+    @Column(name = "text", length = 3000)
     private String text;
 
-    @Column(name = "creation_time")
-    private LocalDate creation_time;
+    @Column(name = "created")
+    private LocalDate created;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 }
