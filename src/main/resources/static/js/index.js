@@ -1,14 +1,21 @@
 $(document).ready(function () {
 
-
-    var url = new URL(window.location.href);
-    var id = url.searchParams.get("id");
+    var id = new URL(window.location.href).searchParams.get("id");
 
     // Populate main page with all courses.
     if (id == null) {
 
+        var url;
+        var category = new URL(window.location.href).searchParams.get("category");
+
+        if (category != null) {
+            url = '/api/course/bycategory/' + category;
+        } else {
+            url = '/api/course/all/';
+        }
+
         //Courses or current course with details.
-        $.get('/api/course/all', function (data) {
+        $.get(url, function (data) {
 
             //Populate cards(each course) on all courses page.
             $.each(data, function (index, el) {
@@ -73,7 +80,5 @@ $(document).ready(function () {
         }).fail(function (err) {
             alert(err);
         })
-
     }
-
 });
