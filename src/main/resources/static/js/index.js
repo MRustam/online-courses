@@ -11,7 +11,7 @@ $(document).ready(function () {
         if (category != null) {
             url = '/api/course/bycategory/' + category;
         } else {
-            url = '/api/course/all/';
+            url = '/api/course/all';
         }
 
         //Courses or current course with details.

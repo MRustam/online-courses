@@ -2,14 +2,13 @@ package ru.rmamedov.courses.springbootappcourses.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/student")
 public class StudentController {
 
     private IStudentService iStudentService;
@@ -24,7 +23,7 @@ public class StudentController {
     public List<Student> getAll() {
         return iStudentService.findAll();
     }
-    @GetMapping("/all/{id}")
+    @GetMapping("/{id}")
     public Student getOneById(@PathVariable Long id) {
         return iStudentService.findOneById(id);
     }
@@ -36,15 +35,9 @@ public class StudentController {
     public void deleteOneById(@PathVariable Long id) {
         iStudentService.deleteOneById(id);
     }
-    @PutMapping("/update/{id}")
-    public Student updateById(@PathVariable Long id, @RequestBody Student student) {
+    @PutMapping("/update")
+    public Student updateById(@RequestBody Student student) {
         return iStudentService.updateOne(student);
-    }
-
-    //All courses of this student.
-    @GetMapping("/all/{id}/courses")
-    public List<Course> getAllCoursesOfStudent(@PathVariable Long id) {
-        return iStudentService.getAllCoursesOfCurrentStudent(id);
     }
 
 }

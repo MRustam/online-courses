@@ -46,8 +46,8 @@ public class InstructorServiceImpl implements IInstructorService {
         instructor.setPassword(bCryptPasswordEncoder.encode(instructor.getPassword()));
         List<Role> roles = new ArrayList<>();
         for (Role r : instructor.getRoles()) {
-            if (r.getRole() != null) {
-                roles.add(roleRep.findByRole(r.getRole()));
+            if (r.getName() != null) {
+                roles.add(roleRep.findByName(r.getName()));
             }
         }
         instructor.setRoles(new HashSet<>(roles));

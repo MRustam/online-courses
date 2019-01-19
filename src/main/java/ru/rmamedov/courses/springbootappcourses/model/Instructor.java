@@ -68,7 +68,7 @@ public class Instructor implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> currentRoles = new ArrayList<>();
         for (Role r : roles) {
-            currentRoles.add(new SimpleGrantedAuthority(r.getRole()));
+            currentRoles.add(new SimpleGrantedAuthority(r.getName()));
         }
         return currentRoles;
     }

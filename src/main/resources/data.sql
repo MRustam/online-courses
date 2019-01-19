@@ -8,16 +8,14 @@ VALUES ('albertEnstein', '$2a$10$Lp5Nvy4mHAbyC6MGxJrhVOQfnAHAzQiNbK7ZpzX11jGWqfp
 INSERT INTO instructor (username, password, full_name, age, phone, email, skype, work_experience)
 VALUES ('jetLi', '$2a$10$Lp5Nvy4mHAbyC6MGxJrhVOQfnAHAzQiNbK7ZpzX11jGWqfp/59jke', 'Jet Li', 35, '+99100100', 'li@gmail.com', 'li@gmail.com', 11);
 
-INSERT INTO role (role) VALUES ('ROLE_ADMIN');
-INSERT INTO role (role) VALUES ('ROLE_INSTRUCTOR');
-INSERT INTO role (role) VALUES ('ROLE_STUDENT');
+INSERT INTO role (name) VALUES ('ROLE_ADMIN');
+INSERT INTO role (name) VALUES ('ROLE_INSTRUCTOR');
+INSERT INTO role (name) VALUES ('ROLE_STUDENT');
 
 INSERT INTO instructor_role (instructor_id, role_id) VALUES (2, 2);
 INSERT INTO instructor_role (instructor_id, role_id) VALUES (3, 2);
 INSERT INTO instructor_role (instructor_id, role_id) VALUES (1, 2);
 INSERT INTO instructor_role (instructor_id, role_id) VALUES (4, 2);
-
-
 
 
 
@@ -34,22 +32,6 @@ INSERT INTO student_role (student_id, role_id) VALUES (1, 3);
 INSERT INTO student_role (student_id, role_id) VALUES (2, 3);
 INSERT INTO student_role (student_id, role_id) VALUES (3, 3);
 INSERT INTO student_role (student_id, role_id) VALUES (4, 3);
-
--- INSERT INTO course_student (student_id, course_id)
--- VALUES (1, 1);
--- INSERT INTO course_student (student_id, course_id)
--- VALUES (2, 1);
--- INSERT INTO course_student (student_id, course_id)
--- VALUES (2, 4);
--- INSERT INTO course_student (student_id, course_id)
--- VALUES (3, 1);
--- INSERT INTO course_student (student_id, course_id)
--- VALUES (4, 2);
--- INSERT INTO course_student (student_id, course_id)
--- VALUES (3, 2);
-
-
-
 
 
 
@@ -92,3 +74,18 @@ VALUES ('В том случае, если среди читателей расс
  'необходимо делать письма адаптивными, чтобы все подписчики могли комфортно с ними взаимодействовать. Однако обеспечение ' ||
   'адаптивности — не такое уж и простое дело, поэтому, когда нужно сделать так, чтобы письма гарантированно хорошо выглядели ' ||
    'на максимально возможном количестве устройств и почтовых программ, стоит обратить свой взор на plain-text.', '2014-03-29', 1);
+
+
+
+-- INSERT INTO course_student (student_id, course_id)
+-- VALUES (1, 1);
+-- INSERT INTO course_student (student_id, course_id)
+-- VALUES (2, 1);
+-- INSERT INTO course_student (student_id, course_id)
+-- VALUES (2, 4);
+-- INSERT INTO course_student (student_id, course_id)
+-- VALUES (3, 1);
+-- INSERT INTO course_student (student_id, course_id)
+-- VALUES (4, 2);
+-- INSERT INTO course_student (student_id, course_id)
+-- VALUES (3, 2);
