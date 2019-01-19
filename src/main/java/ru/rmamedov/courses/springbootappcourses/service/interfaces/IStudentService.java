@@ -22,9 +22,8 @@ public interface IStudentService extends UserDetailsService, BaseInterface<Stude
     @Override
     void deleteOneById(Long aLong);
 
+    @Override
     Student updateOne(Student student);
-
-    List<Course> getAllCoursesOfCurrentStudent(Long id);
 
     @Override
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;

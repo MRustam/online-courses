@@ -5,6 +5,6 @@ import ru.rmamedov.courses.springbootappcourses.model.Role;
 
 public interface RoleRep extends JpaRepository<Role, Long> {
 
-    Role findByRole(String role);
+    Role findByName(String role);
 
 }

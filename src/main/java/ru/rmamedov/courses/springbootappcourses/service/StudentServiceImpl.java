@@ -32,7 +32,7 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public List<Student> findAll() {
-        return null;
+        return studentRep.findAll();
     }
 
     @Override
@@ -45,8 +45,8 @@ public class StudentServiceImpl implements IStudentService {
         student.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
         List<Role> roles = new ArrayList<>();
         for (Role r : student.getRoles()) {
-            if (r.getRole() != null) {
-                roles.add(roleRep.findByRole(r.getRole()));
+            if (r.getName() != null) {
+                roles.add(roleRep.findByName(r.getName()));
             }
         }
         student.setRoles(new HashSet<>(roles));
@@ -60,11 +60,6 @@ public class StudentServiceImpl implements IStudentService {
 
     @Override
     public Student updateOne(Student student) {
-        return null;
-    }
-
-    @Override
-    public List<Course> getAllCoursesOfCurrentStudent(Long id) {
         return null;
     }
 

@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         case 'students':
             // All students.
-            $.get('/api/students/all', function (data) {
+            $.get('/api/student/all', function (data) {
 
                 $('#multi-content').append(
                     '<h1 class="my-4 text-center display-5" style="color: white">All Students</h1>' +
@@ -15,8 +15,8 @@ $(document).ready(function () {
                     '       <thead>\n' +
                     '           <tr>\n' +
                     '               <th class="">№</th>\n' +
-                    '               <th class="">First password</th>\n' +
-                    '               <th class="">Last password</th>\n' +
+                    '               <th class="">Full Name</th>\n' +
+                    '               <th class="">Phone</th>\n' +
                     '               <th class="">Email</th>\n' +
                     '               <th class="">Skype</th>\n' +
                     '               <th class="">Age</th>\n' +
@@ -51,18 +51,17 @@ $(document).ready(function () {
                     '        </div>\n' +
                     '    </div>\n' +
                     '</div>' +
-                    '</div>' +
-                    '<script src="/js/all-role-table.js"></script>');
+                    '</div>');
 
                 $.each(data, function (index, el) {
 
                     $('#tbody-users').append(   '<tr>' +
                         '                           <td style="text-align:center;" class="">' + el.id + '</td>' +
-                        '                           <td class="">' + el.firstName + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.lastName + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.detail.email + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.detail.skype + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.detail.age + '</td>' +
+                        '                           <td class="">' + el.fullName + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.phone + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.email + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.skype + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.age + '</td>' +
                         '                           <td style="text-align:center;">' +
                         '                           <div class="btn-group-sm">' +
                         '                               <button class="btn btn-success" data-toggle="modal" data-target="#myModal" contenteditable="false">Add</button>' +
@@ -85,20 +84,21 @@ $(document).ready(function () {
 
                 $('#multi-content').append(
                     '<h1 class="my-4 text-center display-5" style="color: white">All Instructors' +
-                    '</h1>');
+                    '</h1>' +
+                    '<div class="row">' +
+
+                    '</div>');
 
                 $.each(data, function (index, el) {
 
-                    $('#multi-content').append(
-                        '    <div class="row">\n' +
+                    $('.row').append(
                         '        <div class="col-lg-4 col-sm-6 text-center mb-4">\n' +
                         '            <img class="rounded-circle img-fluid d-block mx-auto" src="/img/lego-developer.jpeg" alt="">\n' +
-                        '            <h3 style="color: white">' + el.firstName + ' ' + el.lastName + '<br/>' +
-                        '                <small style="color: white"> work experience: ' + el.detail.workExperience + ' years</small>\n' +
-                        '            </h3>\n' +
-                        '            <p style="color: white">email: ' + el.detail.email + '<br/>skype: ' + el.detail.skype + '</p>' +
-                        '        </div>\n' +
-                        '    </div>');
+                        '            <h3>' + el.fullName + '</h3>' +
+                        '            <p> work experience: ' + el.workExperience + ' years</p>\n' +
+                        '            <p>' + el.phone + '</p>' +
+                        '            <p style="color: white">email: ' + el.email + '<br/>skype: ' + el.skype + '</p>' +
+                        '        </div>');
 
                 })
 
@@ -223,7 +223,7 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: "/api/courses/save",
+            url: "/api/course/save",
             contentType: "application/json",
             data: JSON.stringify(dataInput),
             success: function () {
