@@ -14,36 +14,37 @@ $(document).ready(function () {
             url = '/api/course/all';
         }
 
+        console.log(category);
         //Courses or current course with details.
         $.get(url, function (data) {
-
             //Populate cards(each course) on all courses page.
             $.each(data, function (index, el) {
                 var div = $('<div class="col-lg-3 col-md-6 mb-4">' +
-                    '<div class="card h-100">' +
-                    '<div class="div-rating"><p id="p-rating">' + el.rating + '</p></div>' +
-                    '<img class="card-img-top" src="/img/abstract.jpg" />' +
-                    '<div class="card-body">' +
-                    '<h5 class="card-title">' + el.title + '</h5>' +
-                    '<p class="card-text">' + el.description + '</p>' +
-                    '</div>' +
-                    '<div class="card-footer text-center">' +
-                    '<a href="?id=' + el.id + '" class="btn btn-info btn-sm">More</a>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>');
+                    '           <div class="card h-100">' +
+                    '               <div class="div-rating">' +
+                    '                   <p id="p-rating">' + el.rating + '</p>' +
+                    '               </div>' +
+                    '               <img class="card-img-top" src="/img/abstract.jpg" />' +
+                    '               <div class="card-body">' +
+                    '                   <h5 class="card-title">' + el.title + '</h5>' +
+                    '                   <p class="card-text">' + el.description + '</p>' +
+                    '               </div>' +
+                    '               <div class="card-footer text-center">' +
+                    '                   <a href="?id=' + el.id + '" class="btn btn-info btn-sm">More</a>' +
+                    '               </div>' +
+                    '           </div>' +
+                    '       </div>');
 
                 $('#courses-list').append(div);
-            })
+            });
         }).fail(function (err) {
-            alert(err);
+            console.log(err);
         })
 
     } else {
 
         // Populate main page current course. Works if id were passed by parameter (/api/courses/all#?id).
         $.get('/api/course/' + id, function (data) {
-
             // Populate course data.
             $('#current-course').append('<div class="card">' +
                 '<img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">' +

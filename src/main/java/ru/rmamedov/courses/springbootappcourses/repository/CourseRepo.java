@@ -8,7 +8,7 @@ import ru.rmamedov.courses.springbootappcourses.model.Review;
 import java.util.List;
 
 @Repository
-public interface CourseRep extends JpaRepository<Course, Long> {
+public interface CourseRepo extends JpaRepository<Course, Long> {
 
     List<Course> findTop10ByOrderByRatingDesc();
 

@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
+import ru.rmamedov.courses.springbootappcourses.service.interfaces.IUserService;
 
 
 @Configuration
@@ -18,11 +18,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
     private LoggingAccessDeniedHandler accessDeniedHandler;
-    private IInstructorService instructorService;
+    private IUserService instructorService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public SecurityConfiguration(LoggingAccessDeniedHandler accessDeniedHandler, IInstructorService instructorService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public SecurityConfiguration(LoggingAccessDeniedHandler accessDeniedHandler, IUserService instructorService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.accessDeniedHandler = accessDeniedHandler;
         this.instructorService = instructorService;

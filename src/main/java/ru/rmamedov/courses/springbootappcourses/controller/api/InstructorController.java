@@ -1,8 +1,10 @@
 package ru.rmamedov.courses.springbootappcourses.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Instructor;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
 
@@ -12,42 +14,68 @@ import java.util.List;
 @RequestMapping("/api/instructor")
 public class InstructorController {
 
-    private IInstructorService iInstructorService;
+    private IInstructorService instructorService;
 
     @Autowired
-    public InstructorController(IInstructorService iInstructorService) {
-        this.iInstructorService = iInstructorService;
+    public InstructorController(IInstructorService instructorService) {
+        this.instructorService = instructorService;
     }
 
     @GetMapping("/all")
-    public List<Instructor> getAll() {
-        return iInstructorService.findAll();
+    public ResponseEntity<List<Instructor>> getAll() {
+        if (instructorService.findAll().size() > 0) {
+            return new ResponseEntity<>(instructorService.findAll(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    public Instructor getOneById(@PathVariable Long id) {
-        return iInstructorService.findOneById(id);
+    public ResponseEntity<Instructor> findById(@PathVariable Long id) {
+        Instructor instructor = instructorService.findById(id);
+        if (instructor == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(instructor, HttpStatus.OK);
+    }
+
+    @GetMapping("/byusername/{username}")
+    public ResponseEntity<Instructor> findByUsername(@PathVariable String username) {
+        Instructor instructor = instructorService.findByUsername(username);
+        if (instructor == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(instructor, HttpStatus.OK);
     }
 
     @PostMapping("/save")
-    public Instructor saveOne(@RequestBody Instructor instructor) {
-        return iInstructorService.saveOne(instructor);
-    }
-
-    @DeleteMapping("/delete/{id}")
-    public void deleteOneById(@PathVariable Long id) {
-        iInstructorService.deleteOneById(id);
+    public ResponseEntity<Instructor> save(@RequestBody Instructor instructor) {
+        if (instructor == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(instructorService.save(instructor), HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public Instructor updateById(@RequestBody Instructor instructor) {
-        return iInstructorService.updateOne(instructor);
+    public ResponseEntity<Instructor> update(@RequestBody Instructor instructor) {
+        if (instructor == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(instructorService.update(instructor), HttpStatus.OK);
     }
 
-    //Get all students of this course
-    @GetMapping("{id}/courses")
-    public List<Course> getAllCoursesOfThisInstructor(@PathVariable Long id) {
-        return iInstructorService.getExistingCourses(id);
-    }
+//    @PatchMapping("/update/{id}")
+//    public ResponseEntity<Instructor> update(@PathVariable Long id, @RequestBody Instructor instructor) {
+//        if (id <= 0 & instructor == null) {
+//            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+//        }
+//        return new ResponseEntity<>(instructorService.update(id, instructor), HttpStatus.OK);
+//    }
 
+    @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        try {
+            instructorService.deleteOneById(id);
+        } catch (EmptyResultDataAccessException e) {}
+    }
 }

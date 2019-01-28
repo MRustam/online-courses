@@ -8,6 +8,7 @@ import ru.rmamedov.courses.springbootappcourses.repository.ReviewRepo;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IReviewService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewServiceImpl implements IReviewService {
@@ -25,27 +26,32 @@ public class ReviewServiceImpl implements IReviewService {
     }
 
     @Override
-    public Review findOneById(Long aLong) {
+    public Review findById(Long id) {
         return null;
     }
 
     @Override
-    public Review saveOne(Review object) {
+    public Review save(Review review) {
         return null;
     }
 
     @Override
-    public void deleteOneById(Long aLong) {
+    public void deleteOneById(Long id) {
 
     }
 
     @Override
-    public Review updateOne(Review review) {
+    public Review update(Review review) {
         return null;
     }
 
+//    @Override
+//    public Review update(Long id, Review review) {
+//        return null;
+//    }
+
     @Override
-    public List<Review> getAllByCourseId(Long id) throws EntityNotFoundException {
+    public List<Review> findAllByCourseId(Long id) throws EntityNotFoundException {
         return reviewRepo.findByCourseIdOrderByCreatedDesc(id);
     }
 }
