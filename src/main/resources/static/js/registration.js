@@ -20,17 +20,17 @@ $(document).ready(function () {
 
         $.ajax({
             method: "POST",
-            url: "/api/instructor/save",
+            url: "/api/user/save",
             contentType: "application/json",
             data: JSON.stringify(user),
             dataType: 'json',
             cache: false,
             success: function () {
-                window.location.replace("/login");
+                // window.location.replace("/login");
             },
             error: function (err) {
-                alert("Failed to register" + err);
-                window.location.replace("/registration");
+                // alert("Failed to register" + err);
+                // window.location.replace("/registration");
             }
         });
 

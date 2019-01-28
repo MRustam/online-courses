@@ -2,9 +2,9 @@ package ru.rmamedov.courses.springbootappcourses.service.interfaces;
 
 import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Review;
-import ru.rmamedov.courses.springbootappcourses.model.Student;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICourseService extends BaseInterface<Course, Long> {
 
@@ -13,15 +13,15 @@ public interface ICourseService extends BaseInterface<Course, Long> {
     List<Course> findAll();
 
     @Override
-    Course findOneById(Long id);
+    Course findById(Long id);
 
     @Override
-    Course saveOne(Course object);
+    Course save(Course object);
 
     @Override
     void deleteOneById(Long id);
 
-    Course updateOne(Course course);
+    Course update(Course course);
 
     // Sorted by rating
     List<Course> getAllByRating();

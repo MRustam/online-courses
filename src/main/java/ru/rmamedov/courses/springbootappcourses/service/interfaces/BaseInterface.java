@@ -6,12 +6,14 @@ public interface BaseInterface<T, ID> {
 
     List<T> findAll();
 
-    T findOneById(ID id);
+    T findById(ID id);
 
-    T saveOne(T object);
+    T save(T object);
 
     void deleteOneById(ID id);
 
-    T updateOne(T t);
+    T update(T t);
+
+//    T update(Long id, T patch);
 
 }

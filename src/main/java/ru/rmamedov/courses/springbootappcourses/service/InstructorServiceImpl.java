@@ -1,92 +1,100 @@
 package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
-import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Instructor;
 import ru.rmamedov.courses.springbootappcourses.model.Role;
-import ru.rmamedov.courses.springbootappcourses.repository.InstructorRep;
+import ru.rmamedov.courses.springbootappcourses.model.User;
+import ru.rmamedov.courses.springbootappcourses.repository.InstructorRepo;
 import ru.rmamedov.courses.springbootappcourses.repository.RoleRep;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InstructorServiceImpl implements IInstructorService {
 
-    private InstructorRep instructorRep;
+
+    private InstructorRepo instructorRepo;
+    private UserServiceImpl userService;
     private RoleRep roleRep;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public InstructorServiceImpl(InstructorRep instructorRep, RoleRep roleRep, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.instructorRep = instructorRep;
+    public InstructorServiceImpl(InstructorRepo instructorRepo, UserServiceImpl userService, RoleRep roleRep) {
+        this.instructorRepo = instructorRepo;
+        this.userService = userService;
         this.roleRep = roleRep;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public List<Instructor> findAll() {
-        return instructorRep.findAll();
+        return instructorRepo.findAll();
     }
 
     @Override
-    public Instructor findOneById(Long id) {
-        return instructorRep.findById(id).orElseThrow(() -> new EntityNotFoundException("Instructor with id: " + id + "not found"));
+    public Instructor findById(Long id) {
+        Optional<Instructor> optInstructor = instructorRepo.findById(id);
+        if (optInstructor.isPresent()) {
+            return optInstructor.get();
+        }
+        throw new EntityNotFoundException("Instructor with id: " + id + " not found");
     }
 
     @Override
-    public Instructor saveOne(Instructor instructor) {
-        instructor.setPassword(bCryptPasswordEncoder.encode(instructor.getPassword()));
-        List<Role> roles = new ArrayList<>();
-        for (Role r : instructor.getRoles()) {
-            if (r.getName() != null) {
-                roles.add(roleRep.findByName(r.getName()));
+    public Instructor findByUsername(String username) {
+        User user = userService.findByUsername(username);
+        if (user != null) {
+            Instructor instructor = instructorRepo.findByUser(user);
+            if (instructor != null) {
+                return instructor;
             }
         }
-        instructor.setRoles(new HashSet<>(roles));
-        return instructorRep.save(instructor);
+        throw new EntityNotFoundException("Instructor with username: '" + "', not found");
     }
+
+    @Override
+    public Instructor save(Instructor instructor) {
+        if (instructor.getUser().getRole() != null) {
+            String roleName = instructor.getUser().getRole().getName();
+            Role role = roleRep.findByName(roleName);
+            if (role != null && role.getName().equals("ROLE_INSTRUCTOR")) {
+                instructor.getUser().setRole(role);
+                return instructorRepo.save(instructor);
+            } else {
+                throw new EntityNotFoundException("Role mast be an 'ROLE_INSTRUCTOR', but found: " + roleName);
+            }
+        } else {
+            throw new EntityNotFoundException("Saving Instructor mast contains a Role");
+        }
+    }
+
+    @Override
+    public Instructor update(Instructor instructor) {
+        if (instructor.getUser().getRole() == null) {
+            throw new EntityNotFoundException("Updating Instructor mast contains a Role!");
+        }
+        return save(instructor);
+    }
+
+//    @Override
+//    public Instructor update(Long id, Instructor patch) {
+//
+//        Instructor instructor = findById(id);
+//
+//        if (patch.getCourses() != null) instructor.setCourses(patch.getCourses());
+//        if (patch.getWorkExperience() != 0) instructor.setWorkExperience(patch.getWorkExperience());
+//
+//        return save(instructor);
+//    }
 
     @Override
     public void deleteOneById(Long id) {
-        instructorRep.delete(findOneById(id));
-    }
-
-    @Override
-    public Instructor updateOne(Instructor instructor) {
-
-        if (instructor == null) {
-            throw new EntityNotFoundException("Updating instructor not found");
-        }
-        return instructorRep.save(instructor);
-    }
-
-    @Override
-    public List<Course> getExistingCourses(Long id) {
-
-        List<Course> courses = findOneById(id).getCourses();
-
-        if (courses.size() < 1) {
-            throw new EntityNotFoundException("This instructor has no any courses");
-        }
-        return courses;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Instructor instructor = instructorRep.findByUsername(username);
-        if (instructor == null) {
-            throw new UsernameNotFoundException("User " + username + "not found");
-        }
-        return instructor;
+        Instructor instructor = findById(id);
+        User user = userService.findByUsername(instructor.getUser().getUsername());
+        user.setRole(roleRep.findByName("ROLE_USER"));
+        instructorRepo.delete(instructor);
     }
 
 }

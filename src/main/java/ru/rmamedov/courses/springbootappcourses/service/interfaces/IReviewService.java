@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface IReviewService extends BaseInterface<Review, Long> {
 
-    List<Review> getAllByCourseId(Long id) throws EntityNotFoundException;
+    List<Review> findAllByCourseId(Long id) throws EntityNotFoundException;
 
 }

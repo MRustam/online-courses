@@ -36,6 +36,7 @@ public class Course {
     @Column(name = "rating")
     private double rating;
 
+    @JsonIgnore
     @Lob
     @Column(name = "image")
     private Byte[] image;
@@ -43,5 +44,14 @@ public class Course {
     @JsonIgnore
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews;
+
+    @JsonIgnore
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    private Instructor instructor;
 
 }
