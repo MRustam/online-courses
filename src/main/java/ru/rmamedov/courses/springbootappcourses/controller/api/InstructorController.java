@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.courses.springbootappcourses.model.Instructor;
+import ru.rmamedov.courses.springbootappcourses.model.User;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
 
 import java.util.List;
@@ -48,11 +49,11 @@ public class InstructorController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Instructor> save(@RequestBody Instructor instructor) {
-        if (instructor == null) {
+    public ResponseEntity<Instructor> save(@RequestBody User user) {
+        if (user == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
         }
-        return new ResponseEntity<>(instructorService.save(instructor), HttpStatus.OK);
+        return new ResponseEntity<>(instructorService.save(user), HttpStatus.OK);
     }
 
     @PutMapping("/update")

@@ -3,6 +3,7 @@ package ru.rmamedov.courses.springbootappcourses.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,7 +41,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.csrf().disable();
+        http
+                .csrf().disable();
+
+        http
+                .authorizeRequests()
+                .antMatchers("/users/**").access("hasRole('ROLE_ADMIN')");
+
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST,"/api/course/save")
+                    .access("hasRole('ROLE_INSTRUCTOR')")
+                .antMatchers("/new-course")
+                    .access("hasRole('ROLE_INSTRUCTOR')");
+
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/user/save", "/api/student/save", "/api/instructor/save")
+                .access("permitAll()");
+
 
         // Login Logout pages.
         http.authorizeRequests()
@@ -53,7 +72,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .clearAuthentication(true)
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login?logout")
-                            .permitAll()
+                        .permitAll()
                 .and()
                     .exceptionHandling()
                         .accessDeniedHandler(accessDeniedHandler);

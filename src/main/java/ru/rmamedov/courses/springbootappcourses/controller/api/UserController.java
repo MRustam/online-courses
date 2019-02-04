@@ -21,6 +21,14 @@ public class UserController {
         this.iUserService = iUserService;
     }
 
+    @PostMapping("/save")
+    public ResponseEntity<User> saveOne(@RequestBody User user) {
+        if (user == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(iUserService.saveOne(user), HttpStatus.CREATED);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<User>> findAll() {
         if (iUserService.findAll().size() > 0) {
@@ -38,29 +46,21 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<User> saveOne(@RequestBody User user) {
-        if (user == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+    @GetMapping("/byusername/{username}")
+    public ResponseEntity<User> FindByUsername(@PathVariable String username) {
+        User user = iUserService.findByUsername(username);
+        if (user != null) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
-        return new ResponseEntity<>(iUserService.saveOne(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/update")
     public ResponseEntity<User> updateOne(@RequestBody User user) {
-        if (iUserService.updateOne(user) == null) {
+        if (iUserService.update(user) == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
         }
-        return new ResponseEntity<>(iUserService.updateOne(user), HttpStatus.ACCEPTED);
-    }
-
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<User> updateOne(@PathVariable Long id, @RequestBody User patch) {
-
-        if (id < 0 & patch == null) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
-        }
-        return new ResponseEntity<>(iUserService.updateOne(id, patch), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(iUserService.update(user), HttpStatus.ACCEPTED);
     }
 
 }

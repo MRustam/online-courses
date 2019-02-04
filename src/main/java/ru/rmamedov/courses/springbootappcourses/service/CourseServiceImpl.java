@@ -7,7 +7,6 @@ import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Review;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRepo;
-import ru.rmamedov.courses.springbootappcourses.repository.StudentRepo;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 
 import java.util.List;
@@ -17,12 +16,12 @@ import java.util.Optional;
 public class CourseServiceImpl implements ICourseService {
 
     private CourseRepo courseRepo;
-    private StudentRepo studentRepo;
+    private StudentServiceImpl studentService;
 
     @Autowired
-    public CourseServiceImpl(CourseRepo courseRepo, StudentRepo studentRepo) {
+    public CourseServiceImpl(CourseRepo courseRepo, StudentServiceImpl studentService) {
         this.courseRepo = courseRepo;
-        this.studentRepo = studentRepo;
+        this.studentService = studentService;
     }
 
     @Override
@@ -49,8 +48,8 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public void deleteOneById(Long id) {
         Course course = findById(id);
-        for (Student student : studentRepo.findAll()) {
-            if (student.getCourses().contains(course)) {
+        for (Student student : studentService.findAll()) {
+            if (student.getCourses() != null) {
                 student.getCourses().remove(course);
             }
         }
@@ -65,7 +64,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public List<Course> getAllByRating() {
-        return courseRepo.findTop10ByOrderByRatingDesc();
+        return courseRepo.findTop20ByOrderByRatingDesc();
     }
 
     @Override
@@ -78,13 +77,4 @@ public class CourseServiceImpl implements ICourseService {
         return courseRepo.findByCategoryOrderByRatingDesc(category);
     }
 
-    @Override
-    public List<Review> getReviewsOfCurrentCourse(Long id) {
-
-        Course course = findById(id);
-        if (course != null) {
-            return course.getReviews();
-        }
-        throw new EntityNotFoundException("Course with id: " + id + " not found");
-    }
 }

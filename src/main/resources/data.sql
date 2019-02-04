@@ -14,15 +14,15 @@ INSERT INTO users (username, password, full_name, age, phone, email, skype, role
 VALUES ('jetLi', '$2a$10$Lp5Nvy4mHAbyC6MGxJrhVOQfnAHAzQiNbK7ZpzX11jGWqfp/59jke', 'Jet Li', 35, '+99100100', 'li@gmail.com', 'li@gmail.com', 3);
 
 
-INSERT INTO instructor (user_id, work_experience)
-VALUES (1, 8);
-INSERT INTO instructor (user_id, work_experience)
-VALUES (2, 10);
+INSERT INTO instructor (user_id, work_experience, rating)
+VALUES (1, 8, 4.2);
+INSERT INTO instructor (user_id, work_experience, rating)
+VALUES (2, 10, 3.5);
 
 INSERT INTO student (user_id, academic_performance)
-VALUES (3, 4.5);
+VALUES (3, 4);
 INSERT INTO student (user_id, academic_performance)
-VALUES (4, 3.6);
+VALUES (4, 3);
 
 INSERT INTO course (title, category, description, duration, start_date, instructor_id, rating)
 VALUES ('Java 7EE', 'programming', 'For not beginners.', 35, '2018-03-01', 1, 9.5);

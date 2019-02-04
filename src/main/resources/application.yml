@@ -1,5 +1,5 @@
 server:
-  port: 9090
+  port: 7070
   servlet:
       session:
         timeout: 400s
@@ -8,9 +8,6 @@ server:
       enabled: false
 
 
-###
-#   Database Settings
-###
 spring:
 
   jpa:
@@ -64,5 +61,5 @@ spring:
 #      path: /h2
 
 
-#logging.level.org.springframework.web: DEBUG
-#logging.level.org.hibernate: ERROR
+logging.level.org.springframework.web: DEBUG
+logging.level.org.hibernate: ERROR

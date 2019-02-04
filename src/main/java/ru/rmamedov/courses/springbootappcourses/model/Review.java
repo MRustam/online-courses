@@ -20,7 +20,12 @@ public class Review {
     @Column(name = "created")
     private LocalDate created;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
     @JoinColumn(name = "course_id")
     private Course course;
 }

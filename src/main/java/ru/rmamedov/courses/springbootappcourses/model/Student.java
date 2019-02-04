@@ -1,5 +1,6 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -21,12 +22,13 @@ public class Student {
             CascadeType.PERSIST,
             CascadeType.REFRESH
     })
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Column(name = "academic_performance")
-    private Double academicPerformance;
+    private int academicPerformance;
 
+    @JsonIgnore
     @ManyToMany(cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,

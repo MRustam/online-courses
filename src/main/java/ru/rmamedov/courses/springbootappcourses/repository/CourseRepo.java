@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface CourseRepo extends JpaRepository<Course, Long> {
 
-    List<Course> findTop10ByOrderByRatingDesc();
+    List<Course> findTop20ByOrderByRatingDesc();
 
     List<Course> findByTitleContainingIgnoreCase(String title);
 

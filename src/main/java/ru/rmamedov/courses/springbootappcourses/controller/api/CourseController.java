@@ -57,7 +57,7 @@ public class CourseController {
 
             Instructor instructor = instructorService.findByUsername(user.getUsername());
             if (instructor != null) {
-                course.setInstructor(instructor);
+                instructor.addCourse(course);
                 return new ResponseEntity<>(iCourseService.save(course), HttpStatus.OK);
             }
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
@@ -87,11 +87,5 @@ public class CourseController {
     @GetMapping("/bycategory/{category}")
     public List<Course> findAllByCategory(@PathVariable String category) {
         return iCourseService.findByCategory(category);
-    }
-
-    //Get all reviews from current course.
-    @GetMapping("/{id}/reviews")
-    public List<Review> getReviewsOfCourse(@PathVariable Long id) {
-        return iCourseService.getReviewsOfCurrentCourse(id);
     }
 }
