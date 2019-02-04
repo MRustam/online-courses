@@ -2,11 +2,13 @@ package ru.rmamedov.courses.springbootappcourses.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -44,7 +46,17 @@ public class User implements UserDetails {
     @Column(name = "skype", unique = true)
     private String skype;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @CreationTimestamp
+    @Column(name = "registered")
+    private LocalDateTime registered;
+
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.PERSIST,
+            CascadeType.REFRESH
+    })
+    @JoinColumn(name = "role_id")
     private Role role;
 
     @JsonIgnore

@@ -45,11 +45,6 @@ public class ReviewServiceImpl implements IReviewService {
         return null;
     }
 
-//    @Override
-//    public Review update(Long id, Review review) {
-//        return null;
-//    }
-
     @Override
     public List<Review> findAllByCourseId(Long id) throws EntityNotFoundException {
         return reviewRepo.findByCourseIdOrderByCreatedDesc(id);

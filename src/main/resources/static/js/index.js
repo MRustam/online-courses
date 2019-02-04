@@ -20,14 +20,14 @@ $(document).ready(function () {
             //Populate cards(each course) on all courses page.
             $.each(data, function (index, el) {
                 var div = $('<div class="col-lg-3 col-md-6 mb-4">' +
-                    '           <div class="card h-100">' +
+                    '           <div class="card h-100" style="border:2px solid wheat;">' +
                     '               <div class="div-rating">' +
                     '                   <p id="p-rating">' + el.rating + '</p>' +
                     '               </div>' +
                     '               <img class="card-img-top" src="/img/abstract.jpg" />' +
                     '               <div class="card-body">' +
                     '                   <h5 class="card-title">' + el.title + '</h5>' +
-                    '                   <p class="card-text">' + el.description + '</p>' +
+                    '                   <p class="card-text small font-weight-light font-italic">' + el.description + '</p>' +
                     '               </div>' +
                     '               <div class="card-footer text-center">' +
                     '                   <a href="?id=' + el.id + '" class="btn btn-info btn-sm">More</a>' +
@@ -67,7 +67,7 @@ $(document).ready(function () {
 
                 $.each(data, function (index, el) {
                     $('#current-course-with-reviews').append('<div class="card-body">' +
-                        '<p>' + el.text + '</p>' +
+                        '<p class="small font-weight-light font-italic">' + el.text + '</p>' +
                         '<small class="text-muted">posted: ' + el.created + '</small>' +
                         '<hr>' +
                         '</div>');

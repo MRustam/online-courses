@@ -1,8 +1,10 @@
 package ru.rmamedov.courses.springbootappcourses.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
+import ru.rmamedov.courses.springbootappcourses.exception.EntityNotSaved;
 import ru.rmamedov.courses.springbootappcourses.model.Instructor;
 import ru.rmamedov.courses.springbootappcourses.model.Role;
 import ru.rmamedov.courses.springbootappcourses.model.User;
@@ -20,12 +22,16 @@ public class InstructorServiceImpl implements IInstructorService {
     private InstructorRepo instructorRepo;
     private UserServiceImpl userService;
     private RoleRep roleRep;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public InstructorServiceImpl(InstructorRepo instructorRepo, UserServiceImpl userService, RoleRep roleRep) {
+    public InstructorServiceImpl(InstructorRepo instructorRepo,
+                                 UserServiceImpl userService, RoleRep roleRep,
+                                 BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.instructorRepo = instructorRepo;
         this.userService = userService;
         this.roleRep = roleRep;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -56,17 +62,20 @@ public class InstructorServiceImpl implements IInstructorService {
 
     @Override
     public Instructor save(Instructor instructor) {
-        if (instructor.getUser().getRole() != null) {
-            String roleName = instructor.getUser().getRole().getName();
-            Role role = roleRep.findByName(roleName);
-            if (role != null && role.getName().equals("ROLE_INSTRUCTOR")) {
-                instructor.getUser().setRole(role);
-                return instructorRepo.save(instructor);
-            } else {
-                throw new EntityNotFoundException("Role mast be an 'ROLE_INSTRUCTOR', but found: " + roleName);
-            }
+        return instructorRepo.save(instructor);
+    }
+
+    @Override
+    public Instructor save(User user) {
+        Role roleFromRepo = roleRep.findByName(user.getRole().getName());
+        if (roleFromRepo != null) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setRole(roleFromRepo);
+            Instructor instructor = new Instructor();
+            instructor.setUser(user);
+            return instructorRepo.save(instructor);
         } else {
-            throw new EntityNotFoundException("Saving Instructor mast contains a Role");
+            throw new EntityNotSaved("Can't manage to save User: " + user);
         }
     }
 
@@ -77,17 +86,6 @@ public class InstructorServiceImpl implements IInstructorService {
         }
         return save(instructor);
     }
-
-//    @Override
-//    public Instructor update(Long id, Instructor patch) {
-//
-//        Instructor instructor = findById(id);
-//
-//        if (patch.getCourses() != null) instructor.setCourses(patch.getCourses());
-//        if (patch.getWorkExperience() != 0) instructor.setWorkExperience(patch.getWorkExperience());
-//
-//        return save(instructor);
-//    }
 
     @Override
     public void deleteOneById(Long id) {

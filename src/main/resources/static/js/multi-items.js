@@ -20,7 +20,6 @@ $(document).ready(function () {
                     '               <th class="">Email</th>\n' +
                     '               <th class="">Skype</th>\n' +
                     '               <th class="">Age</th>\n' +
-                    '               <th class="">Edit</th>\n' +
                     '           </tr>\n' +
                     '       </thead>\n' +
                     '       <tbody id="tbody-users">\n' +
@@ -57,15 +56,16 @@ $(document).ready(function () {
 
                     $('#tbody-users').append(   '<tr>' +
                         '                           <td style="text-align:center;" class="">' + el.id + '</td>' +
-                        '                           <td class="">' + el.fullName + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.phone + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.email + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.skype + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.age + '</td>' +
+                        '                           <td class="">' + el.user.fullName + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.user.phone + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.user.email + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.user.skype + '</td>' +
+                        '                           <td style="text-align:center;" class="">' + el.user.age + '</td>' +
                         '                           <td style="text-align:center;">' +
                         '                           <div class="btn-group-sm">' +
                         '                               <button class="btn btn-success" data-toggle="modal" data-target="#myModal" contenteditable="false">Add</button>' +
                         '                               <button class="btn btn-info" data-toggle="modal" data-target="#myModal" contenteditable="false">Edit</button>' +
+                        '                               <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" contenteditable="false">Del</button>' +
                         '                           </div>' +
                         '                           </td>' +
                         '                       </tr>');
@@ -92,12 +92,14 @@ $(document).ready(function () {
                 $.each(data, function (index, el) {
 
                     $('.row').append(
-                        '        <div class="col-lg-4 col-sm-6 text-center mb-4">\n' +
-                        '            <img class="rounded-circle img-fluid d-block mx-auto" src="/img/lego-developer.jpeg" alt="">\n' +
-                        '            <h3>' + el.fullName + '</h3>' +
-                        '            <p> work experience: ' + el.workExperience + ' years</p>\n' +
-                        '            <p>' + el.phone + '</p>' +
-                        '            <p style="color: white">email: ' + el.email + '<br/>skype: ' + el.skype + '</p>' +
+                        '        <div class="col-lg-4 col-sm-6 mb-4">\n' +
+                        '            <img class="img-fluid d-block mx-auto" src="/img/lego-developer.jpeg" alt="">\n' +
+                        '            <div class="text-center">' +
+                        '               <h3>' + el.user.fullName + '</h3>' +
+                        '               <p> work experience: ' + el.workExperience + ' years</p>\n' +
+                        '               <p>' + el.user.phone + '</p>' +
+                        '               <p style="color: white">email: ' + el.user.email + '<br/>skype: ' + el.user.skype + '</p>' +
+                        '           </div>' +
                         '        </div>');
 
                 })
@@ -130,10 +132,11 @@ $(document).ready(function () {
                 '                        <input password="title" type="text" class="form-control" id="title-input" placeholder="Title" required />\n' +
                 '                    </div>\n' +
                 '                       <div class="form-group mb-4">' +
-                '                         <input password="title" type="text" class="form-control" id="description-input" placeholder="Description" required />\n' +
+                '                         <textarea password="title" class="form-control" id="description-input" placeholder="Description" required />\n' +
                 '                   </div>' +
                 '                   <div class="form-group mb-4">' +
-                '                       <input password="title" type="date" class="form-control" id="date-input" placeholder="Start date" required />\n' +
+                '                       <label for="date-input" class="small font-weight-light font-italic">Start date</label>' +
+                '                       <input password="title" type="date" class="form-control" id="date-input" required />\n' +
                 '                   </div>' +
                 '                    <div class="form-group">\n' +
                 '                        <select password="category[category]" class="custom-select" id="select-category" required>\n' +

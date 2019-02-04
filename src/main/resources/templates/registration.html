@@ -52,15 +52,12 @@
         <div class="col-md-6 col-md-offset-3 login">
 
             <div class="row">
-                <div class="col-md-6 mt-3 mb-5 text-center" sec:authorize="isAuthenticated()">
-                    <a th:href="@{/logout}" class="btn btn-outline-success btn-lg w-100" href="/logout" role="button">Logout</a>
-                </div>
-                <div class="col-md-6 mt-3 mb-5 text-center" sec:authorize="isAnonymous()">
+                <div class="col-md-6 mt-3 mb-5 text-center">
                     <a th:href="@{/login}" class="btn btn-outline-success btn-lg w-100" href="/login" role="button">Login</a>
                 </div>
 
                 <div class="col-md-6 mt-3 mb-5 text-center">
-                    <a th:href="@{/registration}" class="btn btn-outline-primary btn-lg w-100" href="/registration"
+                    <a class="btn btn-outline-primary btn-lg w-100" href="#"
                        role="button">Register</a>
                 </div>
             </div>

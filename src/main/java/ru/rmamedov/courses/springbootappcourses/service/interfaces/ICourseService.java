@@ -16,11 +16,12 @@ public interface ICourseService extends BaseInterface<Course, Long> {
     Course findById(Long id);
 
     @Override
-    Course save(Course object);
+    Course save(Course course);
 
     @Override
     void deleteOneById(Long id);
 
+    @Override
     Course update(Course course);
 
     // Sorted by rating
@@ -31,6 +32,4 @@ public interface ICourseService extends BaseInterface<Course, Long> {
 
     //Find all by category.
     List<Course> findByCategory(String category);
-
-    List<Review> getReviewsOfCurrentCourse(Long id);
 }

@@ -13,11 +13,9 @@ public interface IUserService extends UserDetailsService {
 
     User saveOne(User user);
 
-    User updateOne(User user);
+    User update(User user);
 
-    User updateOne(Long id, User user);
-
-    User findById(Long aLong);
+    User findById(Long id);
 
     User findByUsername(String username);
 
