@@ -48,8 +48,7 @@ $(document).ready(function () {
             dataType: 'json',
             cache: false,
             success: function () {
-                alert("Success!");
-                window.location.replace("/login");
+                window.location.replace("/success");
             },
             error: function (err) {
                 $('#registration-form')[0].reset();

@@ -21,8 +21,10 @@ $(document).ready(function () {
             $.each(data, function (index, el) {
                 var div = $('<div class="col-lg-3 col-md-6 mb-4">' +
                     '           <div class="card h-100" style="border:2px solid wheat;">' +
-                    '               <div class="div-rating">' +
-                    '                   <p id="p-rating">' + el.rating + '</p>' +
+                    '               <div class="div-courseRating">' +
+                    '                   <span class="small font-weight-light font-italic ml-1">rating: ' + el.score + '</span><br/>' +
+                    '                   <span class="small font-weight-light font-italic ml-1">instructor rating: ' + el.rating + '</span><br/>' +
+                    '                   <span class="small font-weight-light font-italic ml-1">enrolled: ' + el.enrolled + '</span>' +
                     '               </div>' +
                     '               <img class="card-img-top" src="/img/abstract.jpg" />' +
                     '               <div class="card-body">' +
@@ -50,10 +52,16 @@ $(document).ready(function () {
                 '<img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">' +
                 '<div class="card-body">' +
                 '<h3 class="card-title">' + data.title + '</h3>' +
-                '<h6>category: <span>' + data.category + '</span></h6>' +
-                '<h6>start: <span style="color: darkgreen">' + data.startDate + '</span></h6>' +
+                '<h6>category: <span class="font-weight-light font-italic small">' + data.category + '</span></h6>' +
+                '<h6>start: <span class="font-weight-light" style="color: darkgreen">' + data.date + '</span></h6>' +
+                '<h6>duration: <span class="font-weight-light" style="color: darkgreen">' + data.duration + '</span></h6>' +
+                '<h6>started: <span style="color: #e4606d">' + (data.status ? 'yes' : 'no') + '</span></h6>' +
+                '<h5>instructor: <span><a href="#' + data.instructorId + '">' + data.owner + '</a></span></h5>' +
                 '<hr>' +
-                '<p class="card-text font-italic">' + data.description + '</p>' +
+                '<h6>reviews: <span style="color: darkgreen">' + (data.rcount != null ? data.rcount : 'nothing') + '</span></h6>' +
+                '<h6>enrolled students: <span style="color: darkgreen">' + (data.enrolled > 0 ? data.enrolled : 'nobody') + '</span></h6>' +
+                '<hr>' +
+                '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
                 '</div>' +
                 '</div>' +
                 '<div class="card card-outline-secondary my-4" id="current-course-with-reviews">' +

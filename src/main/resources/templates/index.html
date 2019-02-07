@@ -49,7 +49,7 @@
                         <a class="dropdown-item" th:href="@{/students}" href="/students" id="students-button">students</a>
                         <a class="dropdown-item" th:href="@{/instructors}" href="/instructors">instructors</a>
                         <div sec:authorize="hasRole('ADMIN')">
-                            <a class="dropdown-item" th:href="@{/users}" href="/users">all users</a>
+                            <a class="dropdown-item" th:href="@{/users}" href="/users">users</a>
                         </div>
 
                         <div class="dropdown-divider"></div>
@@ -145,7 +145,7 @@
             <div class="col-md-12 mx-auto">
                 <!-- Content -->
                 <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Описание проекта:</h5>
-                <p class="font-italic small"><span style="font-weight: bold;">Технологий:</span> Spring Data Jpa, Hibernate, DTO Projections, Spring security, Postgres, Thymeleaf, jQuery.</p>
+                <p class="font-italic small"><span style="font-weight: bold;">Технологий:</span> Spring Data Jpa, Hibernate, Spring Data Projections, Spring security, Postgres, Thymeleaf, jQuery.</p>
                 <p class="font-italic small"><span style="font-weight: bold;">Роли:</span> ADMIN, INSTRUCTOR, STUDENT. После регистрации/авторизации username и role, будут отображаться в header</p>
                 <p class="font-italic small"><span style="font-weight: bold;">User entity:</span> сущность содержащая в себе общие для все пользователей поля.</p>
                 <p class="font-italic small"><span style="font-weight: bold;">Пользоватль:</span> каждый пользватель состоит из User entity и в зависимости от роли, содержит дополнительные поля,

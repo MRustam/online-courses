@@ -15,18 +15,6 @@ public class MvcController {
         return "/index";
     }
 
-    // Student own page.
-    @GetMapping("/students")
-    public String toStudentOwnPage() {
-        return "/one-col-template";
-    }
-
-    // All Instructors page.
-    @GetMapping("/instructors")
-    public String toInstructorsListPage() {
-        return "/one-col-template";
-    }
-
     // Login page. If logged in then prevent to show login page.
     @GetMapping("/login")
     public String toLoginPage() {
@@ -43,14 +31,14 @@ public class MvcController {
     }
 
     // Custom forbidden page if access denied.
-    @GetMapping("/access-denied")
-    public String accessDenied() {
-        return "/one-col-template";
-    }
-
-    // Custom forbidden page if access denied.
-    @GetMapping("/success")
-    public String successPage() {
+    @GetMapping(value = {
+            "/access-denied",
+            "/success",
+            "/students",
+            "/instructors",
+            "/users"
+    })
+    public String toGeneralOneColumnTemplate() {
         return "/one-col-template";
     }
 }

@@ -36,6 +36,12 @@ public class Student {
             CascadeType.REFRESH
     })
     @JoinTable(
+            uniqueConstraints = {
+                    @UniqueConstraint(columnNames = {
+                            "student_id",
+                            "course_id"
+                    })
+            },
             name = "student_course", joinColumns =
             @JoinColumn(name = "student_id", referencedColumnName = "id"),
             inverseJoinColumns =

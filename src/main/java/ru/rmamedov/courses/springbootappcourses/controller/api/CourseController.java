@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.AllCoursesDTO;
 import ru.rmamedov.courses.springbootappcourses.model.Instructor;
-import ru.rmamedov.courses.springbootappcourses.model.Review;
 import ru.rmamedov.courses.springbootappcourses.model.User;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.CurrentCourseDTO;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
 
@@ -31,16 +30,19 @@ public class CourseController {
 
     // CRUD operations
 
-    // Custom get all courses, sorted by rating.
+    // Custom get all courses, sorted by courseRating.
     @GetMapping("/all")
-    public List<Course> getAll() {
-        return iCourseService.getAllByRating();
+    public ResponseEntity<List<AllCoursesDTO>> getAll() {
+        if (iCourseService.findAll().size() > 0) {
+            return new ResponseEntity<>(iCourseService.getAllByRating(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getOneById(@PathVariable Long id) {
-        Course course = iCourseService.findById(id);
+    public ResponseEntity<CurrentCourseDTO> getOneById(@PathVariable Long id) {
+        CurrentCourseDTO course = iCourseService.findDTOById(id);
         if (course != null) {
             return new ResponseEntity<>(course, HttpStatus.OK);
         }
@@ -85,7 +87,7 @@ public class CourseController {
 
     //Filter by category.
     @GetMapping("/bycategory/{category}")
-    public List<Course> findAllByCategory(@PathVariable String category) {
+    public List<AllCoursesDTO> findAllByCategory(@PathVariable String category) {
         return iCourseService.findByCategory(category);
     }
 }

@@ -1,6 +1,5 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -35,9 +34,10 @@ public class Course {
     @Column(name = "rating")
     private double rating;
 
-    @JsonIgnore
+    @Column(name = "status")
+    private boolean status;
+
     @Lob
     @Column(name = "image")
     private Byte[] image;
-
 }
