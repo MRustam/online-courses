@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.model.User;
@@ -64,13 +65,14 @@ public class StudentController {
         return new ResponseEntity<>(studentService.update(student), HttpStatus.OK);
     }
 
-//    @PatchMapping("/update/{id}")
-//    public ResponseEntity<Instructor> update(@PathVariable Long id, @RequestBody Instructor instructor) {
-//        if (id <= 0 & instructor == null) {
-//            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
-//        }
-//        return new ResponseEntity<>(instructorService.update(id, instructor), HttpStatus.OK);
-//    }
+    @PutMapping("/enroll/courseId/{id}")
+    public ResponseEntity<Student> update(@PathVariable Long id,
+                                          @AuthenticationPrincipal User user) {
+        if (id <= 0 || user == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(studentService.enroll(id, user), HttpStatus.OK);
+    }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

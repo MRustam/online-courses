@@ -23,10 +23,10 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-            <span sec:authorize="isAuthenticated()" class="userName-info nav-item small text-white font-italic">
-                username: <span sec:authentication="name"></span> | roles: <span
+            <h6 sec:authorize="isAuthenticated()" class="userName-info nav-item small font-weight-light text-white font-italic">
+                username: <span style="color: cornflowerblue;" sec:authentication="name"></span> | role: <span style="color: cornflowerblue;"
                     sec:authentication="principal.authorities"></span>
-            </span>
+            </h6>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
                         <a class="dropdown-item" th:href="@{/students}" href="/students">students</a>
                         <a class="dropdown-item" th:href="@{/instructors}" href="/instructors">instructors</a>
                         <div sec:authorize="hasRole('ADMIN')">
-                            <a class="dropdown-item" th:href="@{/users}" href="/users">all users</a>
+                            <a class="dropdown-item" th:href="@{/users}" href="/users">users</a>
                         </div>
                         <div class="dropdown-divider"></div>
 

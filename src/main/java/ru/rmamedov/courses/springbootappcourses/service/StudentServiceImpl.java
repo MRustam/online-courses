@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotSaved;
+import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Role;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.model.User;
@@ -19,17 +20,19 @@ import java.util.Optional;
 public class StudentServiceImpl implements IStudentService {
 
     private StudentRepo studentRepo;
+    private CourseServiceImpl courseService;
     private UserServiceImpl userService;
     private RoleRep roleRep;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public StudentServiceImpl(StudentRepo studentRepo, UserServiceImpl userService,
-                              RoleRep roleRep, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public StudentServiceImpl(StudentRepo studentRepo, CourseServiceImpl courseService,
+                              UserServiceImpl userService, RoleRep roleRep, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.studentRepo = studentRepo;
+        this.courseService = courseService;
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.roleRep = roleRep;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
@@ -85,16 +88,13 @@ public class StudentServiceImpl implements IStudentService {
         return save(student);
     }
 
-//    @Override
-//    public Instructor update(Long id, Instructor patch) {
-//
-//        Instructor instructor = findById(id);
-//
-//        if (patch.getCourses() != null) instructor.setCourses(patch.getCourses());
-//        if (patch.getWorkExperience() != 0) instructor.setWorkExperience(patch.getWorkExperience());
-//
-//        return save(instructor);
-//    }
+    @Override
+    public Student enroll(Long id, User user) {
+        Student student = findByUsername(user.getUsername());
+        Course course = courseService.findById(id);
+        student.enroll(course);
+        return update(student);
+    }
 
     @Override
     public void deleteOneById(Long id) {

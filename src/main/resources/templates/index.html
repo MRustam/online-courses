@@ -23,10 +23,10 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-            <span sec:authorize="isAuthenticated()" class="userName-info nav-item small text-white font-italic">
-                username: <span sec:authentication="name"></span> | Roles: <span
+            <h6 sec:authorize="isAuthenticated()" class="userName-info nav-item small font-weight-light text-white font-italic">
+                username: <span style="color: cornflowerblue;" sec:authentication="name"></span> | role: <span style="color: cornflowerblue;"
                     sec:authentication="principal.authorities"></span>
-            </span>
+            </h6>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -49,7 +49,7 @@
                         <a class="dropdown-item" th:href="@{/students}" href="/students" id="students-button">students</a>
                         <a class="dropdown-item" th:href="@{/instructors}" href="/instructors">instructors</a>
                         <div sec:authorize="hasRole('ADMIN')">
-                            <a class="dropdown-item" th:href="@{/users}" href="/users">all users</a>
+                            <a class="dropdown-item" th:href="@{/users}" href="/users">users</a>
                         </div>
 
                         <div class="dropdown-divider"></div>
@@ -145,7 +145,7 @@
             <div class="col-md-12 mx-auto">
                 <!-- Content -->
                 <h5 class="font-weight-bold text-uppercase mt-3 mb-4">Описание проекта:</h5>
-                <p class="font-italic small"><span style="font-weight: bold;">Технологий:</span> Spring Data Jpa, Hibernate, DTO Projections, Spring security, Postgres, Thymeleaf, jQuery.</p>
+                <p class="font-italic small"><span style="font-weight: bold;">Технологий:</span> Spring Data Jpa, Hibernate, Spring Data Projections, Spring security, Postgres, Thymeleaf, jQuery.</p>
                 <p class="font-italic small"><span style="font-weight: bold;">Роли:</span> ADMIN, INSTRUCTOR, STUDENT. После регистрации/авторизации username и role, будут отображаться в header</p>
                 <p class="font-italic small"><span style="font-weight: bold;">User entity:</span> сущность содержащая в себе общие для все пользователей поля.</p>
                 <p class="font-italic small"><span style="font-weight: bold;">Пользоватль:</span> каждый пользватель состоит из User entity и в зависимости от роли, содержит дополнительные поля,

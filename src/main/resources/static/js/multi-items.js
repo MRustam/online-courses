@@ -14,8 +14,9 @@ $(document).ready(function () {
                         '<table class="table table-bordered table-striped">\n' +
                     '       <thead>\n' +
                     '           <tr>\n' +
-                    '               <th class="">№</th>\n' +
+                    '               <th class="">ID</th>\n' +
                     '               <th class="">Full Name</th>\n' +
+                    '               <th class="">Performance</th>\n' +
                     '               <th class="">Phone</th>\n' +
                     '               <th class="">Email</th>\n' +
                     '               <th class="">Skype</th>\n' +
@@ -56,18 +57,12 @@ $(document).ready(function () {
 
                     $('#tbody-users').append(   '<tr>' +
                         '                           <td style="text-align:center;" class="">' + el.id + '</td>' +
-                        '                           <td class="">' + el.user.fullName + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.user.phone + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.user.email + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.user.skype + '</td>' +
-                        '                           <td style="text-align:center;" class="">' + el.user.age + '</td>' +
-                        '                           <td style="text-align:center;">' +
-                        '                           <div class="btn-group-sm">' +
-                        '                               <button class="btn btn-success" data-toggle="modal" data-target="#myModal" contenteditable="false">Add</button>' +
-                        '                               <button class="btn btn-info" data-toggle="modal" data-target="#myModal" contenteditable="false">Edit</button>' +
-                        '                               <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" contenteditable="false">Del</button>' +
-                        '                           </div>' +
-                        '                           </td>' +
+                        '                           <td>' + el.user.fullName + '</td>' +
+                        '                           <td>' + el.academicPerformance + '</td>' +
+                        '                           <td style="text-align:center;">' + el.user.phone + '</td>' +
+                        '                           <td style="text-align:center;">' + el.user.email + '</td>' +
+                        '                           <td style="text-align:center;">' + el.user.skype + '</td>' +
+                        '                           <td style="text-align:center;">' + el.user.age + '</td>' +
                         '                       </tr>');
 
                 })
@@ -77,6 +72,73 @@ $(document).ready(function () {
             });
             break;
 
+        case 'users':
+            $.get('/api/user/all', function (data) {
+
+                $('#multi-content').append(
+                    '<h1 class="my-4 text-center display-5" style="color: white">Users</h1>' +
+                    '<div style="background: #f7f7f7"; class="text-center">' +
+                    '<table class="table table-bordered table-striped">\n' +
+                    '       <thead>\n' +
+                    '           <tr>\n' +
+                    '               <th>ID</th>\n' +
+                    '               <th>Full Name</th>\n' +
+                    '               <th>Phone</th>\n' +
+                    '               <th>Email</th>\n' +
+                    '               <th>Skype</th>\n' +
+                    '               <th>Age</th>\n' +
+                    '               <th>Registered</th>\n' +
+                    '               <th>Role</th>\n' +
+                    '           </tr>\n' +
+                    '       </thead>\n' +
+                    '       <tbody id="tbody-users">\n' +
+
+                    '       </tbody>\n' +
+                    '    </table>\n' +
+                    '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\n' +
+                    '    <div class="modal-dialog">\n' +
+                    '        <div class="modal-content"></div>\n' +
+                    '    </div>\n' +
+                    '    <div class="modal-dialog">\n' +
+                    '        <div class="modal-content"></div>\n' +
+                    '    </div>\n' +
+                    '    <div class="modal-dialog">\n' +
+                    '        <div class="modal-content">\n' +
+                    '            <div class="modal-header">\n' +
+                    '                <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true" class="">×   </span><span class="sr-only">Close</span>\n' +
+                    '\n' +
+                    '                </button>\n' +
+                    '                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>\n' +
+                    '\n' +
+                    '            </div>\n' +
+                    '            <div class="modal-body"></div>\n' +
+                    '            <div class="modal-footer">\n' +
+                    '                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\n' +
+                    '                <button type="button" class="btn btn-primary">Save changes</button>\n' +
+                    '            </div>\n' +
+                    '        </div>\n' +
+                    '    </div>\n' +
+                    '</div>' +
+                    '</div>');
+
+                $.each(data, function (index, el) {
+
+                    $('#tbody-users').append(   '<tr>' +
+                        '                           <td style="text-align:center;" class="">' + el.id + '</td>' +
+                        '                           <td class="small font-italic w-25">' + el.fullName + '</td>' +
+                        '                           <td style="text-align:center;" class="small font-italic">' + el.phone + '</td>' +
+                        '                           <td style="text-align:center;" class="small font-italic">' + el.email + '</td>' +
+                        '                           <td style="text-align:center;" class="small font-italic">' + el.skype + '</td>' +
+                        '                           <td style="text-align:center;" class="small font-italic">' + el.age + '</td>' +
+                        '                           <td style="text-align:center;" class="small font-italic">' + el.registered + '</td>' +
+                        '                           <td style="text-align:center;" class="small font-italic">' + el.role.name + '</td>' +
+                        '                       </tr>');
+                })
+
+            }).fail(function (err) {
+                alert(err);
+            });
+            break;
 
         case 'instructors':
             //All instructors.
@@ -106,7 +168,7 @@ $(document).ready(function () {
 
             }).fail(function (err) {
                 alert(err);
-            })
+            });
             break;
 
 
@@ -210,11 +272,8 @@ $(document).ready(function () {
 
     // Add new course POST.
     var addCourseForm = $('#course-form');
-
     addCourseForm.submit(function (event) {
-
         event.preventDefault();
-
         //PREPARE FORM DATA
         var dataInput = {
             title: $("#title-input").val(),
@@ -223,7 +282,6 @@ $(document).ready(function () {
             date: $("#date-input").val(),
             category: $("#select-category").val()
         };
-
         $.ajax({
             method: "POST",
             url: "/api/course/save",
@@ -236,7 +294,6 @@ $(document).ready(function () {
                 window.location.replace("/error");
             }
         })
-
     });
 
 
