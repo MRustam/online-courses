@@ -14,7 +14,6 @@ $(document).ready(function () {
             url = '/api/course/all';
         }
 
-        console.log(category);
         //Courses or current course with details.
         $.get(url, function (data) {
             //Populate cards(each course) on all courses page.
@@ -62,6 +61,9 @@ $(document).ready(function () {
                 '<h6>enrolled students: <span style="color: darkgreen">' + (data.enrolled > 0 ? data.enrolled : 'nobody') + '</span></h6>' +
                 '<hr>' +
                 '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
+                '<div sec:authorize="hasRole(&#39;STUDENT&#39;)">' +
+                '     <button onclick="enrollFunction(' + id + ')" class="btn btn-success w-25">Enroll course</button>' +
+                '</div>' +
                 '</div>' +
                 '</div>' +
                 '<div class="card card-outline-secondary my-4" id="current-course-with-reviews">' +
@@ -82,12 +84,27 @@ $(document).ready(function () {
                 });
 
             });
-
-            $('#current-course').append('<a href="#" class="btn btn-success" style="margin-bottom: 100px;">Leave a Review</a>');
-
+            $('#current-course').append('<a href="#" class="btn btn-secondary" style="margin-bottom: 100px;">Leave a Review</a>');
 
         }).fail(function (err) {
             alert(err);
-        })
+        });
     }
 });
+
+function enrollFunction(id) {
+    console.log(id);
+
+    $.ajax({
+        url: '/api/student/enroll/courseId/' + id,
+        contentType: 'application/json',
+        method: 'PUT',
+        success: function () {
+            alert('success!');
+        },
+        error: function (err) {
+            console.log('earror! - ' + err);
+        }
+    });
+}
+

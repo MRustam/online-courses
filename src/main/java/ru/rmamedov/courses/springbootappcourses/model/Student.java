@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -48,4 +49,17 @@ public class Student {
             @JoinColumn(name = "course_id", referencedColumnName = "id")
     )
     private List<Course> courses;
+
+    public boolean enroll(Course course) {
+        if (course != null) {
+            if (courses == null) {
+                courses = new ArrayList<>();
+                courses.add(course);
+            } else {
+                courses.add(course);
+            }
+            return true;
+        }
+        return false;
+    }
 }

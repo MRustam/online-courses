@@ -44,10 +44,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable();
 
+        // Look to all users can only admin.
         http
                 .authorizeRequests()
                 .antMatchers("/users/**").access("hasRole('ROLE_ADMIN')");
 
+        // Enroll on course can only Student.
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.PUT, "/api/student/enroll/**").access("hasRole('ROLE_STUDENT')");
+
+        // Add new course can only Instructor.
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/api/course/save")
@@ -55,11 +62,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/new-course")
                     .access("hasRole('ROLE_INSTRUCTOR')");
 
+        // Everybody can process registration.
         http
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/user/save", "/api/student/save", "/api/instructor/save")
                 .access("permitAll()");
 
+        // Access to general pages.
+        http
+                .authorizeRequests()
+                .antMatchers("/access-denied")
+                .access("permitAll()");
 
         // Login Logout pages.
         http.authorizeRequests()

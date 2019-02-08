@@ -8,6 +8,7 @@ import ru.rmamedov.courses.springbootappcourses.repository.DTO.AllCoursesDTO;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRepo;
 import ru.rmamedov.courses.springbootappcourses.repository.DTO.CurrentCourseDTO;
+import ru.rmamedov.courses.springbootappcourses.repository.StudentRepo;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 
 import java.util.List;
@@ -17,12 +18,12 @@ import java.util.Optional;
 public class CourseServiceImpl implements ICourseService {
 
     private CourseRepo courseRepo;
-    private StudentServiceImpl studentService;
+    private StudentRepo studentRepo;
 
     @Autowired
-    public CourseServiceImpl(CourseRepo courseRepo, StudentServiceImpl studentService) {
+    public CourseServiceImpl(CourseRepo courseRepo, StudentRepo studentRepo) {
         this.courseRepo = courseRepo;
-        this.studentService = studentService;
+        this.studentRepo = studentRepo;
     }
 
     @Override
@@ -32,8 +33,7 @@ public class CourseServiceImpl implements ICourseService {
 
     @Override
     public List<AllCoursesDTO> getAllByRating() {
-        List<AllCoursesDTO> list = courseRepo.findAllOrderedByRatingDesc();
-        return list;
+        return courseRepo.findAllOrderedByRatingDesc();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public void deleteOneById(Long id) {
         Course course = findById(id);
-        for (Student student : studentService.findAll()) {
+        for (Student student : studentRepo.findAll()) {
             if (student.getCourses() != null) {
                 student.getCourses().remove(course);
             }

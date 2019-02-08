@@ -28,8 +28,6 @@ public class CourseController {
         this.instructorService = instructorService;
     }
 
-    // CRUD operations
-
     // Custom get all courses, sorted by courseRating.
     @GetMapping("/all")
     public ResponseEntity<List<AllCoursesDTO>> getAll() {
@@ -38,7 +36,6 @@ public class CourseController {
         }
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<CurrentCourseDTO> getOneById(@PathVariable Long id) {

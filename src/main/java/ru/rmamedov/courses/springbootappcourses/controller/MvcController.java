@@ -30,7 +30,6 @@ public class MvcController {
         return "/registration";
     }
 
-    // Custom forbidden page if access denied.
     @GetMapping(value = {
             "/access-denied",
             "/success",

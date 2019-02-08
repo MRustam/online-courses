@@ -22,7 +22,9 @@ public interface IStudentService extends BaseInterface<Student, Long> {
     void deleteOneById(Long id);
 
     @Override
-    Student update(Student instructor);
+    Student update(Student student);
 
     Student findByUsername(String username);
+
+    Student enroll(Long id, User user);
 }
