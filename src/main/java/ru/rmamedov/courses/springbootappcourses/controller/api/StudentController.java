@@ -1,50 +1,84 @@
 package ru.rmamedov.courses.springbootappcourses.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
+import ru.rmamedov.courses.springbootappcourses.model.User;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/students")
+@RequestMapping("/api/student")
 public class StudentController {
 
-    private IStudentService iStudentService;
+    private IStudentService studentService;
 
     @Autowired
-    public StudentController(IStudentService iStudentService) {
-        this.iStudentService = iStudentService;
+    public StudentController(IStudentService studentService) {
+        this.studentService = studentService;
     }
 
-    //CRUD
     @GetMapping("/all")
-    public List<Student> getAll() {
-        return iStudentService.findAll();
+    public ResponseEntity<List<Student>> getAll() {
+        if (studentService.findAll().size() > 0) {
+            return new ResponseEntity<>(studentService.findAll(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/all/{id}")
-    public Student getOneById(@PathVariable Long id) {
-        return iStudentService.findOneById(id);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> findById(@PathVariable Long id) {
+        Student student = studentService.findById(id);
+        if (student == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
+
+    @GetMapping("/byusername/{username}")
+    public ResponseEntity<Student> findByUsername(@PathVariable String username) {
+        Student student = studentService.findByUsername(username);
+        if (student == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
     @PostMapping("/save")
-    public Student saveOne(@RequestBody Student student) {
-        return iStudentService.saveOne(student);
+    public ResponseEntity<Student> save(@RequestBody User user) {
+        if (user == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(studentService.save(user), HttpStatus.OK);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<Student> update(@RequestBody Student student) {
+        if (student == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(studentService.update(student), HttpStatus.OK);
+    }
+
+    @PutMapping("/enroll/courseId/{id}")
+    public ResponseEntity<Student> update(@PathVariable Long id,
+                                          @AuthenticationPrincipal User user) {
+        if (id <= 0 || user == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(studentService.enroll(id, user), HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
-    public void deleteOneById(@PathVariable Long id) {
-        iStudentService.deleteOneById(id);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        try {
+            studentService.deleteOneById(id);
+        } catch (EmptyResultDataAccessException e) {}
     }
-    @PutMapping("/update/{id}")
-    public Student updateById(@PathVariable Long id, @RequestBody Student student) {
-        return iStudentService.updateOne(student);
-    }
-
-    //All courses of this student.
-    @GetMapping("/all/{id}/courses")
-    public List<Course> getAllCoursesOfStudent(@PathVariable Long id) {
-        return iStudentService.getAllCoursesOfCurrentStudent(id);
-    }
-
 }

@@ -20,7 +20,11 @@ public class Review {
     @Column(name = "created")
     private LocalDate created;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User owner;
 }

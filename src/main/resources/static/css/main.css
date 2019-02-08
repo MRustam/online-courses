@@ -1,6 +1,6 @@
 body {
-    /*background-image: url("/img/background.jpg");*/
-    background-color: #9E9E9E;
+    background-image: url("/img/background.jpg");
+    /*background-color: #9E9E9E;*/
     padding-top: 54px;
 }
 
@@ -44,7 +44,7 @@ body {
     border-radius: 7px;
     margin: 0 auto;
     width:20%;
-    margin-top: 140px;
+    margin-top: 90px;
 }
 
 .form-control {

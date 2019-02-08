@@ -1,36 +1,35 @@
 package ru.rmamedov.courses.springbootappcourses.service.interfaces;
 
 import ru.rmamedov.courses.springbootappcourses.model.Course;
-import ru.rmamedov.courses.springbootappcourses.model.Review;
-import ru.rmamedov.courses.springbootappcourses.model.Student;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.AllCoursesDTO;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.CurrentCourseDTO;
 
 import java.util.List;
 
 public interface ICourseService extends BaseInterface<Course, Long> {
 
-    //CRUD
     @Override
     List<Course> findAll();
 
-    @Override
-    Course findOneById(Long id);
+    List<AllCoursesDTO> getAllByRating();
+
+    CurrentCourseDTO findDTOById(Long id);
 
     @Override
-    Course saveOne(Course object);
+    Course findById(Long id);
+
+    @Override
+    Course save(Course course);
 
     @Override
     void deleteOneById(Long id);
 
-    Course updateOne(Course course);
-
-    // Sorted by rating
-    List<Course> getAllByRating();
+    @Override
+    Course update(Course course);
 
     //Find by title
     List<Course> findOneByTitle(String title);
 
     //Find all by category.
-    List<Course> findByCategory(String category);
-
-    List<Review> getReviewsOfCurrentCourse(Long id);
+    List<AllCoursesDTO> findByCategory(String category);
 }

@@ -2,11 +2,11 @@ package ru.rmamedov.courses.springbootappcourses.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.rmamedov.courses.springbootappcourses.model.Student;
+import ru.rmamedov.courses.springbootappcourses.model.User;
 
 @Repository
-public interface StudentRep extends JpaRepository<Student, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    Student findByUsername(String username);
+    User findByUsername(String username);
 
 }

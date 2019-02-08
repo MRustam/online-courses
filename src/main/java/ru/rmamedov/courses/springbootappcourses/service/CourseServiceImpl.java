@@ -4,79 +4,86 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
-import ru.rmamedov.courses.springbootappcourses.model.Review;
-import ru.rmamedov.courses.springbootappcourses.repository.CourseRep;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.AllCoursesDTO;
+import ru.rmamedov.courses.springbootappcourses.model.Student;
+import ru.rmamedov.courses.springbootappcourses.repository.CourseRepo;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.CurrentCourseDTO;
+import ru.rmamedov.courses.springbootappcourses.repository.StudentRepo;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
-import ru.rmamedov.courses.springbootappcourses.service.interfaces.IInstructorService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements ICourseService {
 
-    private CourseRep courseRep;
+    private CourseRepo courseRepo;
+    private StudentRepo studentRepo;
 
     @Autowired
-    public CourseServiceImpl(CourseRep courseRep) {
-        this.courseRep = courseRep;
+    public CourseServiceImpl(CourseRepo courseRepo, StudentRepo studentRepo) {
+        this.courseRepo = courseRepo;
+        this.studentRepo = studentRepo;
     }
 
     @Override
     public List<Course> findAll() {
-        return courseRep.findAll();
+        return courseRepo.findAll();
     }
 
     @Override
-    public Course findOneById(Long id) {
-        Course course = courseRep.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Course with id: '" + id + "' - Not found!"));
-        return course;
+    public List<AllCoursesDTO> getAllByRating() {
+        return courseRepo.findAllOrderedByRatingDesc();
     }
 
     @Override
-    public Course saveOne(Course course) {
-        if (course.getTitle() == null) {
+    public Course findById(Long id) {
+        Optional<Course> optCourse = courseRepo.findById(id);
+        if (optCourse.isPresent()) {
+            return optCourse.get();
+        } throw new EntityNotFoundException("Course with id: " + id + " not found");
+    }
+
+    @Override
+    public CurrentCourseDTO findDTOById(Long id) {
+        Optional<CurrentCourseDTO> optCourse = courseRepo.findDTOById(id);
+        if (optCourse.isPresent()) {
+            return optCourse.get();
+        } throw new EntityNotFoundException("Course with id: " + id + " not found");
+    }
+
+    @Override
+    public Course save(Course course) {
+        if (course == null) {
             throw new EntityNotFoundException("Saving course is null!");
         }
-
-//        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//
-//        String firstName = userDetails.getPassword();
-//
-//        Instructor instructor = instructorService.findByFirstName(firstName);
-//
-//        course.setInstructor(instructor);
-
-        return courseRep.save(course);
+        return courseRepo.save(course);
     }
 
     @Override
     public void deleteOneById(Long id) {
-        courseRep.delete(findOneById(id));
+        Course course = findById(id);
+        for (Student student : studentRepo.findAll()) {
+            if (student.getCourses() != null) {
+                student.getCourses().remove(course);
+            }
+        }
+        courseRepo.delete(course);
     }
 
     @Override
-    public Course updateOne(Course course) {
-        return saveOne(course);
-    }
-
-    @Override
-    public List<Course> getAllByRating() {
-        return courseRep.findTop10ByOrderByRatingDesc();
+    public Course update(Course course) {
+        return save(course);
     }
 
     @Override
     public List<Course> findOneByTitle(String title) {
-        return courseRep.findByTitleContainingIgnoreCase(title);
+        return courseRepo.findByTitleContainingIgnoreCase(title);
     }
 
     @Override
-    public List<Course> findByCategory(String category) {
-        return courseRep.findByCategoryOrderByRatingDesc(category);
+    public List<AllCoursesDTO> findByCategory(String category) {
+        return courseRepo.findByCategoryOrderByRatingDesc(category);
     }
 
-    @Override
-    public List<Review> getReviewsOfCurrentCourse(Long id) {
-        return findOneById(id).getReviews();
-    }
 }

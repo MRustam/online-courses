@@ -23,6 +23,6 @@ public class ReviewController {
 
     @GetMapping("/bycourse/{id}")
     public List<Review> getAllReviewByCourseId(@PathVariable Long id) {
-        return iReviewService.getAllByCourseId(id);
+        return iReviewService.findAllByCourseId(id);
     }
 }

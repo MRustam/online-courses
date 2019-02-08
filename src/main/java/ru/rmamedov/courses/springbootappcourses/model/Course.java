@@ -1,12 +1,10 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Entity
@@ -17,16 +15,16 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false, unique = true)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "category")
+    @Column(name = "category", nullable = false)
     private String category;
 
-    @Column(name = "description", length = 2000)
+    @Column(name = "description", length = 3000)
     private String description;
 
-    @Column(name = "duration")
+    @Column(name = "duration", nullable = false)
     private int duration;
 
     @CreationTimestamp
@@ -36,12 +34,10 @@ public class Course {
     @Column(name = "rating")
     private double rating;
 
+    @Column(name = "status")
+    private boolean status;
+
     @Lob
     @Column(name = "image")
     private Byte[] image;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
-
 }
