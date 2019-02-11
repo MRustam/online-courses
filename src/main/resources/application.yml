@@ -12,7 +12,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL93Dialect
@@ -32,6 +32,8 @@ spring:
     password: 123qwe
     driverClassName: org.postgresql.Driver
     initialization-mode: always
+
+#    postgres-container
 
 
 
