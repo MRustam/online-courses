@@ -37,6 +37,11 @@ public class CourseServiceImpl implements ICourseService {
     }
 
     @Override
+    public List<AllCoursesDTO> getAllByStudentId(Long id) {
+        return courseRepo.findByStudentIdOrderByRatingDesc(id);
+    }
+
+    @Override
     public Course findById(Long id) {
         Optional<Course> optCourse = courseRepo.findById(id);
         if (optCourse.isPresent()) {
