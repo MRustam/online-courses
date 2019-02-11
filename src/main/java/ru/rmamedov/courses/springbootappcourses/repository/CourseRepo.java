@@ -78,4 +78,7 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
 
     @Query(value = sql3, nativeQuery = true)
     Optional<CurrentCourseDTO> findDTOById(@Param("id") Long id);
+
+    @Query(value = sql1 + " WHERE sc.student_id = :id " + sql2, nativeQuery = true)
+    List<AllCoursesDTO> findByStudentIdOrderByRatingDesc(@Param("id") Long id);
 }

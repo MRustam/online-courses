@@ -37,6 +37,15 @@ public class CourseController {
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
+    // Custom get all courses, sorted by courseRating.
+    @GetMapping("/all/by-student-id/{id}")
+    public ResponseEntity<List<AllCoursesDTO>> getAllByStudentId(@PathVariable Long id) {
+        if (iCourseService.findAll().size() > 0) {
+            return new ResponseEntity<>(iCourseService.getAllByStudentId(id), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CurrentCourseDTO> getOneById(@PathVariable Long id) {
         CurrentCourseDTO course = iCourseService.findDTOById(id);

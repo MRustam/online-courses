@@ -7,9 +7,12 @@ $(document).ready(function () {
 
         var url;
         var category = new URL(window.location.href).searchParams.get("category");
+        var studentId = new URL(window.location.href).searchParams.get("studentId");
 
         if (category != null) {
             url = '/api/course/bycategory/' + category;
+        } else if (studentId > 0 ) {
+            url = '/api/course/all/by-student-id/' + studentId;
         } else {
             url = '/api/course/all';
         }
@@ -58,7 +61,7 @@ $(document).ready(function () {
                 '<h5>instructor: <span><a href="#' + data.instructorId + '">' + data.owner + '</a></span></h5>' +
                 '<hr>' +
                 '<h6>reviews: <span style="color: darkgreen">' + (data.rcount != null ? data.rcount : 'nothing') + '</span></h6>' +
-                '<h6>enrolled students: <span style="color: darkgreen">' + (data.enrolled > 0 ? data.enrolled : 'nobody') + '</span></h6>' +
+                '<h6><a href="/students?cId=' + id + '">enrolled students: </a><span style="color: darkgreen">' + (data.enrolled > 0 ? data.enrolled : 'nobody') + '</span></h6>' +
                 '<hr>' +
                 '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
                 '<div sec:authorize="hasRole(&#39;STUDENT&#39;)">' +

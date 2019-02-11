@@ -33,11 +33,16 @@ public class MvcController {
     @GetMapping(value = {
             "/access-denied",
             "/success",
-            "/students",
+            "",
             "/instructors",
             "/users"
     })
     public String toGeneralOneColumnTemplate() {
         return "/one-col-template";
+    }
+
+    @GetMapping("/students")
+    public String toStudents() {
+        return "students";
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.model.User;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.StudentDTO;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
 
 import java.util.List;
@@ -24,16 +25,24 @@ public class StudentController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Student>> getAll() {
+    public ResponseEntity<List<StudentDTO>> getAll() {
         if (studentService.findAll().size() > 0) {
-            return new ResponseEntity<>(studentService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(studentService.findAllDTO(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/all/by-course-id/{id}")
+    public ResponseEntity<List<StudentDTO>> getAllByCourseId(@PathVariable Long id) {
+        if (studentService.findAll().size() > 0) {
+            return new ResponseEntity<>(studentService.findAllDTOByCourseId(id), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Student> findById(@PathVariable Long id) {
-        Student student = studentService.findById(id);
+    public ResponseEntity<StudentDTO> findById(@PathVariable Long id) {
+        StudentDTO student = studentService.findDTOById(id);
         if (student == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

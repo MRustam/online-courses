@@ -2,75 +2,9 @@ $(document).ready(function () {
 
     var path = window.location.href.substring(window.location.href.lastIndexOf('/') + 1).toString();
 
+    console.log(path);
+
     switch (path) {
-
-        case 'students':
-            // All students.
-            $.get('/api/student/all', function (data) {
-
-                $('#multi-content').append(
-                    '<h1 class="my-4 text-center display-5" style="color: white">All Students</h1>' +
-                    '<div style="background: #f7f7f7"; class="text-center">' +
-                        '<table class="table table-bordered table-striped">\n' +
-                    '       <thead>\n' +
-                    '           <tr>\n' +
-                    '               <th class="">ID</th>\n' +
-                    '               <th class="">Full Name</th>\n' +
-                    '               <th class="">Performance</th>\n' +
-                    '               <th class="">Phone</th>\n' +
-                    '               <th class="">Email</th>\n' +
-                    '               <th class="">Skype</th>\n' +
-                    '               <th class="">Age</th>\n' +
-                    '           </tr>\n' +
-                    '       </thead>\n' +
-                    '       <tbody id="tbody-users">\n' +
-
-                    '       </tbody>\n' +
-                    '    </table>\n' +
-                    '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\n' +
-                    '    <div class="modal-dialog">\n' +
-                    '        <div class="modal-content"></div>\n' +
-                    '    </div>\n' +
-                    '    <div class="modal-dialog">\n' +
-                    '        <div class="modal-content"></div>\n' +
-                    '    </div>\n' +
-                    '    <div class="modal-dialog">\n' +
-                    '        <div class="modal-content">\n' +
-                    '            <div class="modal-header">\n' +
-                    '                <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true" class="">×   </span><span class="sr-only">Close</span>\n' +
-                    '\n' +
-                    '                </button>\n' +
-                    '                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>\n' +
-                    '\n' +
-                    '            </div>\n' +
-                    '            <div class="modal-body"></div>\n' +
-                    '            <div class="modal-footer">\n' +
-                    '                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\n' +
-                    '                <button type="button" class="btn btn-primary">Save changes</button>\n' +
-                    '            </div>\n' +
-                    '        </div>\n' +
-                    '    </div>\n' +
-                    '</div>' +
-                    '</div>');
-
-                $.each(data, function (index, el) {
-
-                    $('#tbody-users').append(   '<tr>' +
-                        '                           <td style="text-align:center;" class="">' + el.id + '</td>' +
-                        '                           <td>' + el.user.fullName + '</td>' +
-                        '                           <td>' + el.academicPerformance + '</td>' +
-                        '                           <td style="text-align:center;">' + el.user.phone + '</td>' +
-                        '                           <td style="text-align:center;">' + el.user.email + '</td>' +
-                        '                           <td style="text-align:center;">' + el.user.skype + '</td>' +
-                        '                           <td style="text-align:center;">' + el.user.age + '</td>' +
-                        '                       </tr>');
-
-                })
-
-            }).fail(function (err) {
-                alert(err);
-            });
-            break;
 
         case 'users':
             $.get('/api/user/all', function (data) {
