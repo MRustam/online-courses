@@ -9,6 +9,7 @@ import ru.rmamedov.courses.springbootappcourses.model.Course;
 import ru.rmamedov.courses.springbootappcourses.model.Role;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.model.User;
+import ru.rmamedov.courses.springbootappcourses.repository.DTO.StudentDTO;
 import ru.rmamedov.courses.springbootappcourses.repository.RoleRep;
 import ru.rmamedov.courses.springbootappcourses.repository.StudentRepo;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IStudentService;
@@ -41,10 +42,33 @@ public class StudentServiceImpl implements IStudentService {
     }
 
     @Override
+    public List<StudentDTO> findAllDTO() {
+        return studentRepo.findAllDTO();
+    }
+
+    @Override
+    public List<StudentDTO> findAllDTOByCourseId(Long id) {
+        List<StudentDTO> list = studentRepo.findStudentDTOByCourseId(id);
+        if (list.size() > 0) {
+            return list;
+        }
+        throw new EntityNotFoundException("Students with course id: " + id + " not found");
+    }
+
+    @Override
     public Student findById(Long id) {
-        Optional<Student> optInstructor = studentRepo.findById(id);
-        if (optInstructor.isPresent()) {
-            return optInstructor.get();
+        Optional<Student> student = studentRepo.findById(id);
+        if (student.isPresent()) {
+            return student.get();
+        }
+        throw new EntityNotFoundException("Student with id: " + id + " not found");
+    }
+
+    @Override
+    public StudentDTO findDTOById(Long id) {
+        Optional<StudentDTO> student = studentRepo.findStudentDTOById(id);
+        if (student.isPresent()) {
+            return student.get();
         }
         throw new EntityNotFoundException("Student with id: " + id + " not found");
     }

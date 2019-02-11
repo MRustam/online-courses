@@ -13,6 +13,8 @@ public interface ICourseService extends BaseInterface<Course, Long> {
 
     List<AllCoursesDTO> getAllByRating();
 
+    List<AllCoursesDTO> getAllByStudentId(Long id);
+
     CurrentCourseDTO findDTOById(Long id);
 
     @Override
