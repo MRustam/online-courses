@@ -62,4 +62,11 @@ public class Student {
         }
         return false;
     }
+
+    public boolean leave(Course course) {
+        if (course != null & courses != null) {
+            return courses.remove(course);
+        }
+        return false;
+    }
 }
