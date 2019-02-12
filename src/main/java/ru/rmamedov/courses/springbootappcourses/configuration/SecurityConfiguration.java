@@ -74,6 +74,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .access("hasRole('ROLE_INSTRUCTOR')")
                 .antMatchers("/new-course")
                     .access("hasRole('ROLE_INSTRUCTOR')");
+        // Only instructor can delete course.
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.DELETE, "/api/course/delete/**")
+                    .access("hasRole('ROLE_INSTRUCTOR')");
 
         // Everybody can process registration.
         http

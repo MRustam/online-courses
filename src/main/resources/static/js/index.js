@@ -66,7 +66,8 @@ $(document).ready(function () {
                 '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
                 '<div sec:authorize="hasRole(&#39;STUDENT&#39;)">' +
                 '     <button onclick="enrollFunction(' + id + ')" class="btn btn-success w-25">Enroll course</button>' +
-                '     <button onclick="leaveFunction(' + id + ')" class="btn btn-danger w-25">Leave course</button>' +
+                '     <button onclick="leaveFunction(' + id + ')" class="btn btn-info w-25">Leave course</button><br/>' +
+                '     <button onclick="deleteCourseFunction(' + id + ')" class="btn btn-danger w-25 mt-3">Delete course</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -100,6 +101,22 @@ $(document).ready(function () {
     }
 });
 
+function deleteCourseFunction(id) {
+
+    $.ajax({
+        url: '/api/course/delete/' + id,
+        contentType: 'application/json',
+        method: 'DELETE',
+        success: function () {
+            alert('You are successfully deleted this course!');
+            window.location.replace('/home');
+        },
+        error: function () {
+            console.log('You should be logget in as a instructor!');
+        }
+    });
+}
+
 function enrollFunction(id) {
 
     $.ajax({
@@ -107,11 +124,11 @@ function enrollFunction(id) {
         contentType: 'application/json',
         method: 'PUT',
         success: function () {
-            alert('success!');
+            alert('You are successfully enrolled on this course!');
             window.location.reload();
         },
-        error: function (err) {
-            console.log('error! - ' + err);
+        error: function () {
+            console.log('You should be logget in as a student!');
         }
     });
 }
@@ -123,11 +140,11 @@ function leaveFunction(id) {
         contentType: 'application/json',
         method: 'PUT',
         success: function () {
-            alert('success!');
+            alert('You are successfully drop this course!');
             window.location.reload();
         },
-        error: function (err) {
-            console.log('error! - ' + err);
+        error: function () {
+            console.log('You should be logget in as a student!');
         }
     });
 }
