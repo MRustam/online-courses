@@ -75,12 +75,21 @@ public class StudentController {
     }
 
     @PutMapping("/enroll/courseId/{id}")
-    public ResponseEntity<Student> update(@PathVariable Long id,
+    public ResponseEntity<Student> enroll(@PathVariable Long id,
                                           @AuthenticationPrincipal User user) {
         if (id <= 0 || user == null) {
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
         }
         return new ResponseEntity<>(studentService.enroll(id, user), HttpStatus.OK);
+    }
+
+    @PutMapping("/leave/courseId/{id}")
+    public ResponseEntity<Student> leave(@PathVariable Long id,
+                                          @AuthenticationPrincipal User user) {
+        if (id <= 0 || user == null) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+        return new ResponseEntity<>(studentService.leave(id, user), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

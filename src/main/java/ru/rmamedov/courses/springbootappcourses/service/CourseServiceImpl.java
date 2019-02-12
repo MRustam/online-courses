@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.rmamedov.courses.springbootappcourses.exception.EntityNotFoundException;
 import ru.rmamedov.courses.springbootappcourses.model.Course;
+import ru.rmamedov.courses.springbootappcourses.model.Review;
 import ru.rmamedov.courses.springbootappcourses.repository.DTO.AllCoursesDTO;
 import ru.rmamedov.courses.springbootappcourses.model.Student;
 import ru.rmamedov.courses.springbootappcourses.repository.CourseRepo;
 import ru.rmamedov.courses.springbootappcourses.repository.DTO.CurrentCourseDTO;
+import ru.rmamedov.courses.springbootappcourses.repository.ReviewRepo;
 import ru.rmamedov.courses.springbootappcourses.repository.StudentRepo;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.ICourseService;
 
@@ -19,11 +21,13 @@ public class CourseServiceImpl implements ICourseService {
 
     private CourseRepo courseRepo;
     private StudentRepo studentRepo;
+    private ReviewRepo reviewRepo;
 
     @Autowired
-    public CourseServiceImpl(CourseRepo courseRepo, StudentRepo studentRepo) {
+    public CourseServiceImpl(CourseRepo courseRepo, StudentRepo studentRepo, ReviewRepo reviewRepo) {
         this.courseRepo = courseRepo;
         this.studentRepo = studentRepo;
+        this.reviewRepo = reviewRepo;
     }
 
     @Override
@@ -68,6 +72,10 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public void deleteOneById(Long id) {
         Course course = findById(id);
+        List<Review> reviews = reviewRepo.findByCourseIdOrderByCreatedDesc(course.getId());
+        if (reviews != null) {
+            reviews.stream().forEach(review -> review.setCourse(null));
+        }
         for (Student student : studentRepo.findAll()) {
             if (student.getCourses() != null) {
                 student.getCourses().remove(course);

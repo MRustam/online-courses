@@ -1,11 +1,12 @@
 package ru.rmamedov.courses.springbootappcourses.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 import ru.rmamedov.courses.springbootappcourses.model.Review;
+import ru.rmamedov.courses.springbootappcourses.model.User;
 import ru.rmamedov.courses.springbootappcourses.service.interfaces.IReviewService;
 
 import java.util.List;
@@ -22,7 +23,20 @@ public class ReviewController {
     }
 
     @GetMapping("/bycourse/{id}")
-    public List<Review> getAllReviewByCourseId(@PathVariable Long id) {
-        return iReviewService.findAllByCourseId(id);
+    public ResponseEntity<List<Review>> getAllReviewByCourseId(@PathVariable Long id) {
+        if (iReviewService.findAllByCourseId(id).size() > 0) {
+            return new ResponseEntity<>(iReviewService.findAllByCourseId(id), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/add/{courseId}")
+    public ResponseEntity<Review> add(@PathVariable Long courseId,
+                                      @RequestBody Review review,
+                                      @AuthenticationPrincipal User user) {
+        if (courseId > 0 & user != null & review != null) {
+            return new ResponseEntity<>(iReviewService.add(courseId, review, user), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 }

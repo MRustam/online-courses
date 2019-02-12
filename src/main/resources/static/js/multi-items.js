@@ -125,17 +125,17 @@ $(document).ready(function () {
                 '\n' +
                 '                <form id="course-form" method="POST" >\n' +
                 '                    <div class="form-group">\n' +
-                '                        <input password="title" type="text" class="form-control" id="title-input" placeholder="Title" required />\n' +
+                '                        <input name="title" type="text" class="form-control" id="title-input" placeholder="Title" required />\n' +
                 '                    </div>\n' +
                 '                       <div class="form-group mb-4">' +
-                '                         <textarea password="title" class="form-control" id="description-input" placeholder="Description" required />\n' +
+                '                         <textarea name="title" class="form-control" id="description-input" placeholder="Description" required />\n' +
                 '                   </div>' +
                 '                   <div class="form-group mb-4">' +
                 '                       <label for="date-input" class="small font-weight-light font-italic">Start date</label>' +
-                '                       <input password="title" type="date" class="form-control" id="date-input" required />\n' +
+                '                       <input name="title" type="date" class="form-control" id="date-input" required />\n' +
                 '                   </div>' +
                 '                    <div class="form-group">\n' +
-                '                        <select password="category[category]" class="custom-select" id="select-category" required>\n' +
+                '                        <select name="category[category]" class="custom-select" id="select-category" required>\n' +
                 '                            <option value="">Category</option>\n' +
                 '                            <option value="programming">Programming</option>\n' +
                 '                            <option value="languages">Languages</option>\n' +
@@ -144,7 +144,7 @@ $(document).ready(function () {
                 '                        </select>\n' +
                 '                    </div>\n' +
                 '                   <div class="form-group mb-4">' +
-                '                       <input password="title" type="number" class="form-control" id="duration-input" placeholder="Duration" required />\n' +
+                '                       <input name="title" type="number" class="form-control" id="duration-input" placeholder="Duration" required />\n' +
                 '                   </div>' +
                 '\n' +
                 '                    <button type="submit" class="btn btn-primary mb-4">Submit</button>\n' +

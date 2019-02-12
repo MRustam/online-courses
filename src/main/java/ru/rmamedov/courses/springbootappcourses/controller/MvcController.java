@@ -12,7 +12,7 @@ public class MvcController {
     // General welcome page with list courses.
     @GetMapping(value = {"/", "/home"})
     public String toHomePage() {
-        return "/index";
+        return "index";
     }
 
     // Login page. If logged in then prevent to show login page.
@@ -20,25 +20,25 @@ public class MvcController {
     public String toLoginPage() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
-            return "/index";
+            return "index";
         }
-        return "/login";
+        return "login";
     }
 
     @GetMapping("/registration")
     public String register() {
-        return "/registration";
+        return "registration";
     }
 
     @GetMapping(value = {
             "/access-denied",
             "/success",
-            "",
             "/instructors",
-            "/users"
+            "/users",
+            "/new-course"
     })
     public String toGeneralOneColumnTemplate() {
-        return "/one-col-template";
+        return "one-col-template";
     }
 
     @GetMapping("/students")

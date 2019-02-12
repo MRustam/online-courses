@@ -66,6 +66,8 @@ $(document).ready(function () {
                 '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
                 '<div sec:authorize="hasRole(&#39;STUDENT&#39;)">' +
                 '     <button onclick="enrollFunction(' + id + ')" class="btn btn-success w-25">Enroll course</button>' +
+                '     <button onclick="leaveFunction(' + id + ')" class="btn btn-info w-25">Leave course</button><br/>' +
+                '     <button onclick="deleteCourseFunction(' + id + ')" class="btn btn-danger w-25 mt-3">Delete course</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -81,13 +83,17 @@ $(document).ready(function () {
                 $.each(data, function (index, el) {
                     $('#current-course-with-reviews').append('<div class="card-body">' +
                         '<p class="small font-weight-light font-italic">' + el.text + '</p>' +
-                        '<small class="text-muted">posted: ' + el.created + '</small>' +
+                        '<small class="text-muted"><span class="font-weight-bold">posted:</span> ' + el.created + '</small><br/>' +
+                        '<small class="text-muted"><span class="font-weight-bold">owner:</span> ' + el.owner.fullName + '</small>' +
                         '<hr>' +
                         '</div>');
                 });
 
             });
-            $('#current-course').append('<a href="#" class="btn btn-secondary" style="margin-bottom: 100px;">Leave a Review</a>');
+            $('#current-course').append('<div>' +
+                '   <textarea name="review-text" id="review-text" class="col-lg-12 col-md-6 col-sm-3"/><br/>' +
+                '   <button onclick="addReview(' + id + ')" class="btn btn-info" style="margin-bottom: 100px;">Leave a Review</button>' +
+                '</div>');
 
         }).fail(function (err) {
             alert(err);
@@ -95,19 +101,75 @@ $(document).ready(function () {
     }
 });
 
+function deleteCourseFunction(id) {
+
+    $.ajax({
+        url: '/api/course/delete/' + id,
+        contentType: 'application/json',
+        method: 'DELETE',
+        success: function () {
+            alert('You are successfully deleted this course!');
+            window.location.replace('/home');
+        },
+        error: function () {
+            console.log('You should be logget in as a instructor!');
+        }
+    });
+}
+
 function enrollFunction(id) {
-    console.log(id);
 
     $.ajax({
         url: '/api/student/enroll/courseId/' + id,
         contentType: 'application/json',
         method: 'PUT',
         success: function () {
-            alert('success!');
+            alert('You are successfully enrolled on this course!');
+            window.location.reload();
         },
-        error: function (err) {
-            console.log('earror! - ' + err);
+        error: function () {
+            console.log('You should be logget in as a student!');
         }
     });
 }
+
+function leaveFunction(id) {
+
+    $.ajax({
+        url: '/api/student/leave/courseId/' + id,
+        contentType: 'application/json',
+        method: 'PUT',
+        success: function () {
+            alert('You are successfully drop this course!');
+            window.location.reload();
+        },
+        error: function () {
+            console.log('You should be logget in as a student!');
+        }
+    });
+}
+
+function addReview(id) {
+
+    var review = {
+        text: $("#review-text").val(),
+        created: new Date().toJSON()
+    };
+    $.ajax({
+        method: "POST",
+        url: "/api/review/add/" + id,
+        contentType: "application/json",
+        data: JSON.stringify(review),
+        success: function () {
+            alert('success!');
+            window.location.reload();
+        },
+        error: function () {
+            alert('You should be logget in!');
+            window.location.reload();
+        }
+    })
+}
+
+
 

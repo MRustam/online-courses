@@ -116,8 +116,20 @@ public class StudentServiceImpl implements IStudentService {
     public Student enroll(Long id, User user) {
         Student student = findByUsername(user.getUsername());
         Course course = courseService.findById(id);
-        student.enroll(course);
-        return update(student);
+        if (student.enroll(course)) {
+            return update(student);
+        }
+        throw new EntityNotSaved("Can't enroll to this course: " + course.getTitle());
+    }
+
+    @Override
+    public Student leave(Long id, User user) {
+        Student student = findByUsername(user.getUsername());
+        Course course = courseService.findById(id);
+        if (student.leave(course)) {
+            return update(student);
+        }
+        throw new EntityNotSaved("Can't leave the course: " + course.getTitle());
     }
 
     @Override
