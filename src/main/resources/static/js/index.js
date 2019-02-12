@@ -66,6 +66,7 @@ $(document).ready(function () {
                 '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
                 '<div sec:authorize="hasRole(&#39;STUDENT&#39;)">' +
                 '     <button onclick="enrollFunction(' + id + ')" class="btn btn-success w-25">Enroll course</button>' +
+                '     <button onclick="leaveFunction(' + id + ')" class="btn btn-success w-25">Leave course</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -96,7 +97,6 @@ $(document).ready(function () {
 });
 
 function enrollFunction(id) {
-    console.log(id);
 
     $.ajax({
         url: '/api/student/enroll/courseId/' + id,
@@ -104,9 +104,26 @@ function enrollFunction(id) {
         method: 'PUT',
         success: function () {
             alert('success!');
+            window.location.reload();
         },
         error: function (err) {
-            console.log('earror! - ' + err);
+            console.log('error! - ' + err);
+        }
+    });
+}
+
+function leaveFunction(id) {
+
+    $.ajax({
+        url: '/api/student/leave/courseId/' + id,
+        contentType: 'application/json',
+        method: 'PUT',
+        success: function () {
+            alert('success!');
+            window.location.reload();
+        },
+        error: function (err) {
+            console.log('error! - ' + err);
         }
     });
 }

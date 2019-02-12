@@ -31,6 +31,8 @@ public interface IStudentService extends BaseInterface<Student, Long> {
 
     Student enroll(Long id, User user);
 
+    Student leave(Long id, User user);
+
     StudentDTO findDTOById(Long id);
 
     List<StudentDTO> findAllDTOByCourseId(Long id);

@@ -27,7 +27,7 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://postgres-container:5432/courses_db
+    url: jdbc:postgresql://localhost:5432/courses_db
     username: course_admin
     password: 123qwe
     driverClassName: org.postgresql.Driver
