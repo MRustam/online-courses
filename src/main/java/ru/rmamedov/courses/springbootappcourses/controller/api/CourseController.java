@@ -58,18 +58,14 @@ public class CourseController {
     @PostMapping("/save")
     public ResponseEntity<Course> saveOne(@RequestBody Course course, @AuthenticationPrincipal User user) {
         if (course == null || user == null) {
-
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-
-        } else {
-
-            Instructor instructor = instructorService.findByUsername(user.getUsername());
-            if (instructor != null) {
-                instructor.addCourse(course);
-                return new ResponseEntity<>(iCourseService.save(course), HttpStatus.OK);
-            }
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+        Instructor instructor = instructorService.findByUsername(user.getUsername());
+        if (instructor != null) {
+            instructor.addCourse(course);
+            return new ResponseEntity<>(iCourseService.save(course), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @DeleteMapping("/delete/{id}")

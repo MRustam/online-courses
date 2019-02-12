@@ -1,6 +1,8 @@
 package ru.rmamedov.courses.springbootappcourses.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,9 +19,11 @@ public class Review {
     @Column(name = "text", length = 3000)
     private String text;
 
+    @CreationTimestamp
     @Column(name = "created")
     private LocalDate created;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
