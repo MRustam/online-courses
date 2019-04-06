@@ -65,9 +65,9 @@ $(document).ready(function () {
                 '<hr>' +
                 '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
                 '<div sec:authorize="hasRole(&#39;STUDENT&#39;)">' +
-                '     <button onclick="enrollFunction(' + id + ')" class="btn btn-success w-25">Enroll course</button>' +
-                '     <button onclick="leaveFunction(' + id + ')" class="btn btn-info w-25">Leave course</button><br/>' +
-                '     <button onclick="deleteCourseFunction(' + id + ')" class="btn btn-danger w-25 mt-3">Delete course</button>' +
+                '     <button onclick="subscribe(' + id + ')" class="btn btn-success w-25">Enroll course</button>' +
+                '     <button onclick="unsubscribe(' + id + ')" class="btn btn-info w-25">Leave course</button><br/>' +
+                '     <button onclick="deleteCourse(' + id + ')" class="btn btn-danger w-25 mt-3">Delete course</button>' +
                 '</div>' +
                 '</div>' +
                 '</div>' +
@@ -101,7 +101,7 @@ $(document).ready(function () {
     }
 });
 
-function deleteCourseFunction(id) {
+function deleteCourse(id) {
 
     $.ajax({
         url: '/api/course/delete/' + id,
@@ -117,7 +117,7 @@ function deleteCourseFunction(id) {
     });
 }
 
-function enrollFunction(id) {
+function subscribe(id) {
 
     $.ajax({
         url: '/api/student/enroll/courseId/' + id,
@@ -133,7 +133,7 @@ function enrollFunction(id) {
     });
 }
 
-function leaveFunction(id) {
+function unsubscribe(id) {
 
     $.ajax({
         url: '/api/student/leave/courseId/' + id,
