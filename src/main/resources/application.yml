@@ -2,14 +2,12 @@ server:
   port: 7070
   servlet:
       session:
-        timeout: 400s
-  error:
-    whitelabel:
-      enabled: false
-
+        timeout: 600s
+#  error:
+#    whitelabel:
+#      enabled: false
 
 spring:
-
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -24,7 +22,6 @@ spring:
           lob:
             non_contextual_creation: true
 
-
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/courses_db
@@ -35,33 +32,9 @@ spring:
 
 #    postgres-container
 
-
-
   jackson:
     serialization:
       fail-on-empty-beans: false
 
-
-
-  thymeleaf:
-    cache: false
-    check-template: true
-    check-template-location: true
-    enabled: true
-    encoding: UTF-8
-    mode: HTML
-    prefix: classpath:/templates/
-    suffix: .html
-
-
-#  ###
-#  #   H2 Settings
-#  ###
-#  h2:
-#    console:
-#      enabled: true
-#      path: /h2
-
-
-#logging.level.org.springframework.web: DEBUG
-#logging.level.org.hibernate: ERROR
+logging.level.org.springframework.web: ERROR
+logging.level.org.hibernate: ERROR

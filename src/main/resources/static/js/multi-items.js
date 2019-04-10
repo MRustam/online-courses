@@ -39,7 +39,7 @@ $(document).ready(function () {
                     '    <div class="modal-dialog">\n' +
                     '        <div class="modal-content">\n' +
                     '            <div class="modal-header">\n' +
-                    '                <button type="button" class="close" data-dismiss="modal"> <span aria-hidden="true" class="">×   </span><span class="sr-only">Close</span>\n' +
+                    '                <button type="button" class="close" persist-dismiss="modal"> <span aria-hidden="true" class="">×   </span><span class="sr-only">Close</span>\n' +
                     '\n' +
                     '                </button>\n' +
                     '                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>\n' +
@@ -47,7 +47,7 @@ $(document).ready(function () {
                     '            </div>\n' +
                     '            <div class="modal-body"></div>\n' +
                     '            <div class="modal-footer">\n' +
-                    '                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\n' +
+                    '                <button type="button" class="btn btn-default" persist-dismiss="modal">Close</button>\n' +
                     '                <button type="button" class="btn btn-primary">Save changes</button>\n' +
                     '            </div>\n' +
                     '        </div>\n' +

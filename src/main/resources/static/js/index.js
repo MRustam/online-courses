@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var id = new URL(window.location.href).searchParams.get("id");
 
-    // Populate main page with all courses.
+    // Populate main page with all ru.rmamedov.courses.
     if (id == null) {
 
         var url;
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
         //Courses or current course with details.
         $.get(url, function (data) {
-            //Populate cards(each course) on all courses page.
+            //Populate cards(each course) on all ru.rmamedov.courses page.
             $.each(data, function (index, el) {
                 var div = $('<div class="col-lg-3 col-md-6 mb-4">' +
                     '           <div class="card h-100" style="border:2px solid wheat;">' +
@@ -39,7 +39,7 @@ $(document).ready(function () {
                     '           </div>' +
                     '       </div>');
 
-                $('#courses-list').append(div);
+                $('#ru.rmamedov.courses-list').append(div);
             });
         }).fail(function (err) {
             console.log(err);
@@ -47,9 +47,9 @@ $(document).ready(function () {
 
     } else {
 
-        // Populate main page current course. Works if id were passed by parameter (/api/courses/all#?id).
+        // Populate main page current course. Works if id were passed by parameter (/api/ru.rmamedov.courses/all#?id).
         $.get('/api/course/' + id, function (data) {
-            // Populate course data.
+            // Populate course persist.
             $('#current-course').append('<div class="card">' +
                 '<img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">' +
                 '<div class="card-body">' +
