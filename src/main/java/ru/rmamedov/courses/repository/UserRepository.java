@@ -2,15 +2,15 @@ package ru.rmamedov.courses.repository;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rmamedov.courses.exception.user.UserNotFoundException;
-import ru.rmamedov.courses.exception.user.UserNotSavedException;
+import ru.rmamedov.courses.exception.exceptions.user.UserAlreadyExistsException;
+import ru.rmamedov.courses.exception.exceptions.user.UserNotFoundException;
 import ru.rmamedov.courses.model.user.User;
-import ru.rmamedov.courses.repository.interfaces.IBaseRepository;
+import ru.rmamedov.courses.repository.interfaces.IUserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -24,8 +24,8 @@ import java.util.List;
  */
 
 @Repository
-@Transactional
-public class UserRepository implements IBaseRepository<User, String> {
+@Transactional(propagation = Propagation.MANDATORY)
+public class UserRepository implements IUserRepository {
 
     @PersistenceContext
     private EntityManager em;
@@ -58,10 +58,10 @@ public class UserRepository implements IBaseRepository<User, String> {
 
         typedQuery = em.createQuery(criteriaQuery.select(root));
         final List<User> list = typedQuery.getResultList();
-        if (list != null && !list.isEmpty()) {
-            return Collections.unmodifiableList(list);
+        if (list == null || list.isEmpty()) {
+            throw new UserNotFoundException("There're is no any users!");
         }
-        throw new UserNotFoundException("There're is no any users!");
+        return Collections.unmodifiableList(list);
     }
 
     /**
@@ -136,8 +136,8 @@ public class UserRepository implements IBaseRepository<User, String> {
      * @param user incoming new User.
      */
     @Override
-    public void save(@NotNull final User user) throws DataIntegrityViolationException {
-        em.persist(user);
+    public void save(@NotNull final User user) {
+        em.merge(user);
     }
 
     /**
@@ -147,12 +147,12 @@ public class UserRepository implements IBaseRepository<User, String> {
      */
     @NotNull
     @Override
-    public User update(@NotNull final User user) throws UserNotSavedException {
+    public User update(@NotNull final User user) throws UserAlreadyExistsException {
         final User updatedUser = em.merge(user);
         if (updatedUser != null) {
             return updatedUser;
         }
-        throw new UserNotSavedException("Can't manage to update User!");
+        throw new UserAlreadyExistsException("Can't manage to update User!");
     }
 
     /**
@@ -162,7 +162,7 @@ public class UserRepository implements IBaseRepository<User, String> {
      * @return affected rows.
      */
     @Override
-    public int fetch(@NotNull final User user) throws UserNotSavedException {
+    public int fetch(@NotNull final User user) throws UserAlreadyExistsException {
         criteriaBuilder = em.getCriteriaBuilder();
         criteriaUpdate = criteriaBuilder.createCriteriaUpdate(User.class);
         root = criteriaUpdate.from(User.class);
@@ -196,7 +196,7 @@ public class UserRepository implements IBaseRepository<User, String> {
         if (updated > 0) {
             return updated;
         }
-        throw new UserNotSavedException("Can't manage to update User!");
+        throw new UserAlreadyExistsException("Can't manage to update User!");
     }
 
     /**

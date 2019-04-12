@@ -5,10 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ru.rmamedov.courses.exception.user.UserNotFoundException;
-import ru.rmamedov.courses.exception.user.UserNotSavedException;
+import org.springframework.transaction.annotation.Transactional;
+import ru.rmamedov.courses.exception.exceptions.role.RoleNotFoundException;
 import ru.rmamedov.courses.model.user.Role;
 import ru.rmamedov.courses.repository.RoleRepository;
+import ru.rmamedov.courses.repository.interfaces.IRoleRepository;
 import ru.rmamedov.courses.service.interfaces.IRoleService;
 
 import java.util.List;
@@ -18,38 +19,35 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class RoleService implements IRoleService {
 
-    private RoleRepository repository;
-
-    @NotNull
-    @Override
-    public List<Role> findAll() throws UserNotFoundException {
-        return repository.findAll();
-    }
+    private IRoleRepository repository;
 
     @Autowired
     public RoleService(RoleRepository repository) {
         this.repository = repository;
     }
 
+    @NotNull
     @Override
-    public void save(@NotNull Role role) {
-        try {
-            repository.save(role);
-        } catch (DataIntegrityViolationException ex) {
-            throw new UserNotSavedException("Role already exists, 'Name' have to be unique!");
-        }
+    public List<Role> findAll() throws RoleNotFoundException {
+        return repository.findAll();
     }
 
     @NotNull
     @Override
-    public Role findByName(@NotNull String name) {
+    public Role findByName(@NotNull String name) throws RoleNotFoundException {
         try {
             return repository.findByName(name);
         } catch (EmptyResultDataAccessException ex) {
-            throw new UserNotFoundException("Role with name: '" + name + "' - Not Found");
+            throw new RoleNotFoundException("Role with name: '" + name + "' - Not Found");
         }
+    }
+
+    @Override
+    public void save(@NotNull Role role) throws DataIntegrityViolationException {
+        repository.save(role);
     }
 
     @Override

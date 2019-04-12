@@ -22,7 +22,7 @@ public interface StudentRepo extends JpaRepository<Student, Long> {
             "      u.email,\n" +
             "      u.skype,\n" +
             "      s.academic_performance AS performance,\n" +
-            "      count(sc.course_id) AS ru.rmamedov.courses\n" +
+            "      count(sc.course_id) AS ru.rmamedov.createdCourses\n" +
             "FROM student s\n" +
             "JOIN users u ON s.user_id = u.id\n" +
             "LEFT JOIN student_course sc on s.id = sc.student_id\n";

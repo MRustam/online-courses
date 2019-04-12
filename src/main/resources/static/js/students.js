@@ -29,10 +29,10 @@ $(document).ready(function () {
                 '               <p>username: ' + data.username + '</p>' +
                 '               <p>age: ' + data.age + '</p>' +
                 '               <p>email: ' + data.email + '<br/>skype: ' + data.skype + '</p>' +
-                '               <p>enrolled on: ' + data.courses + ' course/s</p>' +
+                '               <p>enrolledCourses on: ' + data.courses + ' course/s</p>' +
                 '               <p>performance: ' + data.performance + ' </p>' +
                 '               <p>registered: ' + data.registered + '</p>' +
-                '               <p><a href="/home?studentId=' + data.id + '">Your ru.rmamedov.courses link</a></p>' +
+                '               <p><a href="/home?studentId=' + data.id + '">Your ru.rmamedov.createdCourses link</a></p>' +
                 '           </div>' +
                 '        </div>' +
                 '</div>');

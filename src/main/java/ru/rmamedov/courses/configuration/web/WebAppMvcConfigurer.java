@@ -19,7 +19,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = "ru.rmamedov.ru.rmamedov.courses.controller")
+@ComponentScan(basePackages = "ru.rmamedov.ru.rmamedov.createdCourses.controller")
 public class WebAppMvcConfigurer implements WebMvcConfigurer {
 
     private ApplicationContext context;

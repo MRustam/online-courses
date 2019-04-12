@@ -4,8 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.rmamedov.courses.exception.user.UserNotFoundException;
-import ru.rmamedov.courses.exception.user.UserNotSavedException;
+import ru.rmamedov.courses.exception.exceptions.user.UserNotFoundException;
+import ru.rmamedov.courses.exception.exceptions.user.UserAlreadyExistsException;
 import ru.rmamedov.courses.model.user.User;
 import ru.rmamedov.courses.service.interfaces.base.IBaseService;
 
@@ -29,7 +29,7 @@ public interface IUserService extends IBaseService<User, String>, UserDetailsSer
     List<User> searchHavingFullName(String fullName) throws UserNotFoundException;
 
     @Override
-    void save(@NotNull final User object) throws UserNotSavedException;
+    void save(@NotNull final User object) throws UserAlreadyExistsException;
 
     @Override
     int deleteById(@NotNull final String id);

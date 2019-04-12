@@ -116,7 +116,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <finalName>ru.rmamedov.courses</finalName>
+                    <finalName>courses</finalName>
                 </configuration>
             </plugin>
         </plugins>

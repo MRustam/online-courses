@@ -2,8 +2,8 @@ package ru.rmamedov.courses.repository.interfaces;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.EmptyResultDataAccessException;
-import ru.rmamedov.courses.exception.user.UserNotFoundException;
-import ru.rmamedov.courses.exception.user.UserNotSavedException;
+import ru.rmamedov.courses.exception.exceptions.user.UserAlreadyExistsException;
+import ru.rmamedov.courses.exception.exceptions.user.UserNotFoundException;
 import ru.rmamedov.courses.model.user.User;
 
 import java.util.List;
@@ -26,12 +26,12 @@ public interface IBaseRepository<T, ID> {
     @NotNull
     List<T> searchByHavingFullName(@NotNull final ID fullName) throws UserNotFoundException;
 
-    void save(@NotNull final T object) throws UserNotSavedException;
+    void save(@NotNull final T object);// TODO throws some exception.
 
     int deleteById(@NotNull final ID id) throws UserNotFoundException;
 
     @NotNull
     User update(@NotNull final User user);
 
-    int fetch(@NotNull final T t) throws UserNotSavedException;
+    int fetch(@NotNull final T t) throws UserAlreadyExistsException;
 }

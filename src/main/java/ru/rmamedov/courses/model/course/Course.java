@@ -58,14 +58,14 @@ public class Course implements Serializable {
     private LocalDate starts;
 
     @Column(name = "rating")
-    private double rating;
+    private double rating = 0.0D;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     private Image image;
 
-    @ManyToMany(mappedBy = "enrolled",
+    @ManyToMany(mappedBy = "enrolledCourses",
             cascade = {
                     CascadeType.DETACH,
                     CascadeType.MERGE,
@@ -75,7 +75,7 @@ public class Course implements Serializable {
     private Set<User> users;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private Set<Review> reviews;
+    private Set<Comment> comments;
 
     @Override
     public boolean equals(Object o) {

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MvcController {
 
-    // General welcome page with list ru.rmamedov.courses.
+    // General welcome page with list ru.rmamedov.createdCourses.
     @GetMapping(value = {"/", "/home"})
     public String toHomePage() {
         return "index";

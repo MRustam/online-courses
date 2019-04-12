@@ -1,19 +1,17 @@
 package unit;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.rmamedov.courses.SpringBootApp;
 import ru.rmamedov.courses.configuration.persist.PersistenceConfigurer;
-import ru.rmamedov.courses.exception.user.UserNotFoundException;
-import ru.rmamedov.courses.exception.user.UserNotSavedException;
+import ru.rmamedov.courses.exception.exceptions.role.RoleNotFoundException;
 import ru.rmamedov.courses.model.user.Role;
 import ru.rmamedov.courses.service.interfaces.IRoleService;
 
@@ -36,53 +34,57 @@ public class RoleServiceTest {
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
 
-    @Before
-    public void init() {
+    // Find tests.
+    @Test
+    public void whenFindAllRolesButThereAreIsNoAnyThenExceptionThrowsTest() {
+        exceptionRule.expect(RoleNotFoundException.class);
+        exceptionRule.expectMessage("There're is no any roles!");
+        service.findAll();
+    }
+    @Test
+    @DirtiesContext
+    public void findAllRolesTest() {
         service.save(new Role("1", "ROLE_STUDENT"));
         service.save(new Role("2", "ROLE_INSTRUCTOR"));
         service.save(new Role("3", "ROLE_ADMIN"));
-    }
-
-    @After
-    public void destroy() {
-        service.deleteById("1");
-        service.deleteById("2");
-        service.deleteById("3");
-    }
-
-    // Find tests.
-    @Test
-    public void findAllRolesTest() {
         assertEquals(3, service.findAll().size());
     }
     @Test
+    @DirtiesContext
     public void findRoleByNameTest() {
+        service.save(new Role("2", "ROLE_INSTRUCTOR"));
         assertEquals("ROLE_INSTRUCTOR", service.findByName("ROLE_INSTRUCTOR").getName());
     }
     @Test
-    public void whenFindNonexistentRoleByNameThenThrowsExceptionTest() {
-        exceptionRule.expect(UserNotFoundException.class);
-        exceptionRule.expectMessage("Role with name: 'INSTRUCTOR' - Not Found");
-        service.findByName("INSTRUCTOR");
+    public void whenFindByNameNonexistentRoleThenThrowsExceptionTest() {
+        final String roleName = "INSTRUCTOR";
+        exceptionRule.expect(RoleNotFoundException.class);
+        exceptionRule.expectMessage("Role with name: '" + roleName + "' - Not Found");
+        service.findByName(roleName);
     }
     // Save tests.
     @Test
     @DirtiesContext
     public void saveRoleTest() {
         service.save(new Role("4", "ROLE_SUPER_ADMIN"));
-        assertEquals(4, service.findAll().size());
+        assertEquals("ROLE_SUPER_ADMIN", service.findByName("ROLE_SUPER_ADMIN").getName());
+        assertEquals(1, service.findAll().size());
     }
     @Test
     @DirtiesContext
     public void saveRoleWithTheSameNameTest() {
-        exceptionRule.expect(UserNotSavedException.class);
-        service.save(new Role("2", "ROLE_STUDENT"));
+        exceptionRule.expect(DataIntegrityViolationException.class);
+        service.save(new Role("1", "ROLE_STUDENT"));
+        service.save(new Role("4", "ROLE_STUDENT"));
     }
     // Delete rests.
     @Test
     @DirtiesContext
     public void deleteRoleTest() {
+        service.save(new Role("1", "ROLE_STUDENT"));
+        service.save(new Role("2", "ROLE_INSTRUCTOR"));
         service.deleteById("1");
-        assertEquals(2, service.findAll().size());
+        assertEquals(1, service.findAll().size());
+        assertEquals("ROLE_INSTRUCTOR", service.findByName("ROLE_INSTRUCTOR").getName());
     }
 }

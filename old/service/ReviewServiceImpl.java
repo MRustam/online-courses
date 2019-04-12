@@ -39,7 +39,7 @@ public class ReviewServiceImpl implements IReviewService {
             review.setOwner(user);
             return save(review);
         }
-        throw new EntityNotSavedException("Review not saved");
+        throw new EntityNotSavedException("Comment not saved");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ReviewServiceImpl implements IReviewService {
         if (optReview.isPresent()) {
             return optReview.get();
         }
-        throw new EntityNotFoundException("Review with id: " + id + " Not found!");
+        throw new EntityNotFoundException("Comment with id: " + id + " Not found!");
     }
 
     @Override

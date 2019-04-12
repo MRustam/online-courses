@@ -11,8 +11,8 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "review")
-public class Review {
+@Table(name = "comment")
+public class Comment {
 
     @Id
     @Column(name = "id", unique = true)
@@ -37,9 +37,9 @@ public class Review {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Review review = (Review) o;
-        return id.equals(review.id) &&
-                created.equals(review.created);
+        Comment comment = (Comment) o;
+        return id.equals(comment.id) &&
+                created.equals(comment.created);
     }
 
     @Override

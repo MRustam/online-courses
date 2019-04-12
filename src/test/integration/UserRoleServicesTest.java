@@ -2,9 +2,7 @@ package integration;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,9 +38,10 @@ public class UserRoleServicesTest {
     @Autowired
     private IUserService userService;
 
-    @Rule
-    public ExpectedException exceptionRule = ExpectedException.none();
-
+    /**
+     * Init three roles(student, instructor, observer)
+     * Init one User with two roles(student, instructor)
+     */
     @Before
     public void init() {
         final Role role1 = new Role("1", "ROLE_STUDENT");
@@ -61,6 +60,7 @@ public class UserRoleServicesTest {
         userService.deleteById("1");
         roleService.deleteById("1");
         roleService.deleteById("2");
+        roleService.deleteById("4");
     }
 
     // Find tests.
@@ -100,35 +100,4 @@ public class UserRoleServicesTest {
         assertEquals(1, updatedUser.getRoles().size());
         assertEquals(1, userService.findById("1").getRoles().size());
     }
-
-//    @Test
-//    public void findRoleByNameTest() {
-////        assertEquals("ROLE_INSTRUCTOR", service.findByName("ROLE_INSTRUCTOR").getName());
-//    }
-//    @Test
-//    public void whenFindNonexistentRoleByNameThenThrowsExceptionTest() {
-////        exceptionRule.expect(UserNotFoundException.class);
-////        exceptionRule.expectMessage("Role with name: 'INSTRUCTOR' - Not Found");
-////        service.findByName("INSTRUCTOR");
-//    }
-//    // Save tests.
-//    @Test
-//    @DirtiesContext
-//    public void saveRoleTest() {
-////        service.save(new Role("4", "ROLE_SUPER_ADMIN"));
-////        assertEquals(4, service.findAll().size());
-//    }
-//    @Test
-//    @DirtiesContext
-//    public void saveRoleWithTheSameNameTest() {
-////        exceptionRule.expect(UserNotSavedException.class);
-////        service.save(new Role("2", "ROLE_STUDENT"));
-//    }
-//    // Delete rests.
-//    @Test
-//    @DirtiesContext
-//    public void deleteRoleTest() {
-////        service.deleteById("1");
-////        assertEquals(2, service.findAll().size());
-//    }
 }

@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     var id = new URL(window.location.href).searchParams.get("id");
 
-    // Populate main page with all ru.rmamedov.courses.
+    // Populate main page with all ru.rmamedov.createdCourses.
     if (id == null) {
 
         var url;
@@ -19,14 +19,14 @@ $(document).ready(function () {
 
         //Courses or current course with details.
         $.get(url, function (data) {
-            //Populate cards(each course) on all ru.rmamedov.courses page.
+            //Populate cards(each course) on all ru.rmamedov.createdCourses page.
             $.each(data, function (index, el) {
                 var div = $('<div class="col-lg-3 col-md-6 mb-4">' +
                     '           <div class="card h-100" style="border:2px solid wheat;">' +
                     '               <div class="div-courseRating">' +
                     '                   <span class="small font-weight-light font-italic ml-1">rating: ' + el.score + '</span><br/>' +
                     '                   <span class="small font-weight-light font-italic ml-1">instructor rating: ' + el.rating + '</span><br/>' +
-                    '                   <span class="small font-weight-light font-italic ml-1">enrolled: ' + el.enrolled + '</span>' +
+                    '                   <span class="small font-weight-light font-italic ml-1">enrolledCourses: ' + el.enrolled + '</span>' +
                     '               </div>' +
                     '               <img class="card-img-top" src="/img/abstract.jpg" />' +
                     '               <div class="card-body">' +
@@ -39,7 +39,7 @@ $(document).ready(function () {
                     '           </div>' +
                     '       </div>');
 
-                $('#ru.rmamedov.courses-list').append(div);
+                $('#ru.rmamedov.createdCourses-list').append(div);
             });
         }).fail(function (err) {
             console.log(err);
@@ -47,7 +47,7 @@ $(document).ready(function () {
 
     } else {
 
-        // Populate main page current course. Works if id were passed by parameter (/api/ru.rmamedov.courses/all#?id).
+        // Populate main page current course. Works if id were passed by parameter (/api/ru.rmamedov.createdCourses/all#?id).
         $.get('/api/course/' + id, function (data) {
             // Populate course persist.
             $('#current-course').append('<div class="card">' +
@@ -60,8 +60,8 @@ $(document).ready(function () {
                 '<h6>started: <span style="color: #e4606d">' + (data.status ? 'yes' : 'no') + '</span></h6>' +
                 '<h5>instructor: <span><a href="#' + data.instructorId + '">' + data.owner + '</a></span></h5>' +
                 '<hr>' +
-                '<h6>reviews: <span style="color: darkgreen">' + (data.rcount != null ? data.rcount : 'nothing') + '</span></h6>' +
-                '<h6><a href="/students?cId=' + id + '">enrolled students: </a><span style="color: darkgreen">' + (data.enrolled > 0 ? data.enrolled : 'nobody') + '</span></h6>' +
+                '<h6>comments: <span style="color: darkgreen">' + (data.rcount != null ? data.rcount : 'nothing') + '</span></h6>' +
+                '<h6><a href="/students?cId=' + id + '">enrolledCourses students: </a><span style="color: darkgreen">' + (data.enrolled > 0 ? data.enrolled : 'nobody') + '</span></h6>' +
                 '<hr>' +
                 '<p class="card-text font-italic"><span class="font-weight-bold">description: </span>' + data.description + '</p>' +
                 '<div sec:authorize="hasRole(&#39;STUDENT&#39;)">' +
@@ -71,17 +71,17 @@ $(document).ready(function () {
                 '</div>' +
                 '</div>' +
                 '</div>' +
-                '<div class="card card-outline-secondary my-4" id="current-course-with-reviews">' +
+                '<div class="card card-outline-secondary my-4" id="current-course-with-comments">' +
                 '<div class="card-header">' +
                 'Reviews' +
                 '</div>' +
                 '</div>');
 
-            // Populate reviews.
+            // Populate comments.
             $.get('/api/review/bycourse/' + id, function (data) {
 
                 $.each(data, function (index, el) {
-                    $('#current-course-with-reviews').append('<div class="card-body">' +
+                    $('#current-course-with-comments').append('<div class="card-body">' +
                         '<p class="small font-weight-light font-italic">' + el.text + '</p>' +
                         '<small class="text-muted"><span class="font-weight-bold">posted:</span> ' + el.created + '</small><br/>' +
                         '<small class="text-muted"><span class="font-weight-bold">owner:</span> ' + el.owner.fullName + '</small>' +
@@ -124,7 +124,7 @@ function subscribe(id) {
         contentType: 'application/json',
         method: 'PUT',
         success: function () {
-            alert('You are successfully enrolled on this course!');
+            alert('You are successfully enrolledCourses on this course!');
             window.location.reload();
         },
         error: function () {

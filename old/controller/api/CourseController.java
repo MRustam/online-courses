@@ -27,7 +27,7 @@ public class CourseController {
         this.instructorService = instructorService;
     }
 
-    // Custom get all ru.rmamedov.courses, sorted by courseRating.
+    // Custom get all ru.rmamedov.createdCourses, sorted by courseRating.
     @GetMapping("/all")
     public ResponseEntity<List<AllCoursesDTO>> getAll() {
         if (iCourseService.findAll().size() > 0) {
@@ -36,7 +36,7 @@ public class CourseController {
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-    // Custom get all ru.rmamedov.courses, sorted by courseRating.
+    // Custom get all ru.rmamedov.createdCourses, sorted by courseRating.
     @GetMapping("/all/by-student-id/{id}")
     public ResponseEntity<List<AllCoursesDTO>> getAllByStudentId(@PathVariable Long id) {
         if (iCourseService.findAll().size() > 0) {

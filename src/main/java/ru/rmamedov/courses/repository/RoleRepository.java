@@ -4,9 +4,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import ru.rmamedov.courses.exception.user.UserNotFoundException;
+import ru.rmamedov.courses.exception.exceptions.role.RoleNotFoundException;
 import ru.rmamedov.courses.model.user.Role;
+import ru.rmamedov.courses.repository.interfaces.IRoleRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,8 +25,8 @@ import java.util.List;
  */
 
 @Repository
-@Transactional
-public class RoleRepository {
+@Transactional(propagation = Propagation.MANDATORY)
+public class RoleRepository implements IRoleRepository {
 
     @PersistenceContext
     private EntityManager em;
@@ -41,7 +43,7 @@ public class RoleRepository {
      * @return List of all Users.
      */
     @NotNull
-    public List<Role> findAll() throws UserNotFoundException {
+    public List<Role> findAll() throws RoleNotFoundException {
         criteriaBuilder = em.getCriteriaBuilder();
         criteriaQuery = criteriaBuilder.createQuery(Role.class);
         root = criteriaQuery.from(Role.class);
@@ -51,7 +53,7 @@ public class RoleRepository {
         if (list != null && !list.isEmpty()) {
             return Collections.unmodifiableList(list);
         }
-        throw new UserNotFoundException("There're is no any roles!");
+        throw new RoleNotFoundException("There're is no any roles!");
     }
 
     /**
@@ -60,7 +62,7 @@ public class RoleRepository {
      * @param role incoming new User.
      */
     public void save(@NotNull final Role role) throws DataIntegrityViolationException {
-        em.persist(role);
+        em.merge(role);
     }
 
     /**
@@ -70,7 +72,7 @@ public class RoleRepository {
      * @return found User.
      */
     @NotNull
-    public Role findByName(@NotNull final String name) throws EmptyResultDataAccessException, UserNotFoundException {
+    public Role findByName(@NotNull final String name) throws EmptyResultDataAccessException, RoleNotFoundException {
         criteriaBuilder = em.getCriteriaBuilder();
         criteriaQuery = criteriaBuilder.createQuery(Role.class);
         root = criteriaQuery.from(Role.class);
@@ -80,7 +82,7 @@ public class RoleRepository {
         if (role != null) {
             return role;
         }
-        throw new UserNotFoundException("Role with ID: '" + name + "' - Not Found");
+        throw new RoleNotFoundException("Role with ID: '" + name + "' - Not Found");
     }
 
     /**

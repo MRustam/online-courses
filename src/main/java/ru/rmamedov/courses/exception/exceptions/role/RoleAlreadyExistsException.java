@@ -1,12 +1,12 @@
-package ru.rmamedov.courses.exception.user;
+package ru.rmamedov.courses.exception.exceptions.role;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-public class UserNotSavedException extends RuntimeException {
+public class RoleAlreadyExistsException extends RuntimeException {
 
-    public UserNotSavedException(String message) {
+    public RoleAlreadyExistsException(String message) {
         super(message);
     }
 }

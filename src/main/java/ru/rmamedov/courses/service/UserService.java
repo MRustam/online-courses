@@ -7,10 +7,11 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.rmamedov.courses.exception.user.UserNotFoundException;
-import ru.rmamedov.courses.exception.user.UserNotSavedException;
+import org.springframework.transaction.annotation.Transactional;
+import ru.rmamedov.courses.exception.exceptions.user.UserAlreadyExistsException;
+import ru.rmamedov.courses.exception.exceptions.user.UserNotFoundException;
 import ru.rmamedov.courses.model.user.User;
-import ru.rmamedov.courses.repository.UserRepository;
+import ru.rmamedov.courses.repository.interfaces.IUserRepository;
 import ru.rmamedov.courses.service.interfaces.IUserService;
 
 import java.util.List;
@@ -20,12 +21,13 @@ import java.util.List;
  */
 
 @Service
+@Transactional
 public class UserService implements IUserService {
 
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(IUserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -66,11 +68,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void save(@NotNull final User user) throws UserNotSavedException {
+    public void save(@NotNull final User user) throws UserAlreadyExistsException {
         try {
             userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
-            throw new UserNotSavedException("User already exists, 'Username' or 'ID' have to be unique!");
+            throw new UserAlreadyExistsException("User already exists, 'Username' or 'ID' have to be unique!");
         }
     }
 

@@ -1,12 +1,12 @@
-package ru.rmamedov.courses.exception.course;
+package ru.rmamedov.courses.exception.exceptions.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
-public class CourseNotSavedException extends RuntimeException {
+public class UserAlreadyExistsException extends RuntimeException {
 
-    public CourseNotSavedException(String message) {
+    public UserAlreadyExistsException(String message) {
         super(message);
     }
 }

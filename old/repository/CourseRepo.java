@@ -20,7 +20,7 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
             "       concat(substring(c.description, 1, 20), '...') AS description,\n" +
             "       i.rating AS rating,\n" +
             "       c.rating AS score,\n" +
-            "       count(sc.student_id) AS enrolled\n" +
+            "       count(sc.student_id) AS enrolledCourses\n" +
             "FROM course c\n" +
             "  JOIN instructor i ON c.instructor_id = i.id\n" +
             "  LEFT JOIN student_course sc ON c.id = sc.course_id ";
@@ -43,7 +43,7 @@ public interface CourseRepo extends JpaRepository<Course, Long> {
                     "       c.category,\n" +
                     "       c.status,\n" +
                     "       u.full_name AS owner,\n" +
-                    "       count(sc.student_id) AS enrolled,\n" +
+                    "       count(sc.student_id) AS enrolledCourses,\n" +
                     "       rcount.count AS rcount\n" +
                     "FROM course c\n" +
                     "       LEFT JOIN student_course sc ON c.id = sc.course_id\n" +

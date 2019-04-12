@@ -55,7 +55,7 @@ public class User implements UserDetails {
     private int workExperience;
 
     @Column(name = "academic_performance", nullable = true)
-    private double academicPerformance;
+    private double academicPerformance = 0.0D;
 
     @CreationTimestamp
     @Column(name = "registered")
@@ -63,7 +63,7 @@ public class User implements UserDetails {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "instructor_id")
-    private Set<Course> courses;
+    private Set<Course> createdCourses;
 
     @ManyToMany(cascade = {
             CascadeType.DETACH,
@@ -76,7 +76,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "course_id"})
     )
-    private Set<Course> enrolled;
+    private Set<Course> enrolledCourses;
 
     @ManyToMany(
             fetch = FetchType.EAGER,
@@ -93,26 +93,26 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     public boolean createCourse(@NotNull final Course course) {
-        if (courses == null) {
-            courses = new HashSet<>();
-            return courses.add(course);
+        if (createdCourses == null) {
+            createdCourses = new HashSet<>();
+            return createdCourses.add(course);
         } else {
-            return courses.add(course);
+            return createdCourses.add(course);
         }
     }
 
     public boolean enroll(@NotNull final Course course) {
-        if (enrolled == null) {
-            enrolled = new HashSet<>();
-            return enrolled.add(course);
+        if (enrolledCourses == null) {
+            enrolledCourses = new HashSet<>();
+            return enrolledCourses.add(course);
         } else {
-            return enrolled.add(course);
+            return enrolledCourses.add(course);
         }
     }
 
     public boolean dropCourse(@NotNull final Course course) {
-        if (enrolled.contains(course)) {
-            return courses.remove(course);
+        if (enrolledCourses.contains(course)) {
+            return createdCourses.remove(course);
         }
         return false;
     }
