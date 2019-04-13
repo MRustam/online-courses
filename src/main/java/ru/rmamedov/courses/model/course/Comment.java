@@ -19,14 +19,14 @@ public class Comment {
     @NotNull
     private String id = UUID.randomUUID().toString();
 
-    @Column(name = "text", length = 3000)
+    @Column(name = "text", columnDefinition="TEXT")
     private String text;
 
     @Column(name = "created")
     private LocalDateTime created = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)

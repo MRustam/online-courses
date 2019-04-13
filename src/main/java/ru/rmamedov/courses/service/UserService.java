@@ -24,17 +24,17 @@ import java.util.List;
 @Transactional
 public class UserService implements IUserService {
 
-    private IUserRepository userRepository;
+    private IUserRepository repository;
 
     @Autowired
-    public UserService(IUserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(IUserRepository repository) {
+        this.repository = repository;
     }
 
     @NotNull
     @Override
     public List<User> findAll() throws UserNotFoundException {
-        return userRepository.findAll();
+        return repository.findAll();
     }
 
     @NotNull
@@ -42,7 +42,7 @@ public class UserService implements IUserService {
     public User findById(@NotNull final String id) throws UserNotFoundException {
         User user;
         try {
-            user = userRepository.findById(id);
+            user = repository.findById(id);
         } catch (EmptyResultDataAccessException ex) {
             throw new UserNotFoundException("User with ID: '" + id + "' - Not Found");
         }
@@ -54,7 +54,7 @@ public class UserService implements IUserService {
     public UserDetails loadUserByUsername(@NotNull final String username) throws UsernameNotFoundException {
         User user;
         try {
-            user = userRepository.loadByUsername(username);
+            user = repository.loadByUsername(username);
         } catch (EmptyResultDataAccessException ex) {
             throw new UserNotFoundException("User with Username: '" + username + "' - Not Found");
         }
@@ -64,13 +64,13 @@ public class UserService implements IUserService {
     @NotNull
     @Override
     public List<User> searchHavingFullName(@NotNull final String fullName) throws UserNotFoundException {
-        return userRepository.searchByHavingFullName(fullName);
+        return repository.searchByHavingFullName(fullName);
     }
 
     @Override
-    public void save(@NotNull final User user) throws UserAlreadyExistsException {
+    public User save(@NotNull final User user) throws UserAlreadyExistsException {
         try {
-            userRepository.save(user);
+            return repository.save(user);
         } catch (DataIntegrityViolationException ex) {
             throw new UserAlreadyExistsException("User already exists, 'Username' or 'ID' have to be unique!");
         }
@@ -78,17 +78,22 @@ public class UserService implements IUserService {
 
     @Override
     public int deleteById(@NotNull final String id) {
-        return userRepository.deleteById(id);
+        return repository.deleteById(id);
+    }
+
+    @Override
+    public int deleteAll() {
+        return repository.deleteAll();
     }
 
     @NotNull
     @Override
     public User update(@NotNull User user) {
-        return userRepository.update(user);
+        return repository.update(user);
     }
 
     @Override
     public int fetch(@NotNull final User user) {
-        return userRepository.fetch(user);
+        return repository.fetch(user);
     }
 }

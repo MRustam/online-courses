@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.rmamedov.courses.exception.EntityErrorResponse;
 import ru.rmamedov.courses.exception.exceptions.course.CourseNotFoundException;
-import ru.rmamedov.courses.exception.exceptions.course.CourseNotSavedException;
+import ru.rmamedov.courses.exception.exceptions.course.CourseAlreadyExistsException;
 import ru.rmamedov.courses.exception.handler.helper.HandlerHelper;
 
 @ControllerAdvice
@@ -18,7 +18,7 @@ public class GlobalCourseExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseEntity<EntityErrorResponse> handleCourseNotSaved(final CourseNotSavedException ex) {
+    public ResponseEntity<EntityErrorResponse> handleCourseNotSaved(final CourseAlreadyExistsException ex) {
         return new ResponseEntity<>(HandlerHelper.notSaved(new EntityErrorResponse<>(), ex), HttpStatus.NOT_ACCEPTABLE);
     }
 }

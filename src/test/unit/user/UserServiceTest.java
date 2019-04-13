@@ -1,4 +1,4 @@
-package unit;
+package unit.user;
 
 import org.junit.After;
 import org.junit.Before;
@@ -61,8 +61,7 @@ public class UserServiceTest {
     @After
     public void destroy() {
         password = null;
-        service.deleteById(id1);
-        service.deleteById(id2);
+        service.deleteAll();
     }
 
     @Rule
@@ -109,11 +108,12 @@ public class UserServiceTest {
     @Test
     @DirtiesContext
     public void saveUserTest() {
-        service.save(new User(id3, "User_3", password,
+        final User user = service.save(new User(id3, "User_3", password,
                 "Mat Dayman", 32, "+7(500)770-09-09",
                 "mat@mail.ru", "mat@mail.ru",
                 0, 4.3, LocalDateTime.now(),
                 null, null, null));
+        assertNotNull(user);
         assertEquals(3, service.findAll().size());
         assertEquals("mat@mail.ru", ((User) service.loadUserByUsername("User_3")).getEmail());
     }
@@ -150,6 +150,15 @@ public class UserServiceTest {
     @Test
     @DirtiesContext
     public void whenFetchUserThenReturnModifiedRowsTest() {
+        final User user = service.findById(id2);
+        user.setFullName("Qwe Asd");
+        assertEquals(1, service.fetch(user));
+        assertEquals("Qwe Asd", service.findById(id2).getFullName());
+    }
+    // Update.
+    @Test
+    @DirtiesContext
+    public void whenUpdateUserThenReturnModifiedRowsTest() {
         final User user = service.findById(id2);
         user.setFullName("Qwe Asd");
         assertEquals(1, service.fetch(user));

@@ -1,7 +1,6 @@
-package ru.rmamedov.courses.service.interfaces.base;
+package ru.rmamedov.courses.repository.interfaces.base;
 
 import org.jetbrains.annotations.NotNull;
-import ru.rmamedov.courses.model.user.User;
 
 import java.util.List;
 
@@ -9,7 +8,7 @@ import java.util.List;
  * @author Rustam Mamedov
  */
 
-public interface IBaseService<T, ID> {
+public interface IBaseRepository<T, ID> {
 
     @NotNull
     List<T> findAll();
@@ -17,12 +16,12 @@ public interface IBaseService<T, ID> {
     @NotNull
     T findById(@NotNull final ID id);
 
-    T save(@NotNull final T object);
+    T save(@NotNull final T course);
 
     int deleteById(@NotNull final ID id);
 
-    int fetch(@NotNull final T t);
-
     @NotNull
-    User update(@NotNull final User user);
+    T update(@NotNull T t);
+
+    int fetch(@NotNull final T t);
 }

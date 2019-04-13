@@ -86,7 +86,7 @@ public class User implements UserDetails {
                     CascadeType.PERSIST,
                     CascadeType.REFRESH
             })
-    @JoinTable(name = "user_role",
+    @JoinTable(name = "userRole",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
     )

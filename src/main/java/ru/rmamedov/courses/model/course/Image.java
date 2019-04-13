@@ -22,8 +22,8 @@ import java.util.UUID;
 public class Image implements Serializable {
 
     @Id
-    @NotNull
     @Column(name = "id", unique = true)
+    @NotNull
     private String id = UUID.randomUUID().toString();
 
     @Column(name = "name")

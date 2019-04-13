@@ -29,10 +29,12 @@ public interface IUserService extends IBaseService<User, String>, UserDetailsSer
     List<User> searchHavingFullName(String fullName) throws UserNotFoundException;
 
     @Override
-    void save(@NotNull final User object) throws UserAlreadyExistsException;
+    User save(@NotNull final User object) throws UserAlreadyExistsException;
 
     @Override
     int deleteById(@NotNull final String id);
+
+    int deleteAll();
 
     @Override
     int fetch(@NotNull final User user);

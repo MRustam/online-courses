@@ -1,4 +1,4 @@
-package integration;
+package unit.userRole;
 
 import org.junit.After;
 import org.junit.Before;

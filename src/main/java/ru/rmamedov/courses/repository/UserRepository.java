@@ -76,6 +76,7 @@ public class UserRepository implements IUserRepository {
         criteriaBuilder = em.getCriteriaBuilder();
         criteriaQuery = criteriaBuilder.createQuery(User.class);
         root = criteriaQuery.from(User.class);
+
         criteriaQuery.select(root).where(criteriaBuilder.equal(root.get("id"), id));
         typedQuery = em.createQuery(criteriaQuery);
         final User user = typedQuery.getSingleResult();
@@ -136,8 +137,8 @@ public class UserRepository implements IUserRepository {
      * @param user incoming new User.
      */
     @Override
-    public void save(@NotNull final User user) {
-        em.merge(user);
+    public User save(@NotNull final User user) {
+        return em.merge(user);
     }
 
     /**
@@ -213,5 +214,10 @@ public class UserRepository implements IUserRepository {
 
         criteriaDelete.where(criteriaBuilder.equal(root.get("id"), id));
         return em.createQuery(criteriaDelete).executeUpdate();
+    }
+
+    @Override
+    public int deleteAll() {
+        return em.createQuery("DELETE FROM User").executeUpdate();
     }
 }

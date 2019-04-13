@@ -1,4 +1,4 @@
-package unit;
+package unit.role;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,6 +14,8 @@ import ru.rmamedov.courses.configuration.persist.PersistenceConfigurer;
 import ru.rmamedov.courses.exception.exceptions.role.RoleNotFoundException;
 import ru.rmamedov.courses.model.user.Role;
 import ru.rmamedov.courses.service.interfaces.IRoleService;
+
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,6 +36,10 @@ public class RoleServiceTest {
     @Rule
     public ExpectedException exceptionRule = ExpectedException.none();
 
+    private final String id1 = UUID.randomUUID().toString();
+    private final String id2 = UUID.randomUUID().toString();
+    private final String id3 = UUID.randomUUID().toString();
+
     // Find tests.
     @Test
     public void whenFindAllRolesButThereAreIsNoAnyThenExceptionThrowsTest() {
@@ -44,15 +50,15 @@ public class RoleServiceTest {
     @Test
     @DirtiesContext
     public void findAllRolesTest() {
-        service.save(new Role("1", "ROLE_STUDENT"));
-        service.save(new Role("2", "ROLE_INSTRUCTOR"));
-        service.save(new Role("3", "ROLE_ADMIN"));
+        service.save(new Role(id1, "ROLE_STUDENT"));
+        service.save(new Role(id2, "ROLE_INSTRUCTOR"));
+        service.save(new Role(id3, "ROLE_ADMIN"));
         assertEquals(3, service.findAll().size());
     }
     @Test
     @DirtiesContext
     public void findRoleByNameTest() {
-        service.save(new Role("2", "ROLE_INSTRUCTOR"));
+        service.save(new Role(id2, "ROLE_INSTRUCTOR"));
         assertEquals("ROLE_INSTRUCTOR", service.findByName("ROLE_INSTRUCTOR").getName());
     }
     @Test
@@ -74,16 +80,16 @@ public class RoleServiceTest {
     @DirtiesContext
     public void saveRoleWithTheSameNameTest() {
         exceptionRule.expect(DataIntegrityViolationException.class);
-        service.save(new Role("1", "ROLE_STUDENT"));
-        service.save(new Role("4", "ROLE_STUDENT"));
+        service.save(new Role(id1, "ROLE_STUDENT"));
+        service.save(new Role("id4", "ROLE_STUDENT"));
     }
     // Delete rests.
     @Test
     @DirtiesContext
     public void deleteRoleTest() {
-        service.save(new Role("1", "ROLE_STUDENT"));
-        service.save(new Role("2", "ROLE_INSTRUCTOR"));
-        service.deleteById("1");
+        service.save(new Role(id1, "ROLE_STUDENT"));
+        service.save(new Role(id2, "ROLE_INSTRUCTOR"));
+        service.deleteById(id1);
         assertEquals(1, service.findAll().size());
         assertEquals("ROLE_INSTRUCTOR", service.findByName("ROLE_INSTRUCTOR").getName());
     }
